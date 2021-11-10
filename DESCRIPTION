@@ -1,13 +1,16 @@
 Package: volcalc
-Title: What the Package Does (One Line, Title Case)
+Title: Calculate Volatility of Chemical Compounds
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Kristina",
+           family = "Riemer",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "kristinariemer@email.arizona.edu",
+           comment = c(ORCID = "0000-0003-3802-3331"))
+Description: Use this package to calculate estimated volatility values for 
+  individual compounds of interest or for all compounds in a pathway. 
+  Calculation uses the SIMPOL  method (Prankow and Asher, 2008), and is only 
+  currently applicable to compounds and pathways in KEGG. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
