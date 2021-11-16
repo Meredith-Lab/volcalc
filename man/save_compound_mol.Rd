@@ -7,9 +7,9 @@
 save_compound_mol(compound_id, pathway_id)
 }
 \arguments{
-\item{compound_id}{character}
+\item{compound_id}{character string that is 5 digits prepended with a "C"}
 
-\item{pathway_id}{character}
+\item{pathway_id}{character string that is 5 digits prepended with "map"}
 }
 \description{
 Using KEGG ID values for compound and pathway, download

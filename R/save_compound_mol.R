@@ -3,11 +3,13 @@
 #' Using KEGG ID values for compound and pathway, download
 #' and clean up corresponding mol file
 #'
-#' @param compound_id character
-#' @param pathway_id character
+#' @param compound_id character string that is 5 digits prepended with a "C"
+#' @param pathway_id character string that is 5 digits prepended with "map"
 #'
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
+#'
+#' @export
 save_compound_mol <- function(compound_id, pathway_id){
   . <- NULL
   pathway_dir <- paste0("data/compound_mols/", pathway_id)
