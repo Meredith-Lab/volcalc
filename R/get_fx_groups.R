@@ -5,11 +5,12 @@
 #'
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param pathway_id character string that is 5 digits prepended with "map"
+#' @param path relative path to location to download data
 #'
 #' @return single row dataframe with columns for numbers of different functional groups and basic compound details
 #' @export
-get_fx_groups <- function(compound_id, pathway_id){
-  mol_path <- paste0("data/compound_mols/", pathway_id, "/", compound_id, ".mol")
+get_fx_groups <- function(compound_id, pathway_id, path){
+  mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
   kegg_data <- KEGGREST::keggGet(compound_id)
   groups <- data.frame(t(ChemmineR::groups(compound_sdf, groups = "fctgroup",
@@ -29,6 +30,7 @@ get_fx_groups <- function(compound_id, pathway_id){
   if(nrow(carbon_dbl_count) == 0) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
+  # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   phenol_pattern <- "[OX2H][cX3]:[c]"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   amine_pattern <- "[NX3;H2,H1;!$(NC=O)]"

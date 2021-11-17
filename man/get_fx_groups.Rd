@@ -4,12 +4,14 @@
 \alias{get_fx_groups}
 \title{Count functional groups of a compound}
 \usage{
-get_fx_groups(compound_id, pathway_id)
+get_fx_groups(compound_id, pathway_id, path)
 }
 \arguments{
 \item{compound_id}{character string that is 5 digits prepended with a "C"}
 
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
+
+\item{path}{relative path to location to download data}
 }
 \value{
 single row dataframe with columns for numbers of different functional groups and basic compound details

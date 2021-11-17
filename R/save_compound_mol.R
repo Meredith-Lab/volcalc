@@ -5,14 +5,15 @@
 #'
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param pathway_id character string that is 5 digits prepended with "map"
+#' @param path relative path to location to download data
 #'
 #' @return downloaded .mol file
 #' @export
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
-save_compound_mol <- function(compound_id, pathway_id) {
+save_compound_mol <- function(compound_id, pathway_id, path) {
   . <- NULL
-  pathway_dir <- paste0("data/compound_mols/", pathway_id)
+  pathway_dir <- paste0(path, "/", pathway_id)
   if (!dir.exists(pathway_dir)) {
     dir.create(pathway_dir, recursive = TRUE)
   }
