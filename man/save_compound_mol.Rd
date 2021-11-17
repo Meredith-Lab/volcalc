@@ -11,6 +11,9 @@ save_compound_mol(compound_id, pathway_id)
 
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
 }
+\value{
+downloaded .mol file
+}
 \description{
 Using KEGG ID values for compound and pathway, download
 and clean up corresponding mol file

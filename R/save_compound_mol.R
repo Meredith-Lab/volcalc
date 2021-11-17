@@ -6,10 +6,10 @@
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param pathway_id character string that is 5 digits prepended with "map"
 #'
+#' @return downloaded .mol file
+#' @export
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
-#'
-#' @export
 save_compound_mol <- function(compound_id, pathway_id) {
   . <- NULL
   pathway_dir <- paste0("data/compound_mols/", pathway_id)
