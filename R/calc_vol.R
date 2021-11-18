@@ -6,6 +6,7 @@
 #' @param fx_groups_df dataframe of functional group counts for compounds
 #'
 #' @return input dataframe with new columns for volatility value and category
+#' @export
 calc_vol <- function(fx_groups_df){
   aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers

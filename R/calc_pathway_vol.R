@@ -8,7 +8,7 @@
 #'
 #' @return dataframe with one row per compound and columns for basic compound info, functional group counts, and volatility estimate and category
 #'
-#' @examples
+#' @export
 calc_pathway_vol <- function(pathway_id, path){
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   invisible(lapply(compounds_from_pathway, save_compound_mol, pathway_id = pathway_id, path = path))
