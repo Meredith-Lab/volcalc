@@ -10,6 +10,7 @@
 #' @return single row dataframe with columns for numbers of different functional groups and basic compound details
 #' @export
 get_fx_groups <- function(compound_id, pathway_id, path){
+  rowname <- n <- nitrates <- amines <- amides <- nitro <- hydroperoxide <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- NULL
   mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
   kegg_data <- KEGGREST::keggGet(compound_id)
