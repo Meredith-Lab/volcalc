@@ -10,7 +10,7 @@
 #' @return single row dataframe with columns for numbers of different functional groups and basic compound details
 #' @export
 get_fx_groups <- function(compound_id, pathway_id, path){
-  rowname <- n <- nitrates <- amines <- amides <- nitro <- hydroperoxide <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- NULL
+  rowname <- n <- nitrates <- amines <- amides <- nitro <- hydroperoxide <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
   mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
   kegg_data <- KEGGREST::keggGet(compound_id)
@@ -92,6 +92,13 @@ get_fx_groups <- function(compound_id, pathway_id, path){
     dplyr::mutate(nitrate = nitrates + amines + amides + nitro,
                   .after = hydroperoxide) %>%
     dplyr::mutate(p_groups = phosphoric_acid + phosphoric_ester,
-           s_groups = sulfate + sulfonate + thiol)
+           s_groups = sulfate + sulfonate + thiol) %>%
+    # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
+    dplyr::mutate(phenol = ifelse(rings !=0 & rings_aromatic != 0 & phenol > 1, (phenol/2) - (hydroxyl_groups - 1), phenol),
+                  rings = ifelse(rings !=0 & rings_aromatic != 0, rings - rings_aromatic, rings),
+                  hydroxyl_groups = hydroxyl_groups - phenol,
+                  carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds),
+                  carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
+                  phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid))
   return(fx_groups_df)
 }
