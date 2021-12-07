@@ -8,7 +8,7 @@
 #' @return input dataframe with new columns for volatility value and category
 #' @export
 calc_vol <- function(fx_groups_df){
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- NULL
+  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <-  NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
   `%+%` <- function(x, y)  mapply(sum, x, y, MoreArgs = list(na.rm = TRUE))
@@ -40,7 +40,15 @@ calc_vol <- function(fx_groups_df){
              (-1.01	 * amine_primary) %+%
              (-0.85	 * amine_secondary) %+%
              (-0.6 	 * amine_tertiary) %+%
-             (-1.61  * amine_aromatic),
+             (-1.61  * amine_aromatic) %+%
+             (-2.23	 * amines) %+%
+             (-2.23	 * amides) %+%
+             (-2.23	 * phosphoric_acid) %+%
+             (-2.23	 * phosphoric_ester) %+%
+             (-2.23	 * sulfate) %+%
+             (-2.23	 * sulfonate) %+%
+             (-2.23	 * thiol) %+%
+             (-1.2 	 * carbothioester),
            log_c = log_alpha + constant + log_Sum,
            volatility = dplyr::case_when(log_c <= 0 ~ "none",
                                   log_c > 0 & log_c <= 2 ~ "moderate",

@@ -13,6 +13,7 @@
 #' @importFrom utils write.table
 save_compound_mol <- function(compound_id, pathway_id, path) {
   . <- NULL
+  #dont redownload
   pathway_dir <- paste0(path, "/", pathway_id)
   if (!dir.exists(pathway_dir)) {
     dir.create(pathway_dir, recursive = TRUE)
