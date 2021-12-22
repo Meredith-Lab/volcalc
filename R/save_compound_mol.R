@@ -14,6 +14,12 @@
 #' @importFrom utils write.table
 save_compound_mol <- function(compound_id, pathway_id, path, redownload = FALSE) {
   . <- NULL
+  if (!stringr::str_detect(compound_id, "^[C][:digit:]{5}$")) {
+    stop("compound_id is not in the correct KEGG format")
+  }
+  if (!stringr::str_detect(pathway_id, "^[m][a][p][:digit:]{5}$")) {
+    stop("pathway_id is not in the correct KEGG format")
+  }
   pathway_dir <- paste0(path, "/", pathway_id)
   if (!dir.exists(pathway_dir)) {
     dir.create(pathway_dir, recursive = TRUE)
@@ -29,3 +35,6 @@ save_compound_mol <- function(compound_id, pathway_id, path, redownload = FALSE)
     )
   }
 }
+
+stringr::str_detect("C12345687", "[C][:digit:]{5}")
+stringr::str_detect("C12345fjdklsfjdsl", "[C][0-9]{5}")
