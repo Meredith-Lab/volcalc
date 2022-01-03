@@ -4,14 +4,22 @@
 \alias{save_compound_mol}
 \title{Download compound .mol file}
 \usage{
-save_compound_mol(compound_id, pathway_id, path, redownload = FALSE)
+save_compound_mol(
+  pathway_id,
+  path,
+  compound_id = NULL,
+  compound_formula = NULL,
+  redownload = FALSE
+)
 }
 \arguments{
-\item{compound_id}{character string that is 5 digits prepended with a "C"}
-
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
 
 \item{path}{relative path to location to download data}
+
+\item{compound_id}{character string that is 5 digits prepended with a "C"}
+
+\item{compound_formula}{character string of compound formula}
 
 \item{redownload}{download file again even if it has already been downloaded at path}
 }
