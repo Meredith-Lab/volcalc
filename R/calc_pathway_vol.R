@@ -10,16 +10,20 @@
 #'
 #' @export
 calc_pathway_vol <- function(pathway_id, path){
+  compounds_volatility <- c()
   compounds_from_pathway <- keggGetCompounds(pathway_id)
-  invisible(lapply(compounds_from_pathway, save_compound_mol, pathway_id = pathway_id, path = path))
+  mapply(save_compound_mol, pathway_id = pathway_id, path = path, compound_id = compounds_from_pathway)
+  #invisible(lapply(compounds_from_pathway, save_compound_mol, pathway_id = pathway_id, path = path))
   compound_files <- list.files(paste0(path, "/", pathway_id))
   compound_names <- sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
   compounds_fx_groups <- data.frame()
   for(compound in compound_names){
     compound_fx_groups <- get_fx_groups(compound, pathway_id, path)
-    compounds_fx_groups <- rbind(compounds_fx_groups, compound_fx_groups)
+    compound_volatility <- calc_vol(pathway_id = pathway_id, path = path,
+                                    save_file = FALSE, get_groups = FALSE,
+                                    fx_groups_df = compound_fx_groups)
+    compounds_volatility <- rbind(compounds_volatility, compound_volatility)
   }
-  compounds_volatility <- calc_vol(compounds_fx_groups)
   return(compounds_volatility)
 }
 

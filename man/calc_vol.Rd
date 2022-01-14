@@ -4,10 +4,33 @@
 \alias{calc_vol}
 \title{Calculate volatility estimate for compound}
 \usage{
-calc_vol(fx_groups_df)
+calc_vol(
+  pathway_id,
+  path,
+  compound_id = NULL,
+  compound_formula = NULL,
+  redownload = FALSE,
+  save_file = TRUE,
+  get_groups = TRUE,
+  fx_groups_df = NULL
+)
 }
 \arguments{
-\item{fx_groups_df}{dataframe of functional group counts for compounds}
+\item{pathway_id}{character string that is 5 digits prepended with "map"}
+
+\item{path}{relative path to location to download data}
+
+\item{compound_id}{character string that is 5 digits prepended with a "C"}
+
+\item{compound_formula}{character string of compound formula}
+
+\item{redownload}{download file again even if it has already been downloaded at path}
+
+\item{save_file}{save compound mol file using save_compound_mol function}
+
+\item{get_groups}{get dataframe of compound functional groups using get_fx_groups function}
+
+\item{fx_groups_df}{dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly}
 }
 \value{
 input dataframe with new columns for volatility value and category

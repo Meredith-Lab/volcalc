@@ -3,11 +3,29 @@
 #' Using functional group counts from get_fx_groups(), volatility is estimated
 #' using the SIMPOL formula
 #'
-#' @param fx_groups_df dataframe of functional group counts for compounds
+#' @param pathway_id character string that is 5 digits prepended with "map"
+#' @param path relative path to location to download data
+#' @param compound_id character string that is 5 digits prepended with a "C"
+#' @param compound_formula character string of compound formula
+#' @param save_file save compound mol file using save_compound_mol function
+#' @param redownload download file again even if it has already been downloaded at path
+#' @param get_groups get dataframe of compound functional groups using get_fx_groups function
+#' @param fx_groups_df dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly
 #'
 #' @return input dataframe with new columns for volatility value and category
 #' @export
-calc_vol <- function(fx_groups_df){
+calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NULL, redownload = FALSE,
+                     save_file = TRUE, get_groups = TRUE, fx_groups_df = NULL){
+  if ((!isTRUE(save_file) & is.null(fx_groups_df)) | (!isTRUE(get_groups) & is.null(fx_groups_df)) |
+      (!isTRUE(save_file) & !isTRUE(get_groups) & is.null(fx_groups_df))) {
+    stop("either read in functional groups dataframe or set save_file and get_groups to true")
+  }
+  if (isTRUE(save_file)) {
+    save_compound_mol(pathway_id, path, compound_id, compound_formula, redownload)
+  }
+  if (isTRUE(get_groups)) {
+    fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
+  }
   aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <-  NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
