@@ -11,11 +11,14 @@
 #' @param redownload download file again even if it has already been downloaded at path
 #' @param get_groups get dataframe of compound functional groups using get_fx_groups function
 #' @param fx_groups_df dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly
+#' @param return_fx_groups whether to include columns of functional groups in final dataframe
+#' @param return_calc_steps whether to include columns from intermediate volatility calculation steps in final dataframe
 #'
 #' @return input dataframe with new columns for volatility value and category
 #' @export
 calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NULL, redownload = FALSE,
-                     save_file = TRUE, get_groups = TRUE, fx_groups_df = NULL){
+                     save_file = TRUE, get_groups = TRUE, fx_groups_df = NULL,
+                     return_fx_groups = FALSE, return_calc_steps = FALSE){
   if ((!isTRUE(save_file) & is.null(fx_groups_df)) | (!isTRUE(get_groups) & is.null(fx_groups_df)) |
       (!isTRUE(save_file) & !isTRUE(get_groups) & is.null(fx_groups_df))) {
     stop("either read in functional groups dataframe or set save_file and get_groups to true")
@@ -26,7 +29,7 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
   }
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <-  NULL
+  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- log_c <- volatility <- fluorines <- NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
   `%+%` <- function(x, y)  mapply(sum, x, y, MoreArgs = list(na.rm = TRUE))
@@ -71,5 +74,14 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
            volatility = dplyr::case_when(log_c <= 0 ~ "none",
                                   log_c > 0 & log_c <= 2 ~ "moderate",
                                   log_c > 2 ~ "high"))
-  return(vol_df)
+  if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility, carbons:fluorines)
+  } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility, mass, log_alpha:log_Sum)
+  } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
+    subset_vol_df <- vol_df
+  } else {
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility)
+  }
+  return(subset_vol_df)
 }

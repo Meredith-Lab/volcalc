@@ -12,7 +12,9 @@ calc_vol(
   redownload = FALSE,
   save_file = TRUE,
   get_groups = TRUE,
-  fx_groups_df = NULL
+  fx_groups_df = NULL,
+  return_fx_groups = FALSE,
+  return_calc_steps = FALSE
 )
 }
 \arguments{
@@ -31,6 +33,10 @@ calc_vol(
 \item{get_groups}{get dataframe of compound functional groups using get_fx_groups function}
 
 \item{fx_groups_df}{dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly}
+
+\item{return_fx_groups}{whether to include columns of functional groups in final dataframe}
+
+\item{return_calc_steps}{whether to include columns from intermediate volatility calculation steps in final dataframe}
 }
 \value{
 input dataframe with new columns for volatility value and category
