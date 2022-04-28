@@ -1,1 +1,7 @@
 .Rproj.user
+.RData
+.Rbuildignore
+.Rhistory
+*Rproj
+data/
+*.mol
