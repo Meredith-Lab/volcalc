@@ -18,11 +18,26 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of volcalc is to automate calculating estimates of volatility for compounds. 
+The goal of volcalc is to automate calculating estimates of volatility for chemical compounds.
+It also provides the ability to calculate the volatility of all compounds in a metabolic pathway.
+volcalc leverages the [ChemmineR](https://www.bioconductor.org/packages/devel/bioc/vignettes/ChemmineR/inst/doc/ChemmineR.html) (Cao et al 2008) package to query structural information about chemical compounds, and the [KEGGREST](https://bioconductor.org/packages/release/bioc/html/KEGGREST.html) (Tenenbaum et al 2021) package to query the [KEGG database](https://www.genome.jp/kegg/) for metabolic pathways.
+Volatility calculation uses the SIMPOL  method (Prankow and Asher, 2008), and is only currently applicable to compounds and pathways in KEGG.
 
 ## Installing and loading package
 
-Because the package's GitHub repo is private, you'll need to create a personal access token to install it. Get token by going to [https://github.com/settings/tokens](https://github.com/settings/tokens). Hit "Generate new token" button, give the token a name like "volcalc package", and make sure there is a check by the "repo" option before hitting green button at bottom of page. Copy the token, which is a random string of numbers and letters, on the next page and insert into the R command below. Do not share your token with anyone! 
+### Gaining Access
+
+<!-- this section can be deleted after the repository is made public--> 
+
+Because the package's GitHub repository is private, you'll need to use an authentication method. 
+
+- Option 1: If you already have an ssh key, you can register it with GitHub at https://github.com/settings/keys; as described in in ['Connecting to GitHub with SSH'](https://docs.github.com/en/authentication/connecting-to-github-with-ssh). 
+
+
+- Option 2: create a personal access token to install it. Get token by going to [https://github.com/settings/tokens](https://github.com/settings/tokens). Hit "Generate new token" button, give the token a name like "volcalc package", and make sure there is a check by the "repo" option before hitting green button at bottom of page. Copy the token, which is a random string of numbers and letters, on the next page and insert into the R command below. Do not share your token with anyone! 
+
+### Installing the package
+
 You can install volcalc from [the GitHub repository](https://github.com/Meredith-Lab/volcalc) with:
 
 ``` r
@@ -37,23 +52,31 @@ And then use the package with:
 ```{r}
 library(volcalc)
 ```
-## Single compound usage
 
-This is a basic example which shows you how to get a volatility estimate for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*. The KEGG compound identifier for the compound, as found on [the compound's KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is *C16181*. It is part of two molecular pathways; we will use *map00361* below. 
+## USE
+
+### Estimate volatility of a single compound
+
+We will start with a basic example that shows you how to estimate the volatility of a single compound, *beta-2,3,4,5,6-Pentachlorocyclohexanol*. 
+You can search for the KEGG compound identifier in the KEGG database at https://www.genome.jp/kegg/. 
+For this compound, the identifier is *C16181*, and more information about this compound can be found at https://www.genome.jp/entry/C16181. 
+We can see that it is part of two molecular pathways; for this example we will use the first, *map00361*, below. 
 
 #### Single function approach
+
+Here, we calcuate the volatility of the compound 	_beta-2,3,4,5,6-Pentachlorocyclohexanol_.
 
 ```{r}
 calc_vol("map00361", "data", compound_id = "C16181")
 ```
 
-This returns a dataframe with columns specifying general info about the compound, and the compound's calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with `return_fx_groups = TRUE`, and the intermediate calculation steps with `return_calc_steps = TRUE`. A list of all possible dataframe columns is included below. 
+This returns a dataframe with columns containing general information about the compound, the compound's calculated volatility, and its corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with `return_fx_groups = TRUE`, and the intermediate calculation steps with `return_calc_steps = TRUE`. A list of all possible dataframe columns is included below. 
 
-The compound can alternatively be specified with its chemical formula using the `compound_formula` argument instead of `compound_id` as in the example. 
+The compound can alternatively be specified with its chemical formula using the `compound_formula` argument instead of `compound_id` as in the example.
 
 #### Multiple function approach
 
-This breaks the steps done by `calc_vol` into three parts: 1) download the compound's .mol file from KEGG, 2) count occurrences of different functional groups, and 3) estimate volatility. This calculation uses the SIMPOL approach (Prankow and Asher, 2008). 
+This breaks the steps done by `calc_vol` into three parts: 1) download the compound's .mol file from KEGG, 2) count occurrences of different functional groups, and 3) estimate volatility. This calculation uses the SIMPOL approach (Prankow and Asher, 2008).
 
 ```{r}
 save_compound_mol("map00361", "data/", compound_id = "C16181")
@@ -64,9 +87,9 @@ print(example_compound_vol$log_c)
 
 This example compound has a volatility around `r round(example_compound_vol$log_c, 0)`. It is in the `r example_compound_vol$volatility` volatility category. 
 
-## Multiple compounds from a pathway usage
+### Estimate volatility of multiple chemical compounds used in a specified metabolic pathway usage
 
-A dataframe with volatility estimates for all compounds in a chosen pathway can be returned as below. 
+The `calc_pathway_vol` function will return a dataframe with volatility estimates for all of the compounds in the **map00361** pathway. 
 
 ```{r}
 example_pathway_vol <- calc_pathway_vol("map00361", "data/")
@@ -74,6 +97,8 @@ print(example_pathway_vol[1,])
 ```
 
 ## Dataframe columns
+
+The dataframe returned from the functions above contain the following fields, divided into categories below for clarity:
 
 Basic compound information
 
@@ -83,7 +108,7 @@ Basic compound information
 - name: compound name
 - mass: compound mass
 
-Counted functional groups and atoms
+The number of functional groups or atoms in the following classes
 
 - carbons  
 - ketones  
@@ -130,3 +155,9 @@ Volatility calculation steps
 - log_Sum: intermediate step
 - log_c: estimated volatility
 - volatility: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
+
+### References
+
+Dan Tenenbaum and Bioconductor Package Maintainer (2021). "KEGGREST: Client-side REST access to the Kyoto Encyclopedia of Genes and Genomes (KEGG)". R package version 1.34.0.
+  
+Cao, Y., A. Charisi, L.-C. Cheng, T. Jiang, and T. Girke. 2008. "ChemmineR: A Compound Mining Framework for R." Bioinformatics 24 (15): 1733–4. https://doi.org/10.1093/bioinformatics/btn307.
