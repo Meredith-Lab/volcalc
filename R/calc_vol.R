@@ -29,7 +29,7 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
   }
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- log_c <- volatility <- fluorines <- NULL
+  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
   `%+%` <- function(x, y)  mapply(sum, x, y, MoreArgs = list(na.rm = TRUE))
@@ -70,18 +70,18 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
              (-2.23	 * sulfonate) %+%
              (-2.23	 * thiol) %+%
              (-1.2 	 * carbothioester),
-           log_c = log_alpha + constant + log_Sum,
-           volatility = dplyr::case_when(log_c <= 0 ~ "none",
-                                  log_c > 0 & log_c <= 2 ~ "moderate",
-                                  log_c > 2 ~ "high"))
+           volatility = log_alpha + constant + log_Sum,
+           category = dplyr::case_when(volatility <= 0 ~ "low",
+                                  volatility > 0 & volatility <= 2 ~ "moderate",
+                                  volatility > 2 ~ "high"))
   if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility, carbons:fluorines)
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
   } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility, mass, log_alpha:log_Sum)
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
   } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
     subset_vol_df <- vol_df
   } else {
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, log_c:volatility)
+    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category)
   }
   return(subset_vol_df)
 }

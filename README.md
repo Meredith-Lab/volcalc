@@ -48,10 +48,10 @@ below.
 
 ``` r
 calc_vol("map00361", "data", compound_id = "C16181")
-#>       pathway compound  formula                                   name    log_c
-#> CMP1 map00361   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol 6.963971
-#>      volatility
-#> CMP1       high
+#>       pathway compound  formula                                   name
+#> CMP1 map00361   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
+#>      volatility category
+#> CMP1   6.963971     high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -76,7 +76,7 @@ SIMPOL approach (Prankow and Asher, 2008).
 save_compound_mol("map00361", "data/", compound_id = "C16181")
 example_compound_fx_groups <- get_fx_groups("C16181", "map00361", "data/")
 example_compound_vol <- calc_vol("map00361", "data/", compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
-print(example_compound_vol$log_c)
+print(example_compound_vol$volatility)
 #> [1] 6.963971
 ```
 
@@ -91,8 +91,8 @@ pathway can be returned as below.
 ``` r
 example_pathway_vol <- calc_pathway_vol("map00361", "data/")
 print(example_pathway_vol[1,])
-#>       pathway compound formula name    log_c volatility
-#> CMP1 map00361   C00011     CO2 CO2; 7.912336       high
+#>       pathway compound formula name volatility category
+#> CMP1 map00361   C00011     CO2 CO2;   7.912336     high
 ```
 
 ## Dataframe columns
@@ -110,29 +110,29 @@ Counted functional groups and atoms
 -   carbons  
 -   ketones  
 -   aldehydes
--   hydroxyl\_groups
--   carbox\_acids  
+-   hydroxyl_groups
+-   carbox_acids  
 -   peroxide
 -   hydroperoxide  
 -   nitrate  
 -   nitro  
--   carbon\_dbl\_bonds
+-   carbon_dbl_bonds
 -   rings  
--   rings\_aromatic  
+-   rings_aromatic  
 -   phenol  
 -   nitrophenol  
 -   nitroester  
 -   ester  
--   ether\_alicyclic
--   ether\_aromatic  
--   amine\_primary  
--   amine\_secondary
--   amine\_tertiary  
--   amine\_aromatic  
+-   ether_alicyclic
+-   ether_aromatic  
+-   amine_primary  
+-   amine_secondary
+-   amine_tertiary  
+-   amine_aromatic  
 -   amines  
 -   amides  
--   phosphoric\_acid
--   phosphoric\_ester
+-   phosphoric_acid
+-   phosphoric_ester
 -   sulfate  
 -   sulfonate
 -   thiol  
@@ -148,9 +148,8 @@ Counted functional groups and atoms
 
 Volatility calculation steps
 
--   log\_alpha: intermediate step
--   log\_Sum: intermediate step
--   log\_c: estimated volatility
--   volatility: volatility category, where values less than 0 are
-    “none”, values between 0 and 2 are “moderate”, and values above 2
-    are “high”
+-   log_alpha: intermediate step
+-   log_Sum: intermediate step
+-   volatility: estimated volatility
+-   category: volatility category, where values less than 0 are “none”,
+    values between 0 and 2 are “moderate”, and values above 2 are “high”

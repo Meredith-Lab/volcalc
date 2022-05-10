@@ -59,10 +59,10 @@ This breaks the steps done by `calc_vol` into three parts: 1) download the compo
 save_compound_mol("map00361", "data/", compound_id = "C16181")
 example_compound_fx_groups <- get_fx_groups("C16181", "map00361", "data/")
 example_compound_vol <- calc_vol("map00361", "data/", compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
-print(example_compound_vol$log_c)
+print(example_compound_vol$volatility)
 ```
 
-This example compound has a volatility around `r round(example_compound_vol$log_c, 0)`. It is in the `r example_compound_vol$volatility` volatility category. 
+This example compound has a volatility around `r round(example_compound_vol$volatility, 0)`. It is in the `r example_compound_vol$category` volatility category. 
 
 ## Multiple compounds from a pathway usage
 
@@ -128,5 +128,5 @@ Volatility calculation steps
 
 - log_alpha: intermediate step
 - log_Sum: intermediate step
-- log_c: estimated volatility
-- volatility: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
+- volatility: estimated volatility
+- category: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
