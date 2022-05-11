@@ -3,18 +3,18 @@
 #' Using KEGG ID values for compound and pathway, download
 #' and clean up corresponding mol file
 #'
-#' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param compound_formula character string of compound formula
+#' @param pathway_id optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param redownload download file again even if it has already been downloaded at path
 #'
-#' @return downloaded .mol file
+#' @return downloaded .mol file for compound in path folder
 #' @export
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
-save_compound_mol <- function(pathway_id, path = "data", compound_id = NULL,
-                              compound_formula = NULL, redownload = FALSE) {
+save_compound_mol <- function(compound_id = NULL, compound_formula = NULL,
+                              pathway_id = NULL, path = "data", redownload = FALSE) {
   . <- kegg_id <- NULL
   if (is.null(compound_id) & is.null(compound_formula)) {
     stop("either compound_id or compound_formula needs to be specified")
@@ -37,10 +37,16 @@ save_compound_mol <- function(pathway_id, path = "data", compound_id = NULL,
   if (!stringr::str_detect(compound_id, "^[C][:digit:]{5}$")) {
     stop("compound_id is not in the correct KEGG format")
   }
-  if (!stringr::str_detect(pathway_id, "^[m][a][p][:digit:]{5}$")) {
-    stop("pathway_id is not in the correct KEGG format")
+  if (!is.null(pathway_id)) {
+    if (!stringr::str_detect(pathway_id, "^[m][a][p][:digit:]{5}$")) {
+      stop("pathway_id is not in the correct KEGG format")
+    }
   }
-  pathway_dir <- paste0(path, "/", pathway_id)
+  if(!is.null(path)){
+    pathway_dir <- paste0(path, "/", pathway_id)
+  } else {
+    pathway_dir <- path
+  }
   if (!dir.exists(pathway_dir)) {
     dir.create(pathway_dir, recursive = TRUE)
   }

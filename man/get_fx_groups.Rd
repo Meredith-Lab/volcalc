@@ -4,12 +4,12 @@
 \alias{get_fx_groups}
 \title{Count functional groups of a compound}
 \usage{
-get_fx_groups(compound_id, pathway_id, path = "data")
+get_fx_groups(compound_id, pathway_id = NULL, path = "data")
 }
 \arguments{
 \item{compound_id}{character string that is 5 digits prepended with a "C"}
 
-\item{pathway_id}{character string that is 5 digits prepended with "map"}
+\item{pathway_id}{optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"}
 
 \item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
 }

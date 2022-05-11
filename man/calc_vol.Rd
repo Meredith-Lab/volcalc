@@ -5,10 +5,10 @@
 \title{Calculate volatility estimate for compound}
 \usage{
 calc_vol(
-  pathway_id,
-  path = "data",
   compound_id = NULL,
   compound_formula = NULL,
+  pathway_id = NULL,
+  path = "data",
   redownload = FALSE,
   save_file = TRUE,
   get_groups = TRUE,
@@ -18,13 +18,13 @@ calc_vol(
 )
 }
 \arguments{
-\item{pathway_id}{character string that is 5 digits prepended with "map"}
-
-\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
-
 \item{compound_id}{character string that is 5 digits prepended with a "C"}
 
 \item{compound_formula}{character string of compound formula}
+
+\item{pathway_id}{optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"}
+
+\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
 
 \item{redownload}{download file again even if it has already been downloaded at path}
 

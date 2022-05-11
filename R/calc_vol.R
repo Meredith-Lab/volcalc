@@ -3,10 +3,10 @@
 #' Using functional group counts from get_fx_groups(), volatility is estimated
 #' using the SIMPOL formula
 #'
-#' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param compound_formula character string of compound formula
+#' @param pathway_id optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param save_file save compound mol file using save_compound_mol function
 #' @param redownload download file again even if it has already been downloaded at path
 #' @param get_groups get dataframe of compound functional groups using get_fx_groups function
@@ -16,15 +16,19 @@
 #'
 #' @return input dataframe with new columns for volatility value and category
 #' @export
-calc_vol <- function(pathway_id, path = "data", compound_id = NULL, compound_formula = NULL, redownload = FALSE,
-                     save_file = TRUE, get_groups = TRUE, fx_groups_df = NULL,
+calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = NULL,
+                     path = "data",  redownload = FALSE, save_file = TRUE,
+                     get_groups = TRUE, fx_groups_df = NULL,
                      return_fx_groups = FALSE, return_calc_steps = FALSE){
+  if (is.null(compound_id) & is.null(compound_formula)) {
+    stop("either compound_id or compound_formula needs to be specified")
+  }
   if ((!isTRUE(save_file) & is.null(fx_groups_df)) | (!isTRUE(get_groups) & is.null(fx_groups_df)) |
       (!isTRUE(save_file) & !isTRUE(get_groups) & is.null(fx_groups_df))) {
     stop("either read in functional groups dataframe or set save_file and get_groups to true")
   }
   if (isTRUE(save_file)) {
-    save_compound_mol(pathway_id, path, compound_id, compound_formula, redownload)
+    save_compound_mol(compound_id, compound_formula, pathway_id, path, redownload)
   }
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)

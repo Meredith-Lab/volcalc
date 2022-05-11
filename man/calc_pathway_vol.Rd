@@ -4,12 +4,24 @@
 \alias{calc_pathway_vol}
 \title{Calculate volatility estimates for all compounds in a pathway}
 \usage{
-calc_pathway_vol(pathway_id, path = "data")
+calc_pathway_vol(
+  pathway_id,
+  path = "data",
+  redownload = FALSE,
+  return_fx_groups = FALSE,
+  return_calc_steps = FALSE
+)
 }
 \arguments{
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
 
 \item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
+
+\item{redownload}{download files again even if they have already been downloaded at path}
+
+\item{return_fx_groups}{whether to include columns of functional groups in final dataframe}
+
+\item{return_calc_steps}{whether to include columns from intermediate volatility calculation steps in final dataframe}
 }
 \value{
 dataframe with one row per compound and columns for basic compound info, functional group counts, and volatility estimate and category
