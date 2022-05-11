@@ -6,7 +6,7 @@
 \usage{
 calc_vol(
   pathway_id,
-  path,
+  path = "data",
   compound_id = NULL,
   compound_formula = NULL,
   redownload = FALSE,
@@ -20,7 +20,7 @@ calc_vol(
 \arguments{
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
 
-\item{path}{relative path to location to download data}
+\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
 
 \item{compound_id}{character string that is 5 digits prepended with a "C"}
 

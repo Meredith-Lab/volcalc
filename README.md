@@ -47,11 +47,11 @@ below.
 #### Single function approach
 
 ``` r
-calc_vol("map00361", "data", compound_id = "C16181")
+calc_vol("map00361", compound_id = "C16181")
 #>       pathway compound  formula                                   name
 #> CMP1 map00361   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
-#> CMP1   6.963971     high
+#> CMP1   6.963571     high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -65,6 +65,9 @@ The compound can alternatively be specified with its chemical formula
 using the `compound_formula` argument instead of `compound_id` as in the
 example.
 
+You can specify where the compound files are downloaded by setting the
+desired relative path using `path = "path/to/folder"`.
+
 #### Multiple function approach
 
 This breaks the steps done by `calc_vol` into three parts: 1) download
@@ -73,11 +76,11 @@ functional groups, and 3) estimate volatility. This calculation uses the
 SIMPOL approach (Prankow and Asher, 2008).
 
 ``` r
-save_compound_mol("map00361", "data/", compound_id = "C16181")
-example_compound_fx_groups <- get_fx_groups("C16181", "map00361", "data/")
-example_compound_vol <- calc_vol("map00361", "data/", compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
+save_compound_mol("map00361", compound_id = "C16181")
+example_compound_fx_groups <- get_fx_groups("C16181", "map00361")
+example_compound_vol <- calc_vol("map00361", compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
 print(example_compound_vol$volatility)
-#> [1] 6.963971
+#> [1] 6.963571
 ```
 
 This example compound has a volatility around 7. It is in the high
@@ -89,7 +92,7 @@ A dataframe with volatility estimates for all compounds in a chosen
 pathway can be returned as below.
 
 ``` r
-example_pathway_vol <- calc_pathway_vol("map00361", "data/")
+example_pathway_vol <- calc_pathway_vol("map00361")
 print(example_pathway_vol[1,])
 #>       pathway compound formula name volatility category
 #> CMP1 map00361   C00011     CO2 CO2;   7.912336     high

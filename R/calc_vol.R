@@ -4,7 +4,7 @@
 #' using the SIMPOL formula
 #'
 #' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path relative path to location to download data
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param compound_formula character string of compound formula
 #' @param save_file save compound mol file using save_compound_mol function
@@ -16,7 +16,7 @@
 #'
 #' @return input dataframe with new columns for volatility value and category
 #' @export
-calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NULL, redownload = FALSE,
+calc_vol <- function(pathway_id, path = "data", compound_id = NULL, compound_formula = NULL, redownload = FALSE,
                      save_file = TRUE, get_groups = TRUE, fx_groups_df = NULL,
                      return_fx_groups = FALSE, return_calc_steps = FALSE){
   if ((!isTRUE(save_file) & is.null(fx_groups_df)) | (!isTRUE(get_groups) & is.null(fx_groups_df)) |

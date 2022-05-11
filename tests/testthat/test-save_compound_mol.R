@@ -1,5 +1,5 @@
 test_that("file downloads with correct counts block", {
-  save_compound_mol("map00361", "tests/testthat/data", compound_id = "C16181", redownload = TRUE)
+  save_compound_mol("map00361", path = "tests/testthat/data", compound_id = "C16181", redownload = TRUE)
   ex_file_contents <- readLines("tests/testthat/data/map00361/C16181.mol")
   expect_equal(
     ex_file_contents[4],

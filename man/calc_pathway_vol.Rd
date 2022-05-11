@@ -4,12 +4,12 @@
 \alias{calc_pathway_vol}
 \title{Calculate volatility estimates for all compounds in a pathway}
 \usage{
-calc_pathway_vol(pathway_id, path)
+calc_pathway_vol(pathway_id, path = "data")
 }
 \arguments{
 \item{pathway_id}{character string that is 5 digits prepended with "map"}
 
-\item{path}{relative path to location to download data}
+\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
 }
 \value{
 dataframe with one row per compound and columns for basic compound info, functional group counts, and volatility estimate and category

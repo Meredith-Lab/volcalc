@@ -5,11 +5,11 @@
 #'
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path relative path to location to download data
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #'
 #' @return single row dataframe with columns for numbers of different functional groups and basic compound details
 #' @export
-get_fx_groups <- function(compound_id, pathway_id, path) {
+get_fx_groups <- function(compound_id, pathway_id, path = "data") {
   rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
   mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
   if (!file.exists(mol_path)) {

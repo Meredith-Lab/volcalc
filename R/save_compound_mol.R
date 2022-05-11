@@ -4,7 +4,7 @@
 #' and clean up corresponding mol file
 #'
 #' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path relative path to location to download data
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #' @param compound_id character string that is 5 digits prepended with a "C"
 #' @param compound_formula character string of compound formula
 #' @param redownload download file again even if it has already been downloaded at path
@@ -13,7 +13,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
-save_compound_mol <- function(pathway_id, path, compound_id = NULL,
+save_compound_mol <- function(pathway_id, path = "data", compound_id = NULL,
                               compound_formula = NULL, redownload = FALSE) {
   . <- kegg_id <- NULL
   if (is.null(compound_id) & is.null(compound_formula)) {

@@ -4,12 +4,12 @@
 #' counts functional groups and calculates volatility value and category for all
 #'
 #' @param pathway_id character string that is 5 digits prepended with "map"
-#' @param path relative path to location to download data
+#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
 #'
 #' @return dataframe with one row per compound and columns for basic compound info, functional group counts, and volatility estimate and category
 #'
 #' @export
-calc_pathway_vol <- function(pathway_id, path){
+calc_pathway_vol <- function(pathway_id, path = "data"){
   compounds_volatility <- c()
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   mapply(save_compound_mol, pathway_id = pathway_id, path = path, compound_id = compounds_from_pathway)
