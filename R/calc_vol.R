@@ -41,7 +41,7 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
            # multiplier for each functional group is volatility contribution
            log_Sum =
              (-0.44  * carbons) %+%
-             (-0.94	 * ketones) %+%
+             (-0.935 * ketones) %+%
              (-1.35	 * aldehydes) %+%
              (-2.23	 * hydroxyl_groups) %+%
              (-3.58	 * carbox_acids) %+%
@@ -49,18 +49,18 @@ calc_vol <- function(pathway_id, path, compound_id = NULL, compound_formula = NU
              (-2.48	 * hydroperoxide) %+%
              (-2.23	 * nitrate) %+%
              (-2.15	 * nitro) %+%
-             (-0.1 	 * carbon_dbl_bonds) %+%
-             (-0.01	 * rings) %+%
-             (-0.68	 * rings_aromatic) %+%
+             (-0.105 	 * carbon_dbl_bonds) %+%
+             (-0.0104	 * rings) %+%
+             (-0.675	 * rings_aromatic) %+%
              (-2.14	 * phenol) %+%
-             (0.04 	 * nitrophenol) %+%
+             (0.0432 	 * nitrophenol) %+%
              (-2.67	 * nitroester) %+%
              (-1.2 	 * ester) %+%
              (-0.683 * ether_alicyclic) %+%
              (-1.03	 * ether_aromatic) %+%
-             (-1.01	 * amine_primary) %+%
-             (-0.85	 * amine_secondary) %+%
-             (-0.6 	 * amine_tertiary) %+%
+             (-1.03	 * amine_primary) %+%
+             (-0.849	 * amine_secondary) %+%
+             (-0.608 	 * amine_tertiary) %+%
              (-1.61  * amine_aromatic) %+%
              (-2.23	 * amines) %+%
              (-2.23	 * amides) %+%

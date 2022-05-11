@@ -37,6 +37,7 @@ get_fx_groups <- function(compound_id, pathway_id, path) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]"
   phenol_pattern <- "[OX2H][cX3]:[c]"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   amine_pattern <- "[NX3;H2,H1;!$(NC=O)]"
@@ -63,7 +64,7 @@ get_fx_groups <- function(compound_id, pathway_id, path) {
     aldehydes = groups$RCHO,
     hydroxyl_groups = groups$ROH,
     carbox_acids = groups$RCOOH,
-    peroxide = NA,
+    peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
     hydroperoxide = NA,
     nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
     nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
