@@ -41,15 +41,14 @@ This is a basic example which shows you how to get a volatility estimate
 for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*. The
 KEGG compound identifier for the compound, as found on [the compound’s
 KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is
-*C16181*. It is part of two molecular pathways; we will use *map00361*
-below.
+*C16181*.
 
 #### Single function approach
 
 ``` r
-calc_vol("map00361", compound_id = "C16181")
-#>       pathway compound  formula                                   name
-#> CMP1 map00361   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
+calc_vol(compound_id = "C16181")
+#>      pathway compound  formula                                   name
+#> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
 #> CMP1   6.963571     high
 ```
@@ -61,12 +60,17 @@ volatility can be additionally returned with `return_fx_groups = TRUE`,
 and the intermediate calculation steps with `return_calc_steps = TRUE`.
 A list of all possible dataframe columns is included below.
 
-The compound can alternatively be specified with its chemical formula
-using the `compound_formula` argument instead of `compound_id` as in the
-example.
-
-You can specify where the compound files are downloaded by setting the
-desired relative path using `path = "path/to/folder"`.
+There are other possible input arguments to the function. The compound
+can alternatively be specified with its chemical formula using the
+`compound_formula` argument instead of `compound_id` as in the example.
+The KEGG pathway that a compound is part of can be included with the
+`pathway_id` argument, which will generate a data subfolder for all
+compounds in that specified pathway. You can specify where the compound
+files are downloaded by setting the desired relative path using
+`path = "path/to/folder"`; otherwise, the path will be in a `data`
+folder in the current directory. If the underlying data file for a
+compound has already been downloaded in the specified path, it will not
+be downloaded again unless `redownload = TRUE`.
 
 #### Multiple function approach
 
@@ -76,15 +80,18 @@ functional groups, and 3) estimate volatility. This calculation uses the
 SIMPOL approach (Prankow and Asher, 2008).
 
 ``` r
-save_compound_mol("map00361", compound_id = "C16181")
-example_compound_fx_groups <- get_fx_groups("C16181", "map00361")
-example_compound_vol <- calc_vol("map00361", compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
+save_compound_mol(compound_id = "C16181")
+example_compound_fx_groups <- get_fx_groups(compound_id = "C16181")
+example_compound_vol <- calc_vol(compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
 print(example_compound_vol$volatility)
 #> [1] 6.963571
 ```
 
 This example compound has a volatility around 7. It is in the high
 volatility category.
+
+Many of the arguments described for `calc_vol` can be used in these
+intermediate functions. See function documentation for details.
 
 ## Multiple compounds from a pathway usage
 
