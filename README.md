@@ -6,10 +6,31 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of volcalc is to automate calculating estimates of volatility
-for compounds.
+## Overview
 
-## Installing and loading package
+The goal of volcalc is to automate calculating estimates of volatility
+for chemical compounds.
+
+Volatility can be estimated for most chemical compounds that are in the
+[KEGG](https://www.genome.jp/kegg/) database, using just the [KEGG
+unique identifier](https://www.genome.jp/kegg/compound/) for the
+compound of interest. Alternatively, volatility can be estimated for
+multiple compounds that are in a [KEGG
+pathway](https://www.genome.jp/kegg/pathway.html).
+
+## Installation
+
+### Using without installing
+
+You can use the `volcalc` package by using RStudio on a server
+[here](https://mybinder.org/v2/gh/Meredith-Lab/binder_volcalc/master?urlpath=rstudio).
+This instance can be slow to launch.
+
+This was generated using [Binder](https://mybinder.org/), which is an
+excellent free, open source tool to create custom computing
+environments.
+
+### Installing locally
 
 Because the package’s GitHub repo is private, you’ll need to create a
 personal access token to install it. Get token by going to
@@ -29,7 +50,9 @@ devtools::install_github("Meredith-Lab/volcalc", auth_token = "[token]")
 You might be prompted to install some additional R packages, follow the
 instructions provided to do so.
 
-And then use the package with:
+### Loading package
+
+Use the package with:
 
 ``` r
 library(volcalc)
@@ -107,59 +130,110 @@ print(example_pathway_vol[1,])
 
 ## Dataframe columns
 
-Basic compound information
+### Basic compound information
 
--   pathway: KEGG pathway identifier
--   compound: KEGG compound identifier
--   formula: compound chemical formula
--   name: compound name
--   mass: compound mass
+- pathway: KEGG pathway identifier
+- compound: KEGG compound identifier
+- formula: compound chemical formula
+- name: compound name
+- mass: compound mass
 
-Counted functional groups and atoms
+### Counted functional groups and atoms
 
--   carbons  
--   ketones  
--   aldehydes
--   hydroxyl_groups
--   carbox_acids  
--   peroxide
--   hydroperoxide  
--   nitrate  
--   nitro  
--   carbon_dbl_bonds
--   rings  
--   rings_aromatic  
--   phenol  
--   nitrophenol  
--   nitroester  
--   ester  
--   ether_alicyclic
--   ether_aromatic  
--   amine_primary  
--   amine_secondary
--   amine_tertiary  
--   amine_aromatic  
--   amines  
--   amides  
--   phosphoric_acid
--   phosphoric_ester
--   sulfate  
--   sulfonate
--   thiol  
--   carbothioester  
--   oxygens  
--   chlorines
--   nitrogens
--   sulfurs  
--   phosphoruses  
--   bromines
--   iodines  
--   fluorines
+- carbons  
+- ketones  
+- aldehydes
+- hydroxyl_groups
+- carbox_acids  
+- peroxide
+- hydroperoxide  
+- nitrate  
+- nitro  
+- carbon_dbl_bonds
+- rings  
+- rings_aromatic  
+- phenol  
+- nitrophenol  
+- nitroester  
+- ester  
+- ether_alicyclic
+- ether_aromatic  
+- amine_primary  
+- amine_secondary
+- amine_tertiary  
+- amine_aromatic  
+- amines  
+- amides  
+- phosphoric_acid
+- phosphoric_ester
+- sulfate  
+- sulfonate
+- thiol  
+- carbothioester  
+- oxygens  
+- chlorines
+- nitrogens
+- sulfurs  
+- phosphoruses  
+- bromines
+- iodines  
+- fluorines
 
-Volatility calculation steps
+### Volatility calculation steps
 
--   log_alpha: intermediate step
--   log_Sum: intermediate step
--   volatility: estimated volatility
--   category: volatility category, where values less than 0 are “none”,
-    values between 0 and 2 are “moderate”, and values above 2 are “high”
+- log_alpha: intermediate step
+- log_Sum: intermediate step
+- volatility: estimated volatility
+- category: volatility category, where values less than 0 are “none”,
+  values between 0 and 2 are “moderate”, and values above 2 are “high”
+
+### Functional group details
+
+| Functional group   | In manual? | Count method        | Coefficient | Coef source      |
+|--------------------|------------|---------------------|-------------|------------------|
+| Carbons            | Y          | ChemmineR atomcount | -0.438      | ?                |
+| Ketones            | Y          | ChemmineR groups    | -0.935      | Pankow & Asher   |
+| Aldehydes          | Y          | ChemmineR groups    | -1.35       | Pankow & Asher   |
+| Hydroxyl groups    | Y          | ChemmineR groups    | -2.23       | Pankow & Asher   |
+| Carboxylic acids   | Y          | ChemmineR groups    | -3.58       | Pankow & Asher   |
+| Peroxide           | Y          | SMARTS              | -0.368      | Pankow & Asher   |
+| Hydroperoxide      | Y          | NA                  | -2.48       | Pankow & Asher   |
+| Nitrate            | Y          | SMARTS              | -2.23       | Pankow & Asher   |
+| Nitro              | Y          | SMARTS              | -2.15       | Pankow & Asher   |
+| Carbon double bond | Y          | ChemmineR conMA     | -0.105      | Pankow & Asher   |
+| Non-aromatic rings | Y          | ChemmineR rings     | –0.0104     | Pankow & Asher   |
+| Aromatic rings     | Y          | ChemmineR rings     | -0.675      | Pankow & Asher   |
+| Phenol             | Y          | SMARTS              | -2.14       | Pankow & Asher   |
+| Nitrophenol        | Y          | NA                  | 0.0432      | Pankow & Asher   |
+| Nitroester         | Y          | NA                  | -2.67       | Pankow & Asher   |
+| Ester              | Y          | ChemmineR groups    | -1.20       | Pankow & Asher   |
+| Ether (acyclic)    | Y          | NA                  | -0.683      | Pankow & Asher   |
+| Ether (aromatic)   | Y          | NA                  | -1.03       | Pankow & Asher   |
+| Amine primary      | Y          | ChemmineR groups    | -1.03       | Pankow & Asher   |
+| Amine secondary    | Y          | ChemmineR groups    | -0.849      | Pankow & Asher   |
+| Amine tertiary     | Y          | ChemmineR groups    | -0.608      | Pankow & Asher   |
+| Amine aromatic     | Y          | ChemmineR rings     | -1.61       | Pankow & Asher   |
+| Amine              | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Amide              | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Phosphoric acid    | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Phosphoric ester   | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Sulfate            | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Sulfonate          | N          | SMARTS              | -2.23       | Same as nitrate  |
+| Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
+| Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
+
+## How to contribute
+
+We appreciate many kinds of feedback and contributions to this R
+package. If you find a bug, are interested in an additional feature, or
+have made improvements to the package that you want to share, feel free
+to file an issue in this GitHub repo.
+
+## How to cite
+
+If you use this package in your published work, please cite it using the
+reference below:
+
+> Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
+> Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
+> estimating metabolite volatility. In prep.
