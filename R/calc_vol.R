@@ -44,7 +44,7 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
     dplyr::mutate(log_alpha = log((1000000*mass)/(0.0000821*293), base = 10),
            # multiplier for each functional group is volatility contribution
            log_Sum =
-             (-0.44  * carbons) %+%
+             (-0.438 * carbons) %+%
              (-0.935 * ketones) %+%
              (-1.35	 * aldehydes) %+%
              (-2.23	 * hydroxyl_groups) %+%
@@ -59,7 +59,7 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
              (-2.14	 * phenol) %+%
              (0.0432 	 * nitrophenol) %+%
              (-2.67	 * nitroester) %+%
-             (-1.2 	 * ester) %+%
+             (-1.20	 * ester) %+%
              (-0.683 * ether_alicyclic) %+%
              (-1.03	 * ether_aromatic) %+%
              (-1.03	 * amine_primary) %+%
@@ -73,7 +73,7 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
              (-2.23	 * sulfate) %+%
              (-2.23	 * sulfonate) %+%
              (-2.23	 * thiol) %+%
-             (-1.2 	 * carbothioester),
+             (-1.20	 * carbothioester),
            volatility = log_alpha + constant + log_Sum,
            category = dplyr::case_when(volatility <= 0 ~ "low",
                                   volatility > 0 & volatility <= 2 ~ "moderate",
