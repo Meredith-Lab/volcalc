@@ -3,14 +3,18 @@
 #' Using KEGG ID values for compound and pathway, download
 #' and clean up corresponding mol file
 #'
-#' @param compound_id character string that is 5 digits prepended with a "C"
-#' @param compound_formula character string of compound formula
-#' @param pathway_id optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"
-#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
-#' @param redownload download file again even if it has already been downloaded at path
+#' @param compound_id A character string that is 5 digits prepended with a "C".
+#' @param compound_formula A character string detailing a compound formula.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to download data.
+#' @param redownload Download file again even if it has already been downloaded at path.
 #'
-#' @return downloaded .mol file for compound in path folder
+#' @return Downloaded .mol file for compound in path folder.
+#'
+#' @examples save_compound_mol(compound_id = "C16181")
+#'
 #' @export
+#'
 #' @importFrom magrittr %>%
 #' @importFrom utils write.table
 save_compound_mol <- function(compound_id = NULL, compound_formula = NULL,

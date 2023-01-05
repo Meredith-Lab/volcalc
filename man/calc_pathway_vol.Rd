@@ -13,20 +13,25 @@ calc_pathway_vol(
 )
 }
 \arguments{
-\item{pathway_id}{character string that is 5 digits prepended with "map"}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
 
-\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
+\item{path}{An optional parameter to set relative path to location to download data.}
 
-\item{redownload}{download files again even if they have already been downloaded at path}
+\item{redownload}{Download file again even if it has already been downloaded at path.}
 
-\item{return_fx_groups}{whether to include columns of functional groups in final dataframe}
+\item{return_fx_groups}{When \code{TRUE}, includes functional group counts in final dataframe.}
 
-\item{return_calc_steps}{whether to include columns from intermediate volatility calculation steps in final dataframe}
+\item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility calculation steps in final dataframe.}
 }
 \value{
-dataframe with one row per compound and columns for basic compound info, functional group counts, and volatility estimate and category
+Dataframe with columns of basic compound info and volatility value and
+category. See documentation for column descriptions.
 }
 \description{
-Downloads all compound .mol files associated with a given KEGG pathway and
-counts functional groups and calculates volatility value and category for all
+Volatility value and category is estimated for all compounds in a specified
+pathway using the SIMPOL formula
+}
+\examples{
+ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
+
 }

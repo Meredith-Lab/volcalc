@@ -13,20 +13,24 @@ save_compound_mol(
 )
 }
 \arguments{
-\item{compound_id}{character string that is 5 digits prepended with a "C"}
+\item{compound_id}{A character string that is 5 digits prepended with a "C".}
 
-\item{compound_formula}{character string of compound formula}
+\item{compound_formula}{A character string detailing a compound formula.}
 
-\item{pathway_id}{optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
 
-\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
+\item{path}{An optional parameter to set relative path to location to download data.}
 
-\item{redownload}{download file again even if it has already been downloaded at path}
+\item{redownload}{Download file again even if it has already been downloaded at path.}
 }
 \value{
-downloaded .mol file for compound in path folder
+Downloaded .mol file for compound in path folder.
 }
 \description{
 Using KEGG ID values for compound and pathway, download
 and clean up corresponding mol file
+}
+\examples{
+save_compound_mol(compound_id = "C16181")
+
 }

@@ -18,30 +18,35 @@ calc_vol(
 )
 }
 \arguments{
-\item{compound_id}{character string that is 5 digits prepended with a "C"}
+\item{compound_id}{A character string that is 5 digits prepended with a "C".}
 
-\item{compound_formula}{character string of compound formula}
+\item{compound_formula}{A character string detailing a compound formula.}
 
-\item{pathway_id}{optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
 
-\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
+\item{path}{An optional parameter to set relative path to location to download data.}
 
-\item{redownload}{download file again even if it has already been downloaded at path}
+\item{redownload}{Download file again even if it has already been downloaded at path.}
 
-\item{save_file}{save compound mol file using save_compound_mol function}
+\item{save_file}{Whether to save downloaded compound mol files.}
 
-\item{get_groups}{get dataframe of compound functional groups using get_fx_groups function}
+\item{get_groups}{When \code{FALSE}, will expect a dataframe to be read in with \code{fx_groups_df} argument.}
 
-\item{fx_groups_df}{dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly}
+\item{fx_groups_df}{A dataframe of functional group counts for compounds generated from \code{\link[=get_fx_groups]{get_fx_groups()}}.}
 
-\item{return_fx_groups}{whether to include columns of functional groups in final dataframe}
+\item{return_fx_groups}{When \code{TRUE}, includes functional group counts in final dataframe.}
 
-\item{return_calc_steps}{whether to include columns from intermediate volatility calculation steps in final dataframe}
+\item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility calculation steps in final dataframe.}
 }
 \value{
-input dataframe with new columns for volatility value and category
+Dataframe with columns of basic compound info and volatility value and
+category. See documentation for column descriptions.
 }
 \description{
-Using functional group counts from get_fx_groups(), volatility is estimated
-using the SIMPOL formula
+Volatility value and category is estimated for specified compound using the
+SIMPOL formula
+}
+\examples{
+ex_compound <- calc_vol(compound_id = "C16181")
+
 }

@@ -1,20 +1,24 @@
 #' Calculate volatility estimate for compound
 #'
-#' Using functional group counts from get_fx_groups(), volatility is estimated
-#' using the SIMPOL formula
+#' Volatility value and category is estimated for specified compound using the
+#' SIMPOL formula
 #'
-#' @param compound_id character string that is 5 digits prepended with a "C"
-#' @param compound_formula character string of compound formula
-#' @param pathway_id optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"
-#' @param path optional parameter to set relative path to location to download data with default of creating "data" folder in home directory
-#' @param save_file save compound mol file using save_compound_mol function
-#' @param redownload download file again even if it has already been downloaded at path
-#' @param get_groups get dataframe of compound functional groups using get_fx_groups function
-#' @param fx_groups_df dataframe of functional group counts for compounds, optional if reading functional groups dataframe in directly
-#' @param return_fx_groups whether to include columns of functional groups in final dataframe
-#' @param return_calc_steps whether to include columns from intermediate volatility calculation steps in final dataframe
+#' @param compound_id A character string that is 5 digits prepended with a "C".
+#' @param compound_formula A character string detailing a compound formula.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to download data.
+#' @param save_file Whether to save downloaded compound mol files.
+#' @param redownload Download file again even if it has already been downloaded at path.
+#' @param get_groups When `FALSE`, will expect a dataframe to be read in with `fx_groups_df` argument.
+#' @param fx_groups_df A dataframe of functional group counts for compounds generated from [`get_fx_groups()`].
+#' @param return_fx_groups When `TRUE`, includes functional group counts in final dataframe.
+#' @param return_calc_steps When `TRUE`, includes intermediate volatility calculation steps in final dataframe.
 #'
-#' @return input dataframe with new columns for volatility value and category
+#' @return Dataframe with columns of basic compound info and volatility value and
+#' category. See documentation for column descriptions.
+#'
+#' @examples ex_compound <- calc_vol(compound_id = "C16181")
+#'
 #' @export
 calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = NULL,
                      path = "data",  redownload = FALSE, save_file = TRUE,

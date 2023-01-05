@@ -7,16 +7,19 @@
 get_fx_groups(compound_id, pathway_id = NULL, path = "data")
 }
 \arguments{
-\item{compound_id}{character string that is 5 digits prepended with a "C"}
+\item{compound_id}{A character string that is 5 digits prepended with a "C".}
 
-\item{pathway_id}{optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map"}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
 
-\item{path}{optional parameter to set relative path to location to download data with default of creating "data" folder in home directory}
+\item{path}{An optional parameter to set relative path to location to download data.}
 }
 \value{
-single row dataframe with columns for numbers of different functional groups and basic compound details
+Dataframe with columns of basic compound info and functional group counts.
 }
 \description{
-Using a mol file for compound of interest, return number of
-many functional groups in a dataframe
+Return functional group counts relevant to volatility calculation for specified compound
+}
+\examples{
+ex_groups <- get_fx_groups(compound_id = "C16181")
+
 }
