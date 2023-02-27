@@ -28,10 +28,10 @@ test_that("returns correct number of columns depending on return arguments", {
   expect_equal(ncol(calc_vol(compound_id = "C16181", pathway_id = "map00361",
                              path = "tests/testthat/data")), 6)
   expect_equal(ncol(calc_vol(compound_id = "C16181", pathway_id = "map00361",
-                             path = "tests/testthat/data", return_fx_groups = TRUE)), 44)
+                             path = "tests/testthat/data", return_fx_groups = TRUE)), 45)
   expect_equal(ncol(calc_vol(compound_id = "C16181", pathway_id = "map00361",
                              path = "tests/testthat/data", return_calc_steps = TRUE)), 9)
   expect_equal(ncol(calc_vol(compound_id = "C16181", pathway_id = "map00361",
                              path = "tests/testthat/data", return_fx_groups = TRUE,
-                             return_calc_steps = TRUE)), 47)
+                             return_calc_steps = TRUE)), 48)
 })

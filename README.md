@@ -26,9 +26,12 @@ You can use the `volcalc` package by using RStudio on a server
 [here](https://mybinder.org/v2/gh/Meredith-Lab/binder_volcalc/master?urlpath=rstudio).
 This instance can be slow to launch.
 
-This was generated using [Binder](https://mybinder.org/), which is an
-excellent free, open source tool to create custom computing
+The instance was generated using [Binder](https://mybinder.org/), which
+is an excellent free, open source tool to create custom computing
 environments.
+
+To see an example of how to use `volcalc`, run the script
+`example_volcalc_usage.R` which is included in the server’s file system.
 
 ### Installing locally
 
@@ -73,7 +76,7 @@ calc_vol(compound_id = "C16181")
 #>      pathway compound  formula                                   name
 #> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
-#> CMP1   6.963571     high
+#> CMP1   6.975571     high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -107,7 +110,7 @@ save_compound_mol(compound_id = "C16181")
 example_compound_fx_groups <- get_fx_groups(compound_id = "C16181")
 example_compound_vol <- calc_vol(compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
 print(example_compound_vol$volatility)
-#> [1] 6.963571
+#> [1] 6.975571
 ```
 
 This example compound has a volatility around 7. It is in the high
@@ -125,7 +128,7 @@ pathway can be returned as below.
 example_pathway_vol <- calc_pathway_vol("map00361")
 print(example_pathway_vol[1,])
 #>       pathway compound formula name volatility category
-#> CMP1 map00361   C00011     CO2 CO2;   7.912336     high
+#> CMP1 map00361   C00011     CO2 CO2;   7.914336     high
 ```
 
 ## Dataframe columns

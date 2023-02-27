@@ -49,6 +49,7 @@ get_fx_groups <- function(compound_id, pathway_id = NULL, path = "data") {
   amine_pattern <- "[NX3;H2,H1;!$(NC=O)]"
   amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
+  ether_pattern <- "[OD2]([#6])[#6]"
   phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
   phosphoric_ester_pattern <- "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
   sulfate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
@@ -81,6 +82,7 @@ get_fx_groups <- function(compound_id, pathway_id = NULL, path = "data") {
     nitrophenol = NA,
     nitroester = NA,
     ester = groups$RCOOR,
+    ether = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern),
     ether_alicyclic = NA,
     ether_aromatic = NA,
     amine_primary = groups$RNH2,

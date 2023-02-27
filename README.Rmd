@@ -30,7 +30,9 @@ Volatility can be estimated for most chemical compounds that are in the [KEGG](h
 
 You can use the `volcalc` package by using RStudio on a server [here](https://mybinder.org/v2/gh/Meredith-Lab/binder_volcalc/master?urlpath=rstudio). This instance can be slow to launch. 
 
-This was generated using [Binder](https://mybinder.org/), which is an excellent free, open source tool to create custom computing environments. 
+The instance was generated using [Binder](https://mybinder.org/), which is an excellent free, open source tool to create custom computing environments.
+
+To see an example of how to use `volcalc`, run the script `example_volcalc_usage.R` which is included in the server's file system. 
 
 ### Installing locally
 
