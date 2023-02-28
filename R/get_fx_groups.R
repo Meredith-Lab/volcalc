@@ -34,11 +34,15 @@ get_fx_groups <- function(compound_id, pathway_id = NULL, path = "data") {
     tibble::rownames_to_column() %>%
     dplyr::filter(stringr::str_detect(rowname, "C_")) %>%
     tibble::column_to_rownames(var = "rowname")
-  carbon_dbl_count <- data.frame(all = unlist(carbon_bond_data)) %>%
-    dplyr::count(all) %>%
-    dplyr::filter(all == 2) %>%
-    dplyr::select(n) %>%
-    dplyr::mutate(n = n / 2)
+  if (nrow(carbon_bond_data) == 0){
+    carbon_dbl_count <- tibble::tibble(n = 0)
+  } else {
+    carbon_dbl_count <- data.frame(all = unlist(carbon_bond_data)) %>%
+      dplyr::count(all) %>%
+      dplyr::filter(all == 2) %>%
+      dplyr::select(n) %>%
+      dplyr::mutate(n = n / 2)
+  }
   if (nrow(carbon_dbl_count) == 0) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
