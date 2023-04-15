@@ -80,9 +80,10 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
              (-2.23	  * thiol) %+%
              (-1.20	  * carbothioester),
            volatility = log_alpha + constant + log_Sum,
-           category = dplyr::case_when(volatility <= 0 ~ "low",
-                                  volatility > 0 & volatility <= 2 ~ "moderate",
-                                  volatility > 2 ~ "high"))
+           category = dplyr::case_when(volatility < -2 ~ "non", #less than -2
+                                       volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
+                                       volatility >= 0 & volatility < 2 ~ "intermediate", #greater than or equal to 0, less than 2
+                                       volatility >= 2 ~ "high")) #greater than or equal to 2
   if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
     subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
   } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
