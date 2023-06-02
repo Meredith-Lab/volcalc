@@ -39,9 +39,9 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
       - name: Setup system dependencies
-        if: matrix.os != windows-latest
-          run: |
-            npm install openbabel
+        if: matrix.config.os != 'windows-latest'
+        run: |
+          npm install openbabel
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
