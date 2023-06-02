@@ -41,7 +41,7 @@ jobs:
       - name: Setup system dependencies
         if: matrix.config.os != 'windows-latest'
         run: |
-          npm install openbabel
+          npm install openbabel-cli
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
