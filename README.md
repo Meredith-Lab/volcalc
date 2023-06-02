@@ -4,6 +4,8 @@
 # volcalc
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -59,6 +61,7 @@ Use the package with:
 
 ``` r
 library(volcalc)
+#> Warning: package 'volcalc' was built under R version 4.2.3
 ```
 
 ## Single compound usage

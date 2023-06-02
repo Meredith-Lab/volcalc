@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # volcalc
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
