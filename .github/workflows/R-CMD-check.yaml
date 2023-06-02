@@ -19,7 +19,7 @@ jobs:
       matrix:
         config:
           - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
+          # - {os: windows-latest, r: 'release'} #disabled until I can figure out how to install openbabel
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -39,9 +39,9 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
       - name: Setup system dependencies
-        if: matrix.config.os != 'windows-latest'
+        if: matrix.config.os == 'macos-latest'
         run: |
-          npm install openbabel-cli
+          brew install open-babel
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
