@@ -1,1 +1,9 @@
 .Rproj.user
+.Rprofile
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+inst/doc
+/doc/
+/Meta/
