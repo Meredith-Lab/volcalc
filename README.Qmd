@@ -17,9 +17,7 @@ knitr::opts_chunk$set(
 # volcalc
 
 <!-- badges: start -->
-
 [![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
-
 <!-- badges: end -->
 
 ## Overview
@@ -207,7 +205,7 @@ print(example_pathway_vol[1,])
 ## How to contribute
 
 We appreciate many kinds of feedback and contributions to this R package.
-If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an issue in this GitHub repo.
+If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new) in this GitHub repo.
 
 ## How to cite
 
@@ -215,3 +213,9 @@ If you use this package in your published work, please cite it using the referen
 
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J., Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for estimating metabolite volatility.
 > In prep.
+
+### References
+
+::: refs
+:::
+

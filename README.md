@@ -6,7 +6,6 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
-
 <!-- badges: end -->
 
 ## Overview
@@ -102,7 +101,7 @@ be downloaded again unless `redownload = TRUE`.
 This breaks the steps done by `calc_vol` into three parts: 1) download
 the compound’s .mol file from KEGG, 2) count occurrences of different
 functional groups, and 3) estimate volatility. This calculation uses the
-SIMPOL approach (Prankow and Asher, 2008).
+SIMPOL approach (Pankow and Asher 2008).
 
 ``` r
 save_compound_mol(compound_id = "C16181")
@@ -229,7 +228,8 @@ print(example_pathway_vol[1,])
 We appreciate many kinds of feedback and contributions to this R
 package. If you find a bug, are interested in an additional feature, or
 have made improvements to the package that you want to share, feel free
-to file an issue in this GitHub repo.
+to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new)
+in this GitHub repo.
 
 ## How to cite
 
@@ -239,3 +239,22 @@ reference below:
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
 > Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
 > estimating metabolite volatility. In prep.
+
+### References
+
+<div class="refs">
+
+</div>
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-pankowSIMPOLSimpleGroup2008" class="csl-entry">
+
+Pankow, J F, and W E Asher. 2008. “SIMPOL.1: A Simple Group Contribution
+Method for Predicting Vapor Pressures and Enthalpies of Vaporization of
+Multifunctional Organic Compounds.” *Atmos. Chem. Phys.*
+<https://doi.org/10.5194/acp-8-2773-2008>.
+
+</div>
+
+</div>
