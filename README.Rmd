@@ -1,9 +1,8 @@
 ---
-format: gfm
-bibliography: references.bib
+output: github_document
 ---
 
-<!-- README.md is generated from README.Qmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -96,7 +95,7 @@ If the underlying data file for a compound has already been downloaded in the sp
 #### Multiple function approach
 
 This breaks the steps done by `calc_vol` into three parts: 1) download the compound's .mol file from KEGG, 2) count occurrences of different functional groups, and 3) estimate volatility.
-This calculation uses the SIMPOL approach [@pankowSIMPOLSimpleGroup2008].
+This calculation uses the SIMPOL approach[^1].
 
 ```{r}
 save_compound_mol(compound_id = "C16181")
@@ -227,5 +226,5 @@ If you use this package in your published work, please cite it using the referen
 
 ### References
 
-::: refs
-:::
+[^1]: Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group contribution method for predicting vapor pressures and enthalpies of vaporization of multifunctional organic compounds. Atmos. Chem. Phys. https://doi.org/10.5194/acp-8-2773-2008
+

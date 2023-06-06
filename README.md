@@ -5,11 +5,7 @@
 
 <!-- badges: start -->
 
-<div>
-
 [![](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
-
-</div>
 
 <!-- badges: end -->
 
@@ -118,7 +114,7 @@ be downloaded again unless `redownload = TRUE`.
 This breaks the steps done by `calc_vol` into three parts: 1) download
 the compound’s .mol file from KEGG, 2) count occurrences of different
 functional groups, and 3) estimate volatility. This calculation uses the
-SIMPOL approach (Pankow and Asher 2008).
+SIMPOL approach[^1].
 
 ``` r
 save_compound_mol(compound_id = "C16181")
@@ -259,19 +255,7 @@ reference below:
 
 ### References
 
-<div class="refs">
-
-</div>
-
-<div id="refs" class="references csl-bib-body hanging-indent">
-
-<div id="ref-pankowSIMPOLSimpleGroup2008" class="csl-entry">
-
-Pankow, J F, and W E Asher. 2008. “SIMPOL.1: A Simple Group Contribution
-Method for Predicting Vapor Pressures and Enthalpies of Vaporization of
-Multifunctional Organic Compounds.” *Atmos. Chem. Phys.*
-<https://doi.org/10.5194/acp-8-2773-2008>.
-
-</div>
-
-</div>
+[^1]: Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
+    contribution method for predicting vapor pressures and enthalpies of
+    vaporization of multifunctional organic compounds. Atmos. Chem.
+    Phys. <https://doi.org/10.5194/acp-8-2773-2008>
