@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
+
 <!-- badges: end -->
 
 ## Overview
@@ -37,23 +38,30 @@ To see an example of how to use `volcalc`, run the script
 
 ### Installing locally
 
-Because the package’s GitHub repo is private, you’ll need to create a
-personal access token to install it. Get token by going to
-<https://github.com/settings/tokens>. Hit “Generate new token” button,
-give the token a name like “volcalc package”, and make sure there is a
-check by the “repo” option before hitting green button at bottom of
-page. Copy the token, which is a random string of numbers and letters,
-on the next page and insert into the R command below. Do not share your
-token with anyone! You can install volcalc from [the GitHub
-repository](https://github.com/Meredith-Lab/volcalc) with:
+You can install `volcalc` from GitHub with
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("Meredith-Lab/volcalc", auth_token = "[token]")
+# install.packages("remotes")
+remotes::install_github("Meredith-Lab/volcalc")
 ```
 
-You might be prompted to install some additional R packages, follow the
-instructions provided to do so.
+Or from r-universe with
+
+``` r
+install.packages('volcalc', repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+Installation of `volcalc` requires the system library
+[OpenBabel](https://openbabel.org/) (it’s a requirement of the
+`ChemmineOB` package, which `volcalc` depends on). For macOS, this can
+be installed via homebrew by running the following shell command:
+
+``` bash
+brew install open-babel
+```
+
+For other installation options see the [OpenBabel
+documentation](https://openbabel.org/docs/dev/Installation/install.html).
 
 ### Loading package
 
@@ -106,7 +114,7 @@ be downloaded again unless `redownload = TRUE`.
 This breaks the steps done by `calc_vol` into three parts: 1) download
 the compound’s .mol file from KEGG, 2) count occurrences of different
 functional groups, and 3) estimate volatility. This calculation uses the
-SIMPOL approach (Prankow and Asher, 2008).
+SIMPOL approach[^1].
 
 ``` r
 save_compound_mol(compound_id = "C16181")
@@ -146,43 +154,43 @@ print(example_pathway_vol[1,])
 
 ### Counted functional groups and atoms
 
-- carbons  
-- ketones  
+- carbons
+- ketones
 - aldehydes
 - hydroxyl_groups
-- carbox_acids  
+- carbox_acids
 - peroxide
-- hydroperoxide  
-- nitrate  
-- nitro  
+- hydroperoxide
+- nitrate
+- nitro
 - carbon_dbl_bonds
-- rings  
-- rings_aromatic  
-- phenol  
-- nitrophenol  
-- nitroester  
-- ester  
+- rings
+- rings_aromatic
+- phenol
+- nitrophenol
+- nitroester
+- ester
 - ether_alicyclic
-- ether_aromatic  
-- amine_primary  
+- ether_aromatic
+- amine_primary
 - amine_secondary
-- amine_tertiary  
-- amine_aromatic  
-- amines  
-- amides  
+- amine_tertiary
+- amine_aromatic
+- amines
+- amides
 - phosphoric_acid
 - phosphoric_ester
-- sulfate  
+- sulfate
 - sulfonate
-- thiol  
-- carbothioester  
-- oxygens  
+- thiol
+- carbothioester
+- oxygens
 - chlorines
 - nitrogens
-- sulfurs  
-- phosphoruses  
+- sulfurs
+- phosphoruses
 - bromines
-- iodines  
+- iodines
 - fluorines
 
 ### Volatility calculation steps
@@ -233,7 +241,8 @@ print(example_pathway_vol[1,])
 We appreciate many kinds of feedback and contributions to this R
 package. If you find a bug, are interested in an additional feature, or
 have made improvements to the package that you want to share, feel free
-to file an issue in this GitHub repo.
+to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new)
+in this GitHub repo.
 
 ## How to cite
 
@@ -243,3 +252,10 @@ reference below:
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
 > Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
 > estimating metabolite volatility. In prep.
+
+### References
+
+[^1]: Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
+    contribution method for predicting vapor pressures and enthalpies of
+    vaporization of multifunctional organic compounds. Atmos. Chem.
+    Phys. <https://doi.org/10.5194/acp-8-2773-2008>
