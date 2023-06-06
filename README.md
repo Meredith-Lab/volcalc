@@ -5,7 +5,12 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
+<div>
+
+[![](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
+
+</div>
+
 <!-- badges: end -->
 
 ## Overview
@@ -49,6 +54,18 @@ Or from r-universe with
 ``` r
 install.packages('volcalc', repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
 ```
+
+Installation of `volcalc` requires the system library
+[OpenBabel](https://openbabel.org/) (it’s a requirement of the
+`ChemmineOB` package, which `volcalc` depends on). For macOS, this can
+be installed via homebrew by running the following shell command:
+
+``` bash
+brew install open-babel
+```
+
+For other installation options see the [OpenBabel
+documentation](https://openbabel.org/docs/dev/Installation/install.html).
 
 ### Loading package
 
