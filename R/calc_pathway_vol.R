@@ -46,38 +46,51 @@ calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
 #'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
 keggGetCompounds <- function(pathway){
-  url <- sprintf("%s/link/cpd/%s", "http://rest.kegg.jp", pathway)
-  .getUrl <- function (url, parser, ...)
-  {
-    url <- .cleanUrl(url)
-    debug <- getOption("KEGGREST_DEBUG", FALSE)
-    if (debug)
-      .printf("url == %s", url)
-    response <- httr::GET(url)
-    httr::stop_for_status(response)
-    content <- .strip(httr::content(response, "text"))
-    if (nchar(content) == 0)
-      return(character(0))
-    do.call(parser, list(content, ...))
-  }
-  .printf <- function(...) message(noquote(sprintf(...)))
-  .cleanUrl <- function (url)
-  {
-    url <- gsub(" ", "%20", url, fixed = TRUE)
-    url <- gsub("#", "%23", url, fixed = TRUE)
-    url <- gsub(":", "%3a", url, fixed = TRUE)
-    sub("http(s)*%3a//", "http\\1://", url)
-  }
-  .strip <- function (str)
-  {
-    gsub("^\\s+|\\s+$", "", str)
-  }
-  .compoundParser <- function (txt)
-  {
-    cmptxt <- unlist(txt)
-    lines <- strsplit(cmptxt, "\n")
-    cmps <- gsub(".*cpd:", "", unlist(lines))
-    cmps
-  }
-  .getUrl(url, .compoundParser)
+  
+  resp <- 
+    httr2::request("http://rest.kegg.jp/") |> 
+    httr2::req_url_path("link/cpd/") |> 
+    httr2::req_url_path_append(pathway) |> 
+    httr2::req_perform()
+  
+  out <- resp |> 
+    httr2::resp_body_string() |> 
+    stringr::str_split_1("\n") |> 
+    stringr::str_extract("(?<=cpd:).*")
+  out[!is.na(out)]
+  
+  # url <- sprintf("%s/link/cpd/%s", "http://rest.kegg.jp", pathway)
+  # .getUrl <- function (url, parser, ...)
+  # {
+  #   url <- .cleanUrl(url)
+  #   debug <- getOption("KEGGREST_DEBUG", FALSE)
+  #   if (debug)
+  #     .printf("url == %s", url)
+  #   response <- httr::GET(url)
+  #   httr::stop_for_status(response)
+  #   content <- .strip(httr::content(response, "text"))
+  #   if (nchar(content) == 0)
+  #     return(character(0))
+  #   do.call(parser, list(content, ...))
+  # }
+  # .printf <- function(...) message(noquote(sprintf(...)))
+  # .cleanUrl <- function (url)
+  # {
+  #   url <- gsub(" ", "%20", url, fixed = TRUE)
+  #   url <- gsub("#", "%23", url, fixed = TRUE)
+  #   url <- gsub(":", "%3a", url, fixed = TRUE)
+  #   sub("http(s)*%3a//", "http\\1://", url)
+  # }
+  # .strip <- function (str)
+  # {
+  #   gsub("^\\s+|\\s+$", "", str)
+  # }
+  # .compoundParser <- function (txt)
+  # {
+  #   cmptxt <- unlist(txt)
+  #   lines <- strsplit(cmptxt, "\n")
+  #   cmps <- gsub(".*cpd:", "", unlist(lines))
+  #   cmps
+  # }
+  # .getUrl(url, .compoundParser)
 }
