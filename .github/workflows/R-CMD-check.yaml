@@ -47,7 +47,7 @@ jobs:
       - name: ubuntu openbabel
         if: matrix.config.os == 'ubuntu-latest'
         run: |
-          apt-get install openbabel
+          sudo apt-get install openbabel
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
