@@ -8,8 +8,10 @@
 #'
 #' @return Dataframe with columns of basic compound info and functional group counts.
 #'
-#' @examples ex_groups <- get_fx_groups(compound_id = "C16181")
-#'
+#' @examples 
+#' \dontrun{
+#' ex_groups <- get_fx_groups(compound_id = "C16181")
+#' }
 #' @export
 get_fx_groups <- function(compound_id, pathway_id = NULL, path = "data") {
   rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL

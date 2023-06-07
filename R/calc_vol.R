@@ -17,8 +17,10 @@
 #' @return Dataframe with columns of basic compound info and volatility value and
 #' category. See documentation for column descriptions.
 #'
-#' @examples ex_compound <- calc_vol(compound_id = "C16181")
-#'
+#' @examples 
+#' \dontrun{
+#' ex_compound <- calc_vol(compound_id = "C16181")
+#' }
 #' @export
 calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = NULL,
                      path = "data",  redownload = FALSE, save_file = TRUE,

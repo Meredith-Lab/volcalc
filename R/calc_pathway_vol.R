@@ -12,8 +12,10 @@
 #' @return Dataframe with columns of basic compound info and volatility value and
 #' category. See documentation for column descriptions.
 #'
-#' @examples ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
-#'
+#' @examples 
+#' \dontrun{
+#' ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
+#' }
 #' @export
 calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
                              return_fx_groups = FALSE, return_calc_steps = FALSE){

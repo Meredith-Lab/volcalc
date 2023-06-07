@@ -31,6 +31,8 @@ Using KEGG ID values for compound and pathway, download
 and clean up corresponding mol file
 }
 \examples{
+\dontrun{
 save_compound_mol(compound_id = "C16181")
+}
 
 }

@@ -32,6 +32,7 @@ Volatility value and category is estimated for all compounds in a specified
 pathway using the SIMPOL formula
 }
 \examples{
+\dontrun{
 ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
-
+}
 }
