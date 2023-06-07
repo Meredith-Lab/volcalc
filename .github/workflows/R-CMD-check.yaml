@@ -47,6 +47,7 @@ jobs:
       - name: ubuntu openbabel
         if: matrix.config.os == 'ubuntu-latest'
         uses: s-weigand/setup-conda
+      - if: matrix.config.os == 'ubuntu-latest'
         run: |
           conda install -c conda-forge openbabel
       
