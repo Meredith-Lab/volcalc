@@ -21,7 +21,7 @@ c(
       person("SK", "Ledford")
     ),
     year = "in prep",
-    journal = "TBD",
+    journal = "Frontiers in Microbiology",
     header = "Please also cite the related manuscript:"
   )
 )
