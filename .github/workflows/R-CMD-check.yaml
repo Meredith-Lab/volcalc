@@ -46,8 +46,9 @@ jobs:
           brew install open-babel
       - name: ubuntu openbabel
         if: matrix.config.os == 'ubuntu-latest'
+        uses: s-weigand/setup-conda
         run: |
-          sudo apt-get install libopenbabel7
+          conda install -c conda-forge openbabel
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
