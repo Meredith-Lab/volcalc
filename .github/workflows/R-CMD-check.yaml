@@ -48,6 +48,7 @@ jobs:
         if: matrix.config.os == 'ubuntu-latest'
         run: |
           sudo apt-get install libopenbabel-dev
+          sudo ln -s /usr/include/eigen3/Eigen /usr/include/Eigen
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
