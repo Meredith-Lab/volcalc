@@ -62,7 +62,16 @@ For macOS, this can be installed via homebrew by running the following shell com
 brew install open-babel
 ```
 
-For other installation options see the [OpenBabel documentation](https://openbabel.org/docs/dev/Installation/install.html).
+For ubuntu linux:
+
+``` bash
+sudo apt-get install libopenbabel-dev
+sudo apt-get install libeigen3-dev
+```
+
+For windows, `OpenBabel` is included in the `ChemmineOB` binary and does not need to be installed separately.
+
+For other installation options see the [OpenBabel documentation](https://openbabel.org/docs/dev/Installation/install.html) and `ChemmineOB` [install guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 
 ### Loading package
 
