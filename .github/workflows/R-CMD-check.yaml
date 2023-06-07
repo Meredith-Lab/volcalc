@@ -23,7 +23,7 @@ jobs:
           #disabled until I can figure out how to install openbabel
           # - {os: windows-latest, r: 'release'} 
           # - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          # - {os: ubuntu-latest,   r: 'release'}
+          - {os: ubuntu-latest,   r: 'release'}
           # - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
@@ -40,10 +40,14 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
-      - name: Setup system dependencies
+      - name: macOS openbabel
         if: matrix.config.os == 'macos-latest'
         run: |
           brew install open-babel
+      - name: ubuntu openbabel
+        if: matrix.config.os == 'ubuntu-latest'
+        run: |
+          apt install openbabel
       
 
       - uses: r-lib/actions/setup-r-dependencies@v2
