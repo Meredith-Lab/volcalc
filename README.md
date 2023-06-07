@@ -60,6 +60,13 @@ be installed via homebrew by running the following shell command:
 brew install open-babel
 ```
 
+For ubuntu linux:
+
+``` bash
+sudo apt-get install libopenbabel-dev
+sudo apt-get install libeigen3-dev
+```
+
 For other installation options see the [OpenBabel
 documentation](https://openbabel.org/docs/dev/Installation/install.html).
 
