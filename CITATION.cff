@@ -1,0 +1,48 @@
+# -----------------------------------------------------------
+# CITATION file created with {cffr} R package, v0.4.1
+# See also: https://docs.ropensci.org/cffr/
+# -----------------------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "volcalc" in publications use:'
+type: software
+license: MIT
+title: 'volcalc: Calculate Volatility of Chemical Compounds'
+version: 1.0.0
+abstract: Use this package to calculate estimated volatility values for individual
+  compounds of interest or for all compounds in a pathway. Calculation uses the SIMPOL
+  method (Prankow and Asher, 2008), and is only currently applicable to compounds
+  and pathways in KEGG.
+authors:
+- family-names: Riemer
+  given-names: Kristina
+  email: kristinariemer@email.arizona.edu
+  orcid: https://orcid.org/0000-0003-3802-3331
+preferred-citation:
+  type: article
+  title: Automating methods for estimating metabolite volatility
+  authors:
+  - family-names: Meredith
+    given-names: LK
+  - family-names: Riemer
+    given-names: Kristina
+  - family-names: Geffre
+    given-names: P
+  - family-names: Honeker
+    given-names: L
+  - family-names: Krechmer
+    given-names: J
+  - family-names: Graves
+    given-names: K
+  - family-names: Tfaily
+    given-names: M
+  - family-names: Ledford
+    given-names: SK
+  year: in prep
+  journal: Frontiers in Microbiology
+date-released: '2023-06-06'
+contact:
+- family-names: Riemer
+  given-names: Kristina
+  email: kristinariemer@email.arizona.edu
+  orcid: https://orcid.org/0000-0003-3802-3331

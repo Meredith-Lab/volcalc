@@ -4,3 +4,4 @@ LICENSE.md
 README.Rmd
 ^LICENSE\.md$
 ^\.github$
+^CITATION\.cff$
