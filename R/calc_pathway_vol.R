@@ -22,8 +22,13 @@
 #' ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
 #' }
 #' @export
-calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
-                             return_fx_groups = FALSE, return_calc_steps = FALSE){
+calc_pathway_vol <-
+  function(pathway_id,
+           path = "data",
+           redownload = FALSE,
+           return_fx_groups = FALSE,
+           return_calc_steps = FALSE) {
+    
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   mapply(save_compound_mol, compound_id = compounds_from_pathway,
          pathway_id = pathway_id, path = path, redownload = redownload)

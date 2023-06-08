@@ -29,10 +29,18 @@
 #' ex_compound <- calc_vol(compound_id = "C16181")
 #' }
 #' @export
-calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = NULL,
-                     path = "data",  redownload = FALSE, save_file = TRUE,
-                     get_groups = TRUE, fx_groups_df = NULL,
-                     return_fx_groups = FALSE, return_calc_steps = FALSE){
+calc_vol <-
+  function(compound_id = NULL,
+           compound_formula = NULL,
+           pathway_id = NULL,
+           path = "data",
+           redownload = FALSE,
+           save_file = TRUE,
+           get_groups = TRUE,
+           fx_groups_df = NULL,
+           return_fx_groups = FALSE,
+           return_calc_steps = FALSE) {
+    
   if (is.null(compound_id) & is.null(compound_formula)) {
     stop("either compound_id or compound_formula needs to be specified")
   }
