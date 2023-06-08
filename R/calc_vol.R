@@ -54,7 +54,10 @@ calc_vol <-
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
   }
+    
+  #assign variables to quiet devtools::check()
   aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
+  
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
   vol_df <- fx_groups_df %>%
@@ -96,14 +99,18 @@ calc_vol <-
              (-2.23	  * thiol) %+%
              (-1.20	  * carbothioester),
            volatility = log_alpha + constant + log_Sum,
-           category = dplyr::case_when(volatility < -2 ~ "non", #less than -2
-                                       volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
-                                       volatility >= 0 & volatility < 2 ~ "intermediate", #greater than or equal to 0, less than 2
-                                       volatility >= 2 ~ "high")) #greater than or equal to 2
+           category = dplyr::case_when(
+             volatility <  -2                  ~ "non", #less than -2
+             volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
+             volatility >= 0 & volatility < 2  ~ "intermediate", #greater than or equal to 0, less than 2
+             volatility >= 2                   ~ "high" #greater than or equal to 2
+           )) 
   if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
+    subset_vol_df <-
+      dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
   } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
+    subset_vol_df <- 
+      dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
   } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
     subset_vol_df <- vol_df
   } else {
