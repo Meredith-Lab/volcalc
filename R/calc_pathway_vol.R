@@ -24,12 +24,15 @@
 #' @export
 calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
                              return_fx_groups = FALSE, return_calc_steps = FALSE){
-  compounds_volatility <- c()
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   mapply(save_compound_mol, compound_id = compounds_from_pathway,
          pathway_id = pathway_id, path = path, redownload = redownload)
   compound_files <- list.files(paste0(path, "/", pathway_id))
-  compound_names <- sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
+  compound_names <- 
+    sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
+  
+  #pre-allocate vectors for for-loop
+  compounds_volatility <- c()
   compounds_fx_groups <- data.frame()
   for(compound in compound_names){
     compound_fx_groups <- get_fx_groups(compound_id = compound,
