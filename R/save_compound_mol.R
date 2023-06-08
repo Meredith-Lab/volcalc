@@ -20,10 +20,13 @@
 #' }
 #'
 #' @export
-#'
-#' @importFrom utils write.table
-save_compound_mol <- function(compound_id = NULL, compound_formula = NULL,
-                              pathway_id = NULL, path = "data", redownload = FALSE) {
+save_compound_mol <-
+  function(compound_id = NULL,
+           compound_formula = NULL,
+           pathway_id = NULL,
+           path = "data",
+           redownload = FALSE) {
+    
   . <- kegg_id <- NULL
   if (is.null(compound_id) & is.null(compound_formula)) {
     stop("either compound_id or compound_formula needs to be specified")
@@ -64,7 +67,7 @@ save_compound_mol <- function(compound_id = NULL, compound_formula = NULL,
     mol_clean <- gsub(">.*", "", mol) %>%
       paste0("\n\n\n", .)
     file_path <- paste0(pathway_dir, "/", compound_id, ".mol")
-    write.table(mol_clean,
+    utils::write.table(mol_clean,
       file = file_path, row.names = FALSE,
       col.names = FALSE, quote = FALSE
     )
