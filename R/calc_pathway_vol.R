@@ -48,14 +48,14 @@ calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
 keggGetCompounds <- function(pathway){
   
   resp <- 
-    httr2::request("http://rest.kegg.jp/") |> 
-    httr2::req_url_path("link/cpd/") |> 
-    httr2::req_url_path_append(pathway) |> 
+    httr2::request("http://rest.kegg.jp/")  %>%  
+    httr2::req_url_path("link/cpd/") %>%  
+    httr2::req_url_path_append(pathway) %>%  
     httr2::req_perform()
   
-  out <- resp |> 
-    httr2::resp_body_string() |> 
-    stringr::str_split_1("\n") |> 
+  out <- resp %>% 
+    httr2::resp_body_string() %>%  
+    stringr::str_split_1("\n") %>%  
     stringr::str_extract("(?<=cpd:).*")
   out[!is.na(out)]
   
