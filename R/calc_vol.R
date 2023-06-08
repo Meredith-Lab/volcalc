@@ -5,19 +5,26 @@
 #'
 #' @param compound_id A character string that is 5 digits prepended with a "C".
 #' @param compound_formula A character string detailing a compound formula.
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
 #' @param save_file Whether to save downloaded compound mol files.
-#' @param redownload Download file again even if it has already been downloaded at path.
-#' @param get_groups When `FALSE`, will expect a dataframe to be read in with `fx_groups_df` argument.
-#' @param fx_groups_df A dataframe of functional group counts for compounds generated from [`get_fx_groups()`].
-#' @param return_fx_groups When `TRUE`, includes functional group counts in final dataframe.
-#' @param return_calc_steps When `TRUE`, includes intermediate volatility calculation steps in final dataframe.
+#' @param redownload Download file again even if it has already been downloaded
+#'   at path.
+#' @param get_groups When `FALSE`, will expect a dataframe to be read in with
+#'   `fx_groups_df` argument.
+#' @param fx_groups_df A dataframe of functional group counts for compounds
+#'   generated from [`get_fx_groups()`].
+#' @param return_fx_groups When `TRUE`, includes functional group counts in
+#'   final dataframe.
+#' @param return_calc_steps When `TRUE`, includes intermediate volatility
+#'   calculation steps in final dataframe.
 #'
-#' @return Dataframe with columns of basic compound info and volatility value and
-#' category. See documentation for column descriptions.
+#' @return Dataframe with columns of basic compound info and volatility value
+#'   and category. See documentation for column descriptions.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_compound <- calc_vol(compound_id = "C16181")
 #' }

@@ -17,18 +17,21 @@ save_compound_mol(
 
 \item{compound_formula}{A character string detailing a compound formula.}
 
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
+format of 5 digits prepended with "map".}
 
-\item{path}{An optional parameter to set relative path to location to download data.}
+\item{path}{An optional parameter to set relative path to location to
+download data.}
 
-\item{redownload}{Download file again even if it has already been downloaded at path.}
+\item{redownload}{Download file again even if it has already been downloaded
+at path.}
 }
 \value{
 Downloaded .mol file for compound in path folder.
 }
 \description{
-Using KEGG ID values for compound and pathway, download
-and clean up corresponding mol file
+Using KEGG ID values for compound and pathway, download and clean up
+corresponding mol file
 }
 \examples{
 \dontrun{

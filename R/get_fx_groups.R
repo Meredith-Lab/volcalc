@@ -1,14 +1,18 @@
 #' Count functional groups of a compound
 #'
-#' Return functional group counts relevant to volatility calculation for specified compound
+#' Return functional group counts relevant to volatility calculation for
+#' specified compound
 #'
 #' @param compound_id A character string that is 5 digits prepended with a "C".
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
 #'
-#' @return Dataframe with columns of basic compound info and functional group counts.
+#' @return Dataframe with columns of basic compound info and functional group
+#'   counts.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_groups <- get_fx_groups(compound_id = "C16181")
 #' }

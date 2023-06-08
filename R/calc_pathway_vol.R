@@ -3,16 +3,21 @@
 #' Volatility value and category is estimated for all compounds in a specified
 #' pathway using the SIMPOL formula
 #'
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
-#' @param redownload Download file again even if it has already been downloaded at path.
-#' @param return_fx_groups When `TRUE`, includes functional group counts in final dataframe.
-#' @param return_calc_steps When `TRUE`, includes intermediate volatility calculation steps in final dataframe.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
+#' @param redownload Download file again even if it has already been downloaded
+#'   at path.
+#' @param return_fx_groups When `TRUE`, includes functional group counts in
+#'   final dataframe.
+#' @param return_calc_steps When `TRUE`, includes intermediate volatility
+#'   calculation steps in final dataframe.
 #'
-#' @return Dataframe with columns of basic compound info and volatility value and
-#' category. See documentation for column descriptions.
+#' @return Dataframe with columns of basic compound info and volatility value
+#'   and category. See documentation for column descriptions.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
 #' }
@@ -42,7 +47,8 @@ calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
 
 #' Get list of KEGG compound IDs for given KEGG pathway
 #'
-#' This is a temporary helper function until this function is improved and pushed into KEGGREST package
+#' This is a temporary helper function until this function is improved and
+#' pushed into KEGGREST package
 #'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
 keggGetCompounds <- function(pathway){

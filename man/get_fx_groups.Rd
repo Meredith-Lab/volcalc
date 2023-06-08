@@ -9,15 +9,19 @@ get_fx_groups(compound_id, pathway_id = NULL, path = "data")
 \arguments{
 \item{compound_id}{A character string that is 5 digits prepended with a "C".}
 
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
+format of 5 digits prepended with "map".}
 
-\item{path}{An optional parameter to set relative path to location to download data.}
+\item{path}{An optional parameter to set relative path to location to
+download data.}
 }
 \value{
-Dataframe with columns of basic compound info and functional group counts.
+Dataframe with columns of basic compound info and functional group
+counts.
 }
 \description{
-Return functional group counts relevant to volatility calculation for specified compound
+Return functional group counts relevant to volatility calculation for
+specified compound
 }
 \examples{
 \dontrun{
