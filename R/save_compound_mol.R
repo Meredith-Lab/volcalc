@@ -11,8 +11,11 @@
 #'
 #' @return Downloaded .mol file for compound in path folder.
 #'
-#' @examples save_compound_mol(compound_id = "C16181")
-#'
+#' @examples 
+#' \dontrun{
+#' save_compound_mol(compound_id = "C16181")
+#' }
+#' 
 #' @export
 #'
 #' @importFrom magrittr %>%

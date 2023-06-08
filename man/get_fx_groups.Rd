@@ -20,6 +20,7 @@ Dataframe with columns of basic compound info and functional group counts.
 Return functional group counts relevant to volatility calculation for specified compound
 }
 \examples{
+\dontrun{
 ex_groups <- get_fx_groups(compound_id = "C16181")
-
+}
 }

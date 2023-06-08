@@ -47,6 +47,7 @@ Volatility value and category is estimated for specified compound using the
 SIMPOL formula
 }
 \examples{
+\dontrun{
 ex_compound <- calc_vol(compound_id = "C16181")
-
+}
 }
