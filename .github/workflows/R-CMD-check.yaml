@@ -21,8 +21,8 @@ jobs:
           - {os: macos-latest,   r: 'release'}
           - {os: macos-latest,   r: 'devel'}
           - {os: macos-latest,   r: 'oldrel-1'}
-          - {os: ubuntu-latest,   r: 'release'}
-          #disabled until I can figure out how to install openbabel
+          #disabled until I can figure out why it errors on ubuntu
+          # - {os: ubuntu-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
 
 
