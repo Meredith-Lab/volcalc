@@ -49,7 +49,6 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
   aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
-  `%+%` <- function(x, y)  mapply(sum, x, y, MoreArgs = list(na.rm = TRUE))
   vol_df <- fx_groups_df %>%
     # mass is converted from grams to micrograms
     # 0.0000821 is universal gas constant
