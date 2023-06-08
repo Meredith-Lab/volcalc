@@ -21,17 +21,21 @@ get_fx_groups <-
   function(compound_id,
            pathway_id = NULL,
            path = "data") {
+  
+    #assign variables to quiet devtools::check()
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+    
   if(!is.null(pathway_id)){
-    mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
+    mol_path <- file.path(path, pathway_id, paste0(compound_id, ".mol"))
   } else {
-    mol_path <- paste0(path, "/", compound_id, ".mol")
+    mol_path <- file.path(path, paste0(compound_id, ".mol"))
   }
   if (!file.exists(mol_path)) {
     stop("compound file has either not been downloaded or is in wrong location")
   }
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
   kegg_data <- KEGGREST::keggGet(compound_id)
+  #TODO: could use as_tibble_row() for many of these
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
     type = "countMA"

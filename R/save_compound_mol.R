@@ -26,8 +26,10 @@ save_compound_mol <-
            pathway_id = NULL,
            path = "data",
            redownload = FALSE) {
-    
+  
+  #assign variables to quiet devtools::check()
   . <- kegg_id <- NULL
+  
   if (is.null(compound_id) & is.null(compound_formula)) {
     stop("either compound_id or compound_formula needs to be specified")
   }
@@ -55,18 +57,18 @@ save_compound_mol <-
     }
   }
   if(!is.null(path)){
-    pathway_dir <- paste0(path, "/", pathway_id)
+    pathway_dir <- file.path(path, pathway_id)
   } else {
     pathway_dir <- path
   }
   if (!dir.exists(pathway_dir)) {
     dir.create(pathway_dir, recursive = TRUE)
   }
-  if (!file.exists(paste0(pathway_dir, "/", compound_id, ".mol")) | isTRUE(redownload)) {
+  if (!file.exists(file.path(pathway_dir, paste0(compound_id, ".mol"))) | isTRUE(redownload)) {
     mol <- KEGGREST::keggGet(compound_id, option = "mol")
     mol_clean <- gsub(">.*", "", mol) %>%
       paste0("\n\n\n", .)
-    file_path <- paste0(pathway_dir, "/", compound_id, ".mol")
+    file_path <- file.path(pathway_dir, paste0(compound_id, ".mol"))
     utils::write.table(mol_clean,
       file = file_path, row.names = FALSE,
       col.names = FALSE, quote = FALSE
