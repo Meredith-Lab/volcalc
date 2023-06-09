@@ -56,7 +56,7 @@ save_compound_mol <-
       stop("pathway_id is not in the correct KEGG format")
     }
   }
-  if(!is.null(path)){
+  if(!is.null(pathway_id)){
     pathway_dir <- file.path(path, pathway_id)
   } else {
     pathway_dir <- path

@@ -11,5 +11,10 @@ Use this package to calculate estimated volatility values for individual compoun
 \author{
 \strong{Maintainer}: Kristina Riemer \email{kristinariemer@email.arizona.edu} (\href{https://orcid.org/0000-0003-3802-3331}{ORCID}) [copyright holder]
 
+Other contributors:
+\itemize{
+  \item Eric R. Scott (\href{https://orcid.org/0000-0002-7430-7879}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}
