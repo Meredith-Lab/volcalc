@@ -57,18 +57,18 @@ save_compound_mol <-
     }
   }
   if(!is.null(pathway_id)){
-    pathway_dir <- file.path(path, pathway_id)
+    pathway_dir <- fs::path(path, pathway_id)
   } else {
     pathway_dir <- path
   }
-  if (!dir.exists(pathway_dir)) {
-    dir.create(pathway_dir, recursive = TRUE)
+  if (!fs::dir_exists(pathway_dir)) {
+    fs::dir_create(pathway_dir, recurse = TRUE)
   }
-  if (!file.exists(file.path(pathway_dir, paste0(compound_id, ".mol"))) | isTRUE(redownload)) {
+  if (!fs::file_exists(fs::path(pathway_dir, compound_id, ext = "mol")) | isTRUE(redownload)) {
     mol <- KEGGREST::keggGet(compound_id, option = "mol")
     mol_clean <- gsub(">.*", "", mol) %>%
       paste0("\n\n\n", .)
-    file_path <- file.path(pathway_dir, paste0(compound_id, ".mol"))
+    file_path <- fs::path(pathway_dir, compound_id, ext = "mol")
     utils::write.table(mol_clean,
       file = file_path, row.names = FALSE,
       col.names = FALSE, quote = FALSE

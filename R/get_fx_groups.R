@@ -26,11 +26,11 @@ get_fx_groups <-
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
   if(!is.null(pathway_id)){
-    mol_path <- file.path(path, pathway_id, paste0(compound_id, ".mol"))
+    mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
   } else {
-    mol_path <- file.path(path, paste0(compound_id, ".mol"))
+    mol_path <- fs::path(path, compound_id, ext = "mol")
   }
-  if (!file.exists(mol_path)) {
+  if (!fs::file_exists(mol_path)) {
     stop("compound file has either not been downloaded or is in wrong location")
   }
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)

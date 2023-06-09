@@ -32,7 +32,7 @@ calc_pathway_vol <-
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   mapply(save_compound_mol, compound_id = compounds_from_pathway,
          pathway_id = pathway_id, path = path, redownload = redownload)
-  compound_files <- list.files(paste0(path, "/", pathway_id))
+  compound_files <- fs::dir_ls(fs::path(path, pathway_id))
   compound_names <- 
     sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
   

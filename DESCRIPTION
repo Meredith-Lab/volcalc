@@ -16,6 +16,7 @@ Imports:
     ChemmineOB,
     ChemmineR,
     dplyr,
+    fs,
     httr2,
     KEGGREST,
     magrittr,
