@@ -34,7 +34,7 @@ calc_pathway_vol <-
          pathway_id = pathway_id, path = path, redownload = redownload)
   compound_files <- fs::dir_ls(fs::path(path, pathway_id))
   compound_names <- 
-    sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
+   fs::path_file(compound_files) %>% fs::path_ext_remove()
   
   #pre-allocate vectors for for-loop
   compounds_volatility <- c()
