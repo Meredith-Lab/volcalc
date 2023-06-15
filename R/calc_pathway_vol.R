@@ -48,7 +48,7 @@ calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
 keggGetCompounds <- function(pathway){
   
   resp <- 
-    httr2::request("http://rest.kegg.jp/")  %>%  
+    httr2::request("https://rest.kegg.jp/")  %>%  
     httr2::req_url_path("link/cpd/") %>%  
     httr2::req_url_path_append(pathway) %>%  
     httr2::req_perform()
