@@ -110,7 +110,8 @@ KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is
 #### Single function approach
 
 ``` r
-calc_vol(compound_id = "C16181")
+out_path <- tempdir()
+calc_vol(compound_id = "C16181", path = out_path)
 #>      pathway compound  formula                                   name
 #> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
@@ -144,9 +145,13 @@ functional groups, and 3) estimate volatility. This calculation uses the
 SIMPOL approach[^1].
 
 ``` r
-save_compound_mol(compound_id = "C16181")
-example_compound_fx_groups <- get_fx_groups(compound_id = "C16181")
-example_compound_vol <- calc_vol(compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
+save_compound_mol(compound_id = "C16181", path = out_path)
+example_compound_fx_groups <-
+  get_fx_groups(compound_id = "C16181", path = out_path)
+example_compound_vol <-
+  calc_vol(compound_id = "C16181",
+           fx_groups_df = example_compound_fx_groups,
+           path = out_path)
 print(example_compound_vol$volatility)
 #> [1] 6.975571
 ```
@@ -163,7 +168,7 @@ A dataframe with volatility estimates for all compounds in a chosen
 pathway can be returned as below.
 
 ``` r
-example_pathway_vol <- calc_pathway_vol("map00361")
+example_pathway_vol <- calc_pathway_vol("map00361", path = out_path)
 print(example_pathway_vol[1,])
 #>       pathway compound formula name volatility category
 #> CMP1 map00361   C00011     CO2 CO2;   7.914336     high
