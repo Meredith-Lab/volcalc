@@ -45,26 +45,31 @@ To see an example of how to use `volcalc`, run the script
 You can install `volcalc` from GitHub with
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("Meredith-Lab/volcalc")
+# install.packages("pak")
+pak::pkg_install("Meredith-Lab/volcalc")
 ```
 
 Or from r-universe with
 
 ``` r
-install.packages('volcalc', repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
+options(repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
+pak::pkg_install('volcalc')
 ```
 
-Installation of `volcalc` requires the system library
-[OpenBabel](https://openbabel.org/) (it’s a requirement of the
-`ChemmineOB` package, which `volcalc` depends on). For macOS, this can
-be installed via homebrew by running the following shell command:
+Installation of `volcalc` requires the system libraries
+[OpenBabel](https://openbabel.org/) and Eigen3 (requirements of the
+`ChemmineOB` package, which `volcalc` depends on). `pak` will take care
+of the installation of these libraries for you on some systems, but you
+may need to install them manually.
+
+For macOS, they can be installed via homebrew by running the following
+shell command:
 
 ``` bash
 brew install open-babel
 ```
 
-For ubuntu linux:
+For Ubuntu Linux:
 
 ``` bash
 sudo apt-get install libopenbabel-dev
@@ -85,7 +90,6 @@ Use the package with:
 
 ``` r
 library(volcalc)
-#> Warning: package 'volcalc' was built under R version 4.2.3
 ```
 
 ## Single compound usage
