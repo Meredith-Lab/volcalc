@@ -263,6 +263,13 @@ print(example_pathway_vol[1,])
 | Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
 | Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
 
+## Code of Conduct
+
+Please note that the volcalc project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
 ## How to contribute
 
 We appreciate many kinds of feedback and contributions to this R
