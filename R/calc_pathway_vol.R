@@ -3,28 +3,41 @@
 #' Volatility value and category is estimated for all compounds in a specified
 #' pathway using the SIMPOL formula
 #'
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
-#' @param redownload Download file again even if it has already been downloaded at path.
-#' @param return_fx_groups When `TRUE`, includes functional group counts in final dataframe.
-#' @param return_calc_steps When `TRUE`, includes intermediate volatility calculation steps in final dataframe.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
+#' @param redownload Download file again even if it has already been downloaded
+#'   at path.
+#' @param return_fx_groups When `TRUE`, includes functional group counts in
+#'   final dataframe.
+#' @param return_calc_steps When `TRUE`, includes intermediate volatility
+#'   calculation steps in final dataframe.
 #'
-#' @return Dataframe with columns of basic compound info and volatility value and
-#' category. See documentation for column descriptions.
+#' @return Dataframe with columns of basic compound info and volatility value
+#'   and category. See documentation for column descriptions.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_pathway <- calc_pathway_vol(pathway_id = "map00361")
 #' }
 #' @export
-calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
-                             return_fx_groups = FALSE, return_calc_steps = FALSE){
-  compounds_volatility <- c()
+calc_pathway_vol <-
+  function(pathway_id,
+           path = "data",
+           redownload = FALSE,
+           return_fx_groups = FALSE,
+           return_calc_steps = FALSE) {
+    
   compounds_from_pathway <- keggGetCompounds(pathway_id)
   mapply(save_compound_mol, compound_id = compounds_from_pathway,
          pathway_id = pathway_id, path = path, redownload = redownload)
-  compound_files <- list.files(paste0(path, "/", pathway_id))
-  compound_names <- sapply(compound_files, function(x) substr(x, 1, nchar(x) - 4))
+  compound_files <- fs::dir_ls(fs::path(path, pathway_id))
+  compound_names <- 
+   fs::path_file(compound_files) %>% fs::path_ext_remove()
+  
+  #pre-allocate vectors for for-loop
+  compounds_volatility <- c()
   compounds_fx_groups <- data.frame()
   for(compound in compound_names){
     compound_fx_groups <- get_fx_groups(compound_id = compound,
@@ -42,7 +55,8 @@ calc_pathway_vol <- function(pathway_id, path = "data", redownload = FALSE,
 
 #' Get list of KEGG compound IDs for given KEGG pathway
 #'
-#' This is a temporary helper function until this function is improved and pushed into KEGGREST package
+#' This is a temporary helper function until this function is improved and
+#' pushed into KEGGREST package
 #'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
 keggGetCompounds <- function(pathway){

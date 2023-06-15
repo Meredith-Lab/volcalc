@@ -1,30 +1,41 @@
 #' Count functional groups of a compound
 #'
-#' Return functional group counts relevant to volatility calculation for specified compound
+#' Return functional group counts relevant to volatility calculation for
+#' specified compound
 #'
 #' @param compound_id A character string that is 5 digits prepended with a "C".
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
 #'
-#' @return Dataframe with columns of basic compound info and functional group counts.
+#' @return Dataframe with columns of basic compound info and functional group
+#'   counts.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_groups <- get_fx_groups(compound_id = "C16181")
 #' }
 #' @export
-get_fx_groups <- function(compound_id, pathway_id = NULL, path = "data") {
-  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+get_fx_groups <-
+  function(compound_id,
+           pathway_id = NULL,
+           path = "data") {
+  
+    #assign variables to quiet devtools::check()
+    rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+    
   if(!is.null(pathway_id)){
-    mol_path <- paste0(path, "/", pathway_id, "/", compound_id, ".mol")
+    mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
   } else {
-    mol_path <- paste0(path, "/", compound_id, ".mol")
+    mol_path <- fs::path(path, compound_id, ext = "mol")
   }
-  if (!file.exists(mol_path)) {
+  if (!fs::file_exists(mol_path)) {
     stop("compound file has either not been downloaded or is in wrong location")
   }
   compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
   kegg_data <- KEGGREST::keggGet(compound_id)
+  #TODO: could use as_tibble_row() for many of these
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
     type = "countMA"

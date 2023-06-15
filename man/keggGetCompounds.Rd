@@ -10,5 +10,6 @@ keggGetCompounds(pathway)
 \item{pathway}{string that is a KEGG identifier for a molecular pathway}
 }
 \description{
-This is a temporary helper function until this function is improved and pushed into KEGGREST package
+This is a temporary helper function until this function is improved and
+pushed into KEGGREST package
 }

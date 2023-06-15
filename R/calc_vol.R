@@ -5,27 +5,42 @@
 #'
 #' @param compound_id A character string that is 5 digits prepended with a "C".
 #' @param compound_formula A character string detailing a compound formula.
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to download data.
+#' @param pathway_id An optional character string specifying KEGG pathway ID, in
+#'   format of 5 digits prepended with "map".
+#' @param path An optional parameter to set relative path to location to
+#'   download data.
 #' @param save_file Whether to save downloaded compound mol files.
-#' @param redownload Download file again even if it has already been downloaded at path.
-#' @param get_groups When `FALSE`, will expect a dataframe to be read in with `fx_groups_df` argument.
-#' @param fx_groups_df A dataframe of functional group counts for compounds generated from [`get_fx_groups()`].
-#' @param return_fx_groups When `TRUE`, includes functional group counts in final dataframe.
-#' @param return_calc_steps When `TRUE`, includes intermediate volatility calculation steps in final dataframe.
+#' @param redownload Download file again even if it has already been downloaded
+#'   at path.
+#' @param get_groups When `FALSE`, will expect a dataframe to be read in with
+#'   `fx_groups_df` argument.
+#' @param fx_groups_df A dataframe of functional group counts for compounds
+#'   generated from [`get_fx_groups()`].
+#' @param return_fx_groups When `TRUE`, includes functional group counts in
+#'   final dataframe.
+#' @param return_calc_steps When `TRUE`, includes intermediate volatility
+#'   calculation steps in final dataframe.
 #'
-#' @return Dataframe with columns of basic compound info and volatility value and
-#' category. See documentation for column descriptions.
+#' @return Dataframe with columns of basic compound info and volatility value
+#'   and category. See documentation for column descriptions.
 #'
-#' @examples 
+#' @examples
 #' \dontrun{
 #' ex_compound <- calc_vol(compound_id = "C16181")
 #' }
 #' @export
-calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = NULL,
-                     path = "data",  redownload = FALSE, save_file = TRUE,
-                     get_groups = TRUE, fx_groups_df = NULL,
-                     return_fx_groups = FALSE, return_calc_steps = FALSE){
+calc_vol <-
+  function(compound_id = NULL,
+           compound_formula = NULL,
+           pathway_id = NULL,
+           path = "data",
+           redownload = FALSE,
+           save_file = TRUE,
+           get_groups = TRUE,
+           fx_groups_df = NULL,
+           return_fx_groups = FALSE,
+           return_calc_steps = FALSE) {
+    
   if (is.null(compound_id) & is.null(compound_formula)) {
     stop("either compound_id or compound_formula needs to be specified")
   }
@@ -39,10 +54,12 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
   }
+    
+  #assign variables to quiet devtools::check()
   aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
+  
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
-  `%+%` <- function(x, y)  mapply(sum, x, y, MoreArgs = list(na.rm = TRUE))
   vol_df <- fx_groups_df %>%
     # mass is converted from grams to micrograms
     # 0.0000821 is universal gas constant
@@ -82,14 +99,18 @@ calc_vol <- function(compound_id = NULL, compound_formula = NULL, pathway_id = N
              (-2.23	  * thiol) %+%
              (-1.20	  * carbothioester),
            volatility = log_alpha + constant + log_Sum,
-           category = dplyr::case_when(volatility < -2 ~ "non", #less than -2
-                                       volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
-                                       volatility >= 0 & volatility < 2 ~ "intermediate", #greater than or equal to 0, less than 2
-                                       volatility >= 2 ~ "high")) #greater than or equal to 2
+           category = dplyr::case_when(
+             volatility <  -2                  ~ "non", #less than -2
+             volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
+             volatility >= 0 & volatility < 2  ~ "intermediate", #greater than or equal to 0, less than 2
+             volatility >= 2                   ~ "high" #greater than or equal to 2
+           )) 
   if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
+    subset_vol_df <-
+      dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
   } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
+    subset_vol_df <- 
+      dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
   } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
     subset_vol_df <- vol_df
   } else {

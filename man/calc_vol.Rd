@@ -22,25 +22,32 @@ calc_vol(
 
 \item{compound_formula}{A character string detailing a compound formula.}
 
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in format of 5 digits prepended with "map".}
+\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
+format of 5 digits prepended with "map".}
 
-\item{path}{An optional parameter to set relative path to location to download data.}
+\item{path}{An optional parameter to set relative path to location to
+download data.}
 
-\item{redownload}{Download file again even if it has already been downloaded at path.}
+\item{redownload}{Download file again even if it has already been downloaded
+at path.}
 
 \item{save_file}{Whether to save downloaded compound mol files.}
 
-\item{get_groups}{When \code{FALSE}, will expect a dataframe to be read in with \code{fx_groups_df} argument.}
+\item{get_groups}{When \code{FALSE}, will expect a dataframe to be read in with
+\code{fx_groups_df} argument.}
 
-\item{fx_groups_df}{A dataframe of functional group counts for compounds generated from \code{\link[=get_fx_groups]{get_fx_groups()}}.}
+\item{fx_groups_df}{A dataframe of functional group counts for compounds
+generated from \code{\link[=get_fx_groups]{get_fx_groups()}}.}
 
-\item{return_fx_groups}{When \code{TRUE}, includes functional group counts in final dataframe.}
+\item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
+final dataframe.}
 
-\item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility calculation steps in final dataframe.}
+\item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility
+calculation steps in final dataframe.}
 }
 \value{
-Dataframe with columns of basic compound info and volatility value and
-category. See documentation for column descriptions.
+Dataframe with columns of basic compound info and volatility value
+and category. See documentation for column descriptions.
 }
 \description{
 Volatility value and category is estimated for specified compound using the
