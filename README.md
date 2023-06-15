@@ -15,8 +15,15 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 ## Overview
 
-The goal of volcalc is to automate calculating estimates of volatility
+The goal of `volcalc` is to automate calculating estimates of volatility
 for chemical compounds.
+
+**`volcalc` is a work in progress—use at your own risk!**
+
+It is still in a stage of development likely to introduce many breaking
+changes. For a bit of a road map of where development is headed, see our
+[proposal](https://cct-datascience.github.io/volcalc-isc-proposal/) for
+the R Consortium grant.
 
 Volatility can be estimated for most chemical compounds that are in the
 [KEGG](https://www.genome.jp/kegg/) database, using just the [KEGG
