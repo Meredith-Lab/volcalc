@@ -7,13 +7,24 @@
 
 [![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
 [![latest-DOI](https://zenodo.org/badge/425022983.svg)](https://zenodo.org/badge/latestdoi/425022983)
-
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Codecov test
+coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
 <!-- badges: end -->
 
 ## Overview
 
-The goal of volcalc is to automate calculating estimates of volatility
+The goal of `volcalc` is to automate calculating estimates of volatility
 for chemical compounds.
+
+**`volcalc` is a work in progress—use at your own risk!**
+
+It is still in a stage of development likely to introduce many breaking
+changes. For a bit of a road map of where development is headed, see our
+[proposal](https://cct-datascience.github.io/volcalc-isc-proposal/) for
+the R Consortium grant.
 
 Volatility can be estimated for most chemical compounds that are in the
 [KEGG](https://www.genome.jp/kegg/) database, using just the [KEGG
@@ -42,26 +53,31 @@ To see an example of how to use `volcalc`, run the script
 You can install `volcalc` from GitHub with
 
 ``` r
-# install.packages("remotes")
-remotes::install_github("Meredith-Lab/volcalc")
+# install.packages("pak")
+pak::pkg_install("Meredith-Lab/volcalc")
 ```
 
 Or from r-universe with
 
 ``` r
-install.packages('volcalc', repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
+options(repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
+pak::pkg_install('volcalc')
 ```
 
-Installation of `volcalc` requires the system library
-[OpenBabel](https://openbabel.org/) (it’s a requirement of the
-`ChemmineOB` package, which `volcalc` depends on). For macOS, this can
-be installed via homebrew by running the following shell command:
+Installation of `volcalc` requires the system libraries
+[OpenBabel](https://openbabel.org/) and Eigen3 (requirements of the
+`ChemmineOB` package, which `volcalc` depends on). `pak` will take care
+of the installation of these libraries for you on some systems, but you
+may need to install them manually.
+
+For macOS, they can be installed via homebrew by running the following
+shell command:
 
 ``` bash
 brew install open-babel
 ```
 
-For ubuntu linux:
+For Ubuntu Linux:
 
 ``` bash
 sudo apt-get install libopenbabel-dev
@@ -82,7 +98,6 @@ Use the package with:
 
 ``` r
 library(volcalc)
-#> Warning: package 'volcalc' was built under R version 4.2.3
 ```
 
 ## Single compound usage
@@ -96,7 +111,8 @@ KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is
 #### Single function approach
 
 ``` r
-calc_vol(compound_id = "C16181")
+out_path <- tempdir()
+calc_vol(compound_id = "C16181", path = out_path)
 #>      pathway compound  formula                                   name
 #> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
@@ -130,9 +146,13 @@ functional groups, and 3) estimate volatility. This calculation uses the
 SIMPOL approach[^1].
 
 ``` r
-save_compound_mol(compound_id = "C16181")
-example_compound_fx_groups <- get_fx_groups(compound_id = "C16181")
-example_compound_vol <- calc_vol(compound_id = "C16181", fx_groups_df = example_compound_fx_groups)
+save_compound_mol(compound_id = "C16181", path = out_path)
+example_compound_fx_groups <-
+  get_fx_groups(compound_id = "C16181", path = out_path)
+example_compound_vol <-
+  calc_vol(compound_id = "C16181",
+           fx_groups_df = example_compound_fx_groups,
+           path = out_path)
 print(example_compound_vol$volatility)
 #> [1] 6.975571
 ```
@@ -149,7 +169,7 @@ A dataframe with volatility estimates for all compounds in a chosen
 pathway can be returned as below.
 
 ``` r
-example_pathway_vol <- calc_pathway_vol("map00361")
+example_pathway_vol <- calc_pathway_vol("map00361", path = out_path)
 print(example_pathway_vol[1,])
 #>       pathway compound formula name volatility category
 #> CMP1 map00361   C00011     CO2 CO2;   7.914336     high
@@ -248,6 +268,13 @@ print(example_pathway_vol[1,])
 | Sulfonate          | N          | SMARTS              | -2.23       | Same as nitrate  |
 | Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
 | Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
+
+## Code of Conduct
+
+Please note that the volcalc project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 ## How to contribute
 
