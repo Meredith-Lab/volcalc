@@ -57,7 +57,8 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
     mol <- KEGGREST::keggGet(compound_id, option = "mol")
     
     # Adds title to mol file because it is used later on by get_fx_groups()
-    # currently get_fx_groups() queries KEGG for the title, but need to wean it of KEGG API
+    # currently get_fx_groups() queries KEGG for the title, but need to wean it
+    # of KEGG API
     names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
     #just use the first name and remove separator
     title <- stringr::str_remove(names[1], ";")
