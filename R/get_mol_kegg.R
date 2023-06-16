@@ -52,3 +52,26 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
   #TODO construct tibble for output
   
 }
+
+
+#' Get list of KEGG compound IDs for given KEGG pathway
+#'
+#' This is a temporary helper function until this function is improved and
+#' pushed into KEGGREST package
+#'
+#' @param pathway string that is a KEGG identifier for a molecular pathway
+keggGetCompounds <- function(pathway){
+  
+  resp <- 
+    httr2::request("https://rest.kegg.jp/")  %>%  
+    httr2::req_url_path("link/cpd/") %>%  
+    httr2::req_url_path_append(pathway) %>%  
+    httr2::req_perform()
+  
+  out <- resp %>% 
+    httr2::resp_body_string() %>%  
+    stringr::str_split_1("\n") %>%  
+    stringr::str_extract("(?<=cpd:).*")
+  out[!is.na(out)]
+
+}
