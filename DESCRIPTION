@@ -20,8 +20,10 @@ Imports:
     httr2,
     KEGGREST,
     magrittr,
+    rlang,
     stringr,
     tibble,
+    tidyr,
     tidyselect
 Suggests: 
     testthat (>= 3.0.0),
