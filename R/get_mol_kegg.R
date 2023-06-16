@@ -13,20 +13,47 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_mol_kegg(compound_ids = c("C16181", "C06074"))
-#' get_mol_kegg(pathway_ids = "map00361")
+#' get_mol_kegg(compound_ids = c("C16181", "C06074"), dir = tempdir())
+#' get_mol_kegg(pathway_ids = "map00253", dir = tempdir())
 #' }
 get_mol_kegg <- function(compound_ids, pathway_ids, dir){
-  
-  if(!fs::dir_exists(dir)) {
-    fs::dir_create(dir)
+  if(missing(dir)) stop("`dir` is required")
+  if ((missing(compound_ids) & missing(pathway_ids)) |
+      !missing(compound_ids) & !missing(pathway_ids)) {
+    stop("One of `compound_id` or `pathway_id` are required")
   }
-  #TODO check inputs
-  #TODO if pathway_ids are provided, get compound IDs that go with them
-  # keggGetCompounds(pathway_id)
+  
+  #if compounds are provided
+  if (!missing(compound_ids)) {
+    if (!all(stringr::str_detect(compound_ids, "^[C][:digit:]{5}$"))) {
+      stop("Some compound_ids are not in the correct KEGG format")
+    }
+    fs::dir_create(dir)
+    out_tbl <-
+      tibble::tibble(compound_id = compound_ids) %>% 
+      dplyr::mutate(mol_path = fs::path(dir, compound_id, ext = "mol"))
+  }
+  # if pathways are provided
+  if (!missing(pathway_ids)) {
+    if (!all(stringr::str_detect(pathway_ids, "^[m][a][p][:digit:]{5}$"))) {
+      stop("Some pathway_ids are not in the correct KEGG format")
+    }
+    fs::dir_create(dir, pathway_ids)
+    compound_ids_list <- lapply(pathway_ids, keggGetCompounds)
+    names(compound_ids_list) <- pathway_ids
+    out_tbl <- 
+      tibble::enframe(compound_ids_list, name = "pathway_id", value = "compound_id") %>% 
+      tidyr::unnest(tidyselect::everything()) %>% 
+      dplyr::mutate(mol_path = fs::path(dir, pathway_id, compound_id, ext = "mol"))
+    
+  }
+  
   # Download mols
-  #TODO purrr is not already a dependency.  Try to convert this to lapply
   .get_mol_kegg <- function(compound_id) {
+    #TODO I think the KEGG API can handle up to 10 requests at once separated by
+    #"+".  Unfortunately all the mol files come out in a single textfile and
+    #would need parsing to separate.  Could speed things up by reducing API
+    #calls, but would require additional code.
     mol <- KEGGREST::keggGet(compound_id, option = "mol")
     
     # Adds title to mol file because it is used later on by get_fx_groups()
@@ -39,10 +66,9 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
       paste0(title, "\n\n", .)
     mol_clean
   }
-  mols <- lapply(compound_ids, .get_mol_kegg)
-
-  file_paths <- fs::path(dir, compound_ids, ext = "mol")
+  mols <- lapply(out_tbl$compound_id, .get_mol_kegg)
   
+  # write mol files
   .write_mol <- function(mol_clean, file_path) {
     utils::write.table(
       mol_clean,
@@ -52,11 +78,11 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
       quote = FALSE
     )
   }
+
+  mapply(.write_mol, mol_clean = mols, file_path = out_tbl$mol_path)
   
-  mapply(.write_mol, mol_clean = mols, file_path = file_paths)
-  
-  #construct tibble for output
-  tibble::tibble(compound_id = compound_ids, mol_path = file_paths)
+  #return
+  out_tbl
 }
 
 
@@ -71,7 +97,7 @@ keggGetCompounds <- function(pathway){
   resp <- 
     httr2::request("https://rest.kegg.jp/")  %>%  
     httr2::req_url_path("link/cpd/") %>%  
-    httr2::req_url_path_append(pathway) %>%  
+    httr2::req_url_path_append(pathway) %>% 
     httr2::req_perform()
   
   out <- resp %>% 
