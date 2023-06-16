@@ -25,32 +25,38 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
   #TODO if pathway_ids are provided, get compound IDs that go with them
   # keggGetCompounds(pathway_id)
   # Download mols
-  #TODO check if purrr is already a dependency, if not, then convert this to lapply I guess.
-  mols <- 
-    purrr::map(compound_ids, \(compound_id){
-      mol <- KEGGREST::keggGet(compound_id, option = "mol")
-      
-      # Adds title to mol file because it is used later on by get_fx_groups()
-      # currently get_fx_groups() queries KEGG for the title, but need to wean it of KEGG API
-      names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
-      #just use the first name and remove separator
-      title <- stringr::str_remove(names[1], ";")
-      #add title line to mol file
-      mol_clean <- gsub(">.*", "", mol) %>%
-        paste0(title, "\n\n", .)
-    })
-  
-  # Write .mol files out
+  #TODO purrr is not already a dependency.  Try to convert this to lapply
+  .get_mol_kegg <- function(compound_id) {
+    mol <- KEGGREST::keggGet(compound_id, option = "mol")
+    
+    # Adds title to mol file because it is used later on by get_fx_groups()
+    # currently get_fx_groups() queries KEGG for the title, but need to wean it of KEGG API
+    names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
+    #just use the first name and remove separator
+    title <- stringr::str_remove(names[1], ";")
+    #add title line to mol file
+    mol_clean <- gsub(">.*", "", mol) %>%
+      paste0(title, "\n\n", .)
+    mol_clean
+  }
+  mols <- lapply(compound_ids, .get_mol_kegg)
+
   file_paths <- fs::path(dir, compound_ids, ext = "mol")
-  purrr::walk2(mols, file_paths, \(mol_clean, file_path) {
-    utils::write.table(mol_clean,
-                       file = file_path, row.names = FALSE,
-                       col.names = FALSE, quote = FALSE
+  
+  .write_mol <- function(mol_clean, file_path) {
+    utils::write.table(
+      mol_clean,
+      file = file_path,
+      row.names = FALSE,
+      col.names = FALSE,
+      quote = FALSE
     )
-  })
+  }
   
-  #TODO construct tibble for output
+  mapply(.write_mol, mol_clean = mols, file_path = file_paths)
   
+  #construct tibble for output
+  tibble::tibble(compound_id = compound_ids, mol_path = file_paths)
 }
 
 
