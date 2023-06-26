@@ -7,9 +7,11 @@
 get_mol_kegg(compound_ids, pathway_ids, dir)
 }
 \arguments{
-\item{compound_ids}{character vector of KEGG compound IDs---5 digits prepended with a "C".}
+\item{compound_ids}{character vector of KEGG compound IDs---5 digits
+prepended with a "C".}
 
-\item{pathway_ids}{character vector of KEGG pathway IDs---5 digits prepended with "map".}
+\item{pathway_ids}{character vector of KEGG pathway IDs---5 digits prepended
+with "map".}
 
 \item{dir}{path to a folder to save mol files in.}
 }
