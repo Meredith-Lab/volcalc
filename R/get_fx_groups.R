@@ -2,39 +2,37 @@
 #'
 #' Return functional group counts relevant to volatility calculation for
 #' specified compound
+#' 
+#' @note Users do not typically need to interact with this function, but it is
+#'   used internally by `calc_vol()`
 #'
-#' @param compound_id A character string that is 5 digits prepended with a "C".
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in
-#'   format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to
-#'   download data.
+#' @param compound_sdf object created by `ChemmineR::read.SDFset()`
 #'
 #' @return Dataframe with columns of basic compound info and functional group
 #'   counts.
 #'
 #' @examples
-#' \dontrun{
-#' ex_groups <- get_fx_groups(compound_id = "C16181")
-#' }
+#' get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
+#' mol <- ChemmineR::read.SDFset(get_df$mol_path)
+#' get_fx_groups(mol)
+#' 
 #' @export
 get_fx_groups <-
-  function(compound_id,
-           pathway_id = NULL,
-           path = "data") {
+  function(compound_sdf) {
   
     #assign variables to quiet devtools::check()
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
-  if(!is.null(pathway_id)){
-    mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
-  } else {
-    mol_path <- fs::path(path, compound_id, ext = "mol")
-  }
-  if (!fs::file_exists(mol_path)) {
-    stop("compound file has either not been downloaded or is in wrong location")
-  }
-  compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
-  kegg_data <- KEGGREST::keggGet(compound_id)
+  # if(!is.null(pathway_id)){
+  #   mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
+  # } else {
+  #   mol_path <- fs::path(path, compound_id, ext = "mol")
+  # }
+  # if (!fs::file_exists(mol_path)) {
+  #   stop("compound file has either not been downloaded or is in wrong location")
+  # }
+  # compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
+  # kegg_data <- KEGGREST::keggGet(compound_id)
   #TODO: could use as_tibble_row() for many of these
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
@@ -50,7 +48,8 @@ get_fx_groups <-
   if (nrow(carbon_bond_data) == 0){
     carbon_dbl_count <- tibble::tibble(n = 0)
   } else {
-    carbon_dbl_count <- data.frame(all = unlist(carbon_bond_data)) %>%
+    carbon_dbl_count <- 
+      data.frame(all = unlist(carbon_bond_data)) %>%
       dplyr::count(all) %>%
       dplyr::filter(all == 2) %>%
       dplyr::select(n) %>%
@@ -74,13 +73,9 @@ get_fx_groups <-
   thiol_pattern <- "[#16X2H]"
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
   fx_groups_df <- data.frame(
-    pathway = ifelse(!is.null(pathway_id), pathway_id, NA),
-    compound = compound_id,
-    formula = kegg_data[[1]]$FORMULA,
-    name = kegg_data[[1]]$NAME[1],
-    mass = ifelse(!is.null(kegg_data[[1]]$MOL_WEIGHT),
-      as.numeric(kegg_data[[1]]$MOL_WEIGHT), NA
-    ),
+    formula = ChemmineR::propOB(compound_sdf)$formula,
+    name = ChemmineR::propOB(compound_sdf)$title, #TODO replace empty string with NA
+    mass = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
     carbons = ifelse("CMP1.C" %in% colnames(atoms),
       atoms$CMP1.C, 0
     ),
@@ -139,7 +134,8 @@ get_fx_groups <-
       atoms$CMP1.F, 0
     )
   )
-  fx_groups_df <- fx_groups_df %>%
+  fx_groups_df <- 
+    fx_groups_df %>%
     # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
     dplyr::mutate(
       phenol = ifelse(rings != 0 & rings_aromatic != 0 & phenol > 1, (phenol / 2) - (hydroxyl_groups - 1), phenol),
