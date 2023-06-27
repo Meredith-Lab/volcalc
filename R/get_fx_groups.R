@@ -20,20 +20,17 @@
 get_fx_groups <-
   function(compound_sdf) {
   
+    #TODO: Should get_fx_groups be vectorized?  Vectorization to work on
+    #multiple compounds could happen at three levels: 1) get_fx_groups() could
+    #accept a vector of SDFset objects. 2) SDFset objects can contain multiple
+    #compounds, so it could accept a single SDFset with multiple compounds. 3)
+    #it could be restricted to a single SDFset with a single molecule and then
+    #be applied to multiple compunds in `calc_vol()`
+    
     #assign variables to quiet devtools::check()
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
-  # if(!is.null(pathway_id)){
-  #   mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
-  # } else {
-  #   mol_path <- fs::path(path, compound_id, ext = "mol")
-  # }
-  # if (!fs::file_exists(mol_path)) {
-  #   stop("compound file has either not been downloaded or is in wrong location")
-  # }
-  # compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
-  # kegg_data <- KEGGREST::keggGet(compound_id)
-  #TODO: could use as_tibble_row() for many of these
+  #TODO: could use as_tibble_row() for many of these instead of data.frame(t())
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
     type = "countMA"
