@@ -4,16 +4,10 @@
 \alias{get_fx_groups}
 \title{Count functional groups of a compound}
 \usage{
-get_fx_groups(compound_id, pathway_id = NULL, path = "data")
+get_fx_groups(compound_sdf)
 }
 \arguments{
-\item{compound_id}{A character string that is 5 digits prepended with a "C".}
-
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
-format of 5 digits prepended with "map".}
-
-\item{path}{An optional parameter to set relative path to location to
-download data.}
+\item{compound_sdf}{object created by \code{ChemmineR::read.SDFset()}}
 }
 \value{
 Dataframe with columns of basic compound info and functional group
@@ -23,8 +17,13 @@ counts.
 Return functional group counts relevant to volatility calculation for
 specified compound
 }
-\examples{
-\dontrun{
-ex_groups <- get_fx_groups(compound_id = "C16181")
+\note{
+Users do not typically need to interact with this function, but it is
+used internally by \code{calc_vol()}
 }
+\examples{
+get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
+mol <- ChemmineR::read.SDFset(get_df$mol_path)
+get_fx_groups(mol)
+
 }
