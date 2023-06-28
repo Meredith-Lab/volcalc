@@ -31,23 +31,22 @@ calc_vol <-
   # calculate volatility
   vol_df <- simpol1(fx_groups_df) 
   
-  if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
-    subset_vol_df <-
-      dplyr::select(vol_df, formula:name, volatility:category, carbons:fluorines)
-  } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
-    subset_vol_df <- 
-      dplyr::select(vol_df, formula:name, volatility:category, mass, log_alpha:log_Sum)
-  } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
-    subset_vol_df <- vol_df
-  } else {
-    subset_vol_df <- dplyr::select(vol_df, formula:name, volatility:category)
+  # wrangle output
+  cols_fx <- NULL
+  cols_calc <- NULL
+  if (isTRUE(return_fx_groups)) {
+    cols_fx <- colnames(fx_groups_df)[!colnames(fx_groups_df) %in% c("formula", "name", "mass")]
   }
-  return(subset_vol_df)
+  if (isTRUE(return_calc_steps)) {
+    cols_calc <- c("mass", "log_alpha", "log_Sum")
+  }
+  
+  vol_df %>% 
+    dplyr::select(all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
+  
   }
 
 simpol1 <- function(fx_groups) {
-  #assign variables to quiet devtools::check()
-  # aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
   
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79 # b_0(T)
