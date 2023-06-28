@@ -1,3 +1,4 @@
+utils::globalVariables(".data")
 #' Calculate volatility estimate for compound
 #'
 #' Volatility value and category is estimated for specified compound using the
