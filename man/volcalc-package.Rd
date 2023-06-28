@@ -9,7 +9,7 @@
 Use this package to calculate estimated volatility values for individual compounds of interest or for all compounds in a pathway. Calculation uses the SIMPOL method (Prankow and Asher, 2008), and is only currently applicable to compounds and pathways in KEGG.
 }
 \author{
-\strong{Maintainer}: Kristina Riemer \email{kristinariemer@email.arizona.edu} (\href{https://orcid.org/0000-0003-3802-3331}{ORCID}) [copyright holder]
+\strong{Maintainer}: Kristina Riemer \email{kristinariemer@arizona.edu} (\href{https://orcid.org/0000-0003-3802-3331}{ORCID}) [copyright holder]
 
 Other contributors:
 \itemize{
