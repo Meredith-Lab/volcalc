@@ -42,10 +42,23 @@ calc_vol <-
   }
   
   vol_df %>% 
-    dplyr::select(all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
+    dplyr::select(dplyr::all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
   
   }
 
+
+
+#' SIMPOL.1 method for calculating estimated volatility
+#' 
+#' Implements SIMPOL.1
+#'
+#' @param fx_groups a data.frame with counts of functional groups produced by
+#'   `get_fx_groups()`
+#'
+#' @return a `data.frame` object
+#' @export
+#'
+#' @examples
 simpol1 <- function(fx_groups) {
   
   # `constant` is vapor pressure baseline modified by functional group multipliers
@@ -60,7 +73,7 @@ simpol1 <- function(fx_groups) {
     # table of coefs and equation to calculate b_k(T) at different values of T.
     # Why wasn't this implemented?
     dplyr::mutate(
-      log_alpha = log((1000000 * mass) / (0.0000821 * 293), base = 10),
+      log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
         #TODO deal with NAs before this step and get rid of %+% operator
@@ -96,13 +109,15 @@ simpol1 <- function(fx_groups) {
         (-2.23	  * .data$sulfonate) %+%
         (-2.23	  * .data$thiol) %+%
         (-1.20	  * .data$carbothioester),
+      
+      #TODO shoud the following be part of simpol1() or part of calc_vol() ?
       # I think constant + log_Sum = log10Pº_{L,i}(T), not sure what adding log_alpha makes it
       volatility = constant + .data$log_alpha + .data$log_Sum, #units are atm ?? (or log10 atm maybe)
       category = dplyr::case_when(
-        volatility <  -2                  ~ "non",
-        volatility >= -2 & volatility < 0 ~ "low",
-        volatility >= 0  & volatility < 2 ~ "intermediate",
-        volatility >= 2                   ~ "high"
+        .data$volatility <  -2                  ~ "non",
+        .data$volatility >= -2 & .data$volatility < 0 ~ "low",
+        .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
+        .data$volatility >= 2                   ~ "high"
       )
     ) 
 }
