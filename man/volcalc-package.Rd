@@ -14,6 +14,7 @@ Use this package to calculate estimated volatility values for individual compoun
 Other contributors:
 \itemize{
   \item Eric R. Scott (\href{https://orcid.org/0000-0002-7430-7879}{ORCID}) [contributor]
+  \item S. Marshall Ledford [contributor]
 }
 
 }
