@@ -12,9 +12,11 @@
 #'   counts.
 #'
 #' @examples
+#' /dontrun{
 #' get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
 #' mol <- ChemmineR::read.SDFset(get_df$mol_path)
 #' get_fx_groups(mol)
+#' }
 #' 
 #' @export
 get_fx_groups <-
