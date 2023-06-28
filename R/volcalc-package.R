@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom magrittr %>%
 #' @importFrom grDevices rgb
+#' @importFrom rlang .data
 ## usethis namespace: end
 NULL
 

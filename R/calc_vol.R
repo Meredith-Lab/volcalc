@@ -117,4 +117,60 @@ calc_vol <-
     subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category)
   }
   return(subset_vol_df)
+  }
+
+simpol <- function(fx_groups) {
+  #assign variables to quiet devtools::check()
+  # aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
+  
+  # `constant` is vapor pressure baseline modified by functional group multipliers
+  constant <- 1.79
+  vol_df <- 
+    fx_groups %>%
+    # mass is converted from grams to micrograms
+    # 0.0000821 is universal gas constant
+    # 293 is temperature in Kelvins
+    dplyr::mutate(
+      log_alpha = log((1000000 * mass) / (0.0000821 * 293), base = 10),
+      # multiplier for each functional group is volatility contribution
+      log_Sum =
+        (-0.438   * .data$carbons) %+%
+        (-0.935   * .data$ketones) %+%
+        (-1.35	  * .data$aldehydes) %+%
+        (-2.23	  * .data$hydroxyl_groups) %+%
+        (-3.58	  * .data$carbox_acids) %+%
+        (-0.368   * .data$peroxide) %+%
+        (-2.48	  * .data$hydroperoxide) %+%
+        (-2.23	  * .data$nitrate) %+%
+        (-2.15	  * .data$nitro) %+%
+        (-0.105   * .data$carbon_dbl_bonds) %+%
+        (-0.0104  * .data$rings) %+%
+        (-0.675	  * .data$rings_aromatic) %+%
+        (-2.14	  * .data$phenol) %+%
+        (0.0432 	* .data$nitrophenol) %+%
+        (-2.67	  * .data$nitroester) %+%
+        (-1.20	  * .data$ester) %+%
+        (-0.718   * .data$ether) %+%
+        (-0.683   * .data$ether_alicyclic) %+%
+        (-1.03	  * .data$ether_aromatic) %+%
+        (-1.03	  * .data$amine_primary) %+%
+        (-0.849	  * .data$amine_secondary) %+%
+        (-0.608 	* .data$amine_tertiary) %+%
+        (-1.61    * .data$amine_aromatic) %+%
+        (-2.23	  * .data$amines) %+%
+        (-2.23	  * .data$amides) %+%
+        (-2.23	  * .data$phosphoric_acid) %+%
+        (-2.23	  * .data$phosphoric_ester) %+%
+        (-2.23	  * .data$sulfate) %+%
+        (-2.23	  * .data$sulfonate) %+%
+        (-2.23	  * .data$thiol) %+%
+        (-1.20	  * .data$carbothioester),
+      volatility = constant + .data$log_alpha + .data$log_Sum,
+      category = dplyr::case_when(
+        volatility <  -2                  ~ "non",
+        volatility >= -2 & volatility < 0 ~ "low",
+        volatility >= 0  & volatility < 2 ~ "intermediate",
+        volatility >= 2                   ~ "high"
+      )
+    ) 
 }
