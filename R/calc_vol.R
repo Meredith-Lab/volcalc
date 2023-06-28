@@ -119,21 +119,27 @@ calc_vol <-
   return(subset_vol_df)
   }
 
-simpol <- function(fx_groups) {
+simpol1 <- function(fx_groups) {
   #assign variables to quiet devtools::check()
   # aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
   
   # `constant` is vapor pressure baseline modified by functional group multipliers
-  constant <- 1.79
+  constant <- 1.79 # b_0(T)
   vol_df <- 
     fx_groups %>%
     # mass is converted from grams to micrograms
     # 0.0000821 is universal gas constant
-    # 293 is temperature in Kelvins
+    # 293 is temperature in Kelvins (19.85ºC)
+    # TODO: not sure why hard-coded at 293K.  The coefficients below are from a
+    # table that used 293.15K (table 6 in Pankow & Asher 2008).  There is also a
+    # table of coefs and equation to calculate b_k(T) at different values of T.
+    # Why wasn't this implemented?
+    temp_K <- 293
     dplyr::mutate(
-      log_alpha = log((1000000 * mass) / (0.0000821 * 293), base = 10),
+      log_alpha = log((1000000 * mass) / (0.0000821 * temp_K), base = 10),
       # multiplier for each functional group is volatility contribution
-      log_Sum =
+      log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
+        # b_k(T)  * v_k,i
         (-0.438   * .data$carbons) %+%
         (-0.935   * .data$ketones) %+%
         (-1.35	  * .data$aldehydes) %+%
@@ -165,7 +171,8 @@ simpol <- function(fx_groups) {
         (-2.23	  * .data$sulfonate) %+%
         (-2.23	  * .data$thiol) %+%
         (-1.20	  * .data$carbothioester),
-      volatility = constant + .data$log_alpha + .data$log_Sum,
+      # I think constant + log_Sum = log10Pº_{L,i}(T), not sure what adding log_alpha makes it
+      volatility = constant + .data$log_alpha + .data$log_Sum, #units are atm ?? (or log10 atm maybe)
       category = dplyr::case_when(
         volatility <  -2                  ~ "non",
         volatility >= -2 & volatility < 0 ~ "low",
