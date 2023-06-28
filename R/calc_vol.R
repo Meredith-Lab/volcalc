@@ -54,57 +54,9 @@ calc_vol <-
   if (isTRUE(get_groups)) {
     fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
   }
-    
-  #assign variables to quiet devtools::check()
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amines <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
+    # calculate volatility
+    vol_df <- simpol1(fx_groups_df) 
   
-  # `constant` is vapor pressure baseline modified by functional group multipliers
-  constant <- 1.79
-  vol_df <- fx_groups_df %>%
-    # mass is converted from grams to micrograms
-    # 0.0000821 is universal gas constant
-    # 293 is temperature in Kelvins
-    dplyr::mutate(log_alpha = log((1000000*mass)/(0.0000821*293), base = 10),
-           # multiplier for each functional group is volatility contribution
-           log_Sum =
-             (-0.438  * carbons) %+%
-             (-0.935  * ketones) %+%
-             (-1.35	  * aldehydes) %+%
-             (-2.23	  * hydroxyl_groups) %+%
-             (-3.58	  * carbox_acids) %+%
-             (-0.368  * peroxide) %+%
-             (-2.48	  * hydroperoxide) %+%
-             (-2.23	  * nitrate) %+%
-             (-2.15	  * nitro) %+%
-             (-0.105  * carbon_dbl_bonds) %+%
-             (-0.0104 * rings) %+%
-             (-0.675	* rings_aromatic) %+%
-             (-2.14	  * phenol) %+%
-             (0.0432 	* nitrophenol) %+%
-             (-2.67	  * nitroester) %+%
-             (-1.20	  * ester) %+%
-             (-0.718  * ether) %+%
-             (-0.683  * ether_alicyclic) %+%
-             (-1.03	  * ether_aromatic) %+%
-             (-1.03	  * amine_primary) %+%
-             (-0.849	* amine_secondary) %+%
-             (-0.608 	* amine_tertiary) %+%
-             (-1.61   * amine_aromatic) %+%
-             (-2.23	  * amines) %+%
-             (-2.23	  * amides) %+%
-             (-2.23	  * phosphoric_acid) %+%
-             (-2.23	  * phosphoric_ester) %+%
-             (-2.23	  * sulfate) %+%
-             (-2.23	  * sulfonate) %+%
-             (-2.23	  * thiol) %+%
-             (-1.20	  * carbothioester),
-           volatility = log_alpha + constant + log_Sum,
-           category = dplyr::case_when(
-             volatility <  -2                  ~ "non", #less than -2
-             volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
-             volatility >= 0 & volatility < 2  ~ "intermediate", #greater than or equal to 0, less than 2
-             volatility >= 2                   ~ "high" #greater than or equal to 2
-           )) 
   if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
     subset_vol_df <-
       dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
@@ -139,6 +91,7 @@ simpol1 <- function(fx_groups) {
       log_alpha = log((1000000 * mass) / (0.0000821 * temp_K), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
+        #TODO deal with NAs before this step and get rid of %+% operator
         # b_k(T)  * v_k,i
         (-0.438   * .data$carbons) %+%
         (-0.935   * .data$ketones) %+%
