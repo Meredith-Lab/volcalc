@@ -22,8 +22,10 @@ Users do not typically need to interact with this function, but it is
 used internally by \code{calc_vol()}
 }
 \examples{
+\dontrun{
 get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
 mol <- ChemmineR::read.SDFset(get_df$mol_path)
 get_fx_groups(mol)
+}
 
 }

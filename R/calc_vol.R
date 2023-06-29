@@ -1,4 +1,3 @@
-utils::globalVariables(".data")
 #' Calculate volatility estimate for compound
 #'
 #' Volatility value and category is estimated for specified compound using the
@@ -23,10 +22,12 @@ calc_vol <-
     
   from <- match.arg(from)
   
-  #TODO: vectorize so `input` can be a vector
+  #TODO: vectorize so `input` can be a vector.  See also notes in
+  #`get_fx_groups()` about how to implement this
   if(from == "mol_path") {
     compound_sdf <- ChemmineR::read.SDFset(input)
   }
+  
   fx_groups_df <- get_fx_groups(compound_sdf)
   # calculate volatility
   vol_df <- simpol1(fx_groups_df) 
