@@ -29,6 +29,10 @@ get_fx_groups <-
     #it could be restricted to a single SDFset with a single molecule and then
     #be applied to multiple compunds in `calc_vol()`
     
+    if(length(compound_sdf) != 1) {
+      stop("SDFset objects must contain a single molecule only")
+    }
+              
     #assign variables to quiet devtools::check()
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
