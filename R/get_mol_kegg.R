@@ -66,7 +66,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
     #just use the first name and remove separator
     title <- stringr::str_remove(names[1], ";")
     #add title line to mol file
-    mol_clean <- paste0(title, "\n\n", gsub(">.*", "", mol))
+    mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
     mol_clean
   }
   mols <- lapply(out_tbl$compound_id, .get_mol_kegg)
