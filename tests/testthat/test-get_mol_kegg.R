@@ -1,4 +1,6 @@
 test_that("get_mol_kegg returns tibble", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
   expect_s3_class(out, "tbl_df")
@@ -6,12 +8,16 @@ test_that("get_mol_kegg returns tibble", {
 })
 
 test_that("get_mol_kegg writes files", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
   expect_true(fs::file_exists(fs::path(out$mol_path)))
 })
 
 test_that("get_mol_kegg errors unless one of compound_id or pathway_id", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   expect_error(get_mol_kegg(dir = dir),
                "One of `compound_id` or `pathway_id` are required")
@@ -22,6 +28,8 @@ test_that("get_mol_kegg errors unless one of compound_id or pathway_id", {
 })
 
 test_that("get_mol_kegg checks ID format", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   expect_error(
     get_mol_kegg(compound_ids = "hello", dir = dir),
@@ -42,14 +50,28 @@ test_that("get_mol_kegg checks ID format", {
 })
 
 test_that("get_mol_kegg dl correct compound", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
   expect_equal(readLines(out$mol_path) %>% head(1), "Malonyl-CoA")
 })
 
 test_that("get_mol_kegg works with pathways", {
+  skip_if_offline()
+  skip_on_cran()
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(pathway_ids = c("map00253", "map00232"), dir = dir)
   expect_equal(nrow(out), 43)
   expect_equal(unique(out$pathway_id), c("map00253", "map00232"))
+})
+
+test_that(".mol files are correctly formed", {
+  skip_if_offline()
+  skip_on_cran()
+  dir <- withr::local_tempdir()
+  out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
+  sdf <- ChemmineR::read.SDFset(out$mol_path)
+  #uggg, annoyingly not capturing warnings.  need to do something fancier
+  expect_no_condition(ChemmineR::propOB(sdf))
 })
