@@ -14,6 +14,6 @@ test_that("returns correct number of columns depending on return arguments", {
 
 test_that("calc_vol() works with multiple inputs", {
   paths <- c("tests/testthat/data/map00361/C00011.mol", "tests/testthat/data/map00361/C00042.mol")
-  expect_s3_class(calc_vol(paths[1]), "data.frame")
+  expect_s3_class(calc_vol(paths), "data.frame")
 })
   
