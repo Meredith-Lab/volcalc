@@ -8,7 +8,7 @@
 #'
 #' @param compound_sdf object created by `ChemmineR::read.SDFset()`
 #'
-#' @return Dataframe with columns of basic compound info and functional group
+#' @return a tibble with columns of basic compound info and functional group
 #'   counts.
 #'
 #' @examples
@@ -31,12 +31,12 @@ get_fx_groups <-
     
     if(length(compound_sdf) != 1) {
       stop("SDFset objects must contain a single molecule only")
+      #this is partly because of type instability of groups() https://github.com/girke-lab/ChemmineR/issues/15
     }
               
     #assign variables to quiet devtools::check()
     rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
-  #TODO: could use as_tibble_row() for many of these instead of data.frame(t())
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
     type = "countMA"
@@ -148,5 +148,5 @@ get_fx_groups <-
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)
     )
-  return(fx_groups_df)
+  tibble::as_tibble(fx_groups_df)
 }

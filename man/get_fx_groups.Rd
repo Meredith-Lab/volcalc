@@ -10,7 +10,7 @@ get_fx_groups(compound_sdf)
 \item{compound_sdf}{object created by \code{ChemmineR::read.SDFset()}}
 }
 \value{
-Dataframe with columns of basic compound info and functional group
+a tibble with columns of basic compound info and functional group
 counts.
 }
 \description{

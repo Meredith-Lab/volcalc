@@ -23,7 +23,7 @@ final dataframe.}
 calculation steps in final dataframe.}
 }
 \value{
-Dataframe with columns of basic compound info and volatility value
+a tibble with columns of basic compound info and volatility value
 and category. See documentation for column descriptions.
 }
 \description{

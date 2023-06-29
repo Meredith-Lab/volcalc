@@ -10,7 +10,7 @@
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
 #'   calculation steps in final dataframe.
 #'
-#' @return Dataframe with columns of basic compound info and volatility value
+#' @return a tibble with columns of basic compound info and volatility value
 #'   and category. See documentation for column descriptions.
 #'
 #' @export
@@ -22,13 +22,13 @@ calc_vol <-
     
   from <- match.arg(from)
   
-  #TODO: vectorize so `input` can be a vector.  See also notes in
-  #`get_fx_groups()` about how to implement this
   if(from == "mol_path") {
-    compound_sdf <- ChemmineR::read.SDFset(input)
+    compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
   }
   
-  fx_groups_df <- get_fx_groups(compound_sdf)
+  fx_groups_df <- lapply(compound_sdf_list, get_fx_groups) %>% 
+    dplyr::bind_rows()
+  
   # calculate volatility
   vol_df <- simpol1(fx_groups_df) 
   
@@ -42,8 +42,8 @@ calc_vol <-
     cols_calc <- c("mass", "log_alpha", "log_Sum")
   }
   
+  #return:
   vol_df %>% 
     dplyr::select(dplyr::all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
-  
   }
 
