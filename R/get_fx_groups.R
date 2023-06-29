@@ -21,21 +21,16 @@
 #' @export
 get_fx_groups <-
   function(compound_sdf) {
-  
-    #TODO: Should get_fx_groups be vectorized?  Vectorization to work on
-    #multiple compounds could happen at three levels: 1) get_fx_groups() could
-    #accept a vector of SDFset objects. 2) SDFset objects can contain multiple
-    #compounds, so it could accept a single SDFset with multiple compounds. 3)
-    #it could be restricted to a single SDFset with a single molecule and then
-    #be applied to multiple compunds in `calc_vol()`
     
     if(length(compound_sdf) != 1) {
       stop("SDFset objects must contain a single molecule only")
-      #this is partly because of type instability of groups() https://github.com/girke-lab/ChemmineR/issues/15
+      # this is partly because of type instability of groups():
+      # https://github.com/girke-lab/ChemmineR/issues/15
     }
               
     #assign variables to quiet devtools::check()
-    rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+    rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <-
+      phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
   groups <- data.frame(t(ChemmineR::groups(compound_sdf,
     groups = "fctgroup",
@@ -61,7 +56,8 @@ get_fx_groups <-
   if (nrow(carbon_dbl_count) == 0) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
-  # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+  # *_pattern are SMARTS strings:
+  # https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]"
   phenol_pattern <- "[OX2H][cX3]:[c]"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
@@ -77,7 +73,7 @@ get_fx_groups <-
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
   fx_groups_df <- data.frame(
     formula = ChemmineR::propOB(compound_sdf)$formula,
-    name = ChemmineR::propOB(compound_sdf)$title, #TODO replace empty string with NA
+    name = ChemmineR::propOB(compound_sdf)$title,
     mass = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
     carbons = ifelse("CMP1.C" %in% colnames(atoms),
       atoms$CMP1.C, 0
@@ -136,7 +132,8 @@ get_fx_groups <-
     fluorines = ifelse("CMP1.F" %in% colnames(atoms),
       atoms$CMP1.F, 0
     )
-  )
+  ) %>% 
+    mutate(name = ifelse(name == "", NA_character_, name))
   fx_groups_df <- 
     fx_groups_df %>%
     # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters

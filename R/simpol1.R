@@ -65,10 +65,10 @@ simpol1 <- function(fx_groups) {
       # I think constant + log_Sum = log10Pº_{L,i}(T), not sure what adding log_alpha makes it
       volatility = constant + .data$log_alpha + .data$log_Sum, #units are atm ?? (or log10 atm maybe)
       category = dplyr::case_when(
-        .data$volatility <  -2                  ~ "non",
+        .data$volatility <  -2                        ~ "non",
         .data$volatility >= -2 & .data$volatility < 0 ~ "low",
         .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
-        .data$volatility >= 2                   ~ "high"
+        .data$volatility >= 2                         ~ "high"
       )
     ) 
 }
