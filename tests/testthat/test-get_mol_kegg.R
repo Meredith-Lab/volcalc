@@ -72,6 +72,9 @@ test_that(".mol files are correctly formed", {
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
   sdf <- ChemmineR::read.SDFset(out$mol_path)
-  #uggg, annoyingly not capturing messages so this test passes even when there are OpenBabel warnings.
-  expect_no_condition(ChemmineR::propOB(sdf))
+  # sdf <- ChemmineR::read.SDFset("tests/testthat/data/map00361/C00042.mol")
+  expect_no_error(
+    really_capture_error(x <- ChemmineR::propOB(sdf))
+  )
+  
 })

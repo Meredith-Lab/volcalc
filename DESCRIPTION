@@ -26,6 +26,7 @@ Imports:
     tidyr,
     tidyselect
 Suggests: 
+    processx,
     testthat (>= 3.0.0),
     withr
 biocViews: 
