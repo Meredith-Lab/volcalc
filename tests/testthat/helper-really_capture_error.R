@@ -4,7 +4,8 @@
 
 # This was modified from code written by Gábor Csárdi.  The purpose is to
 # capture OpenBabel system library errors that are not captured by
-# capture.output() or sink() despite them being printed to the R console.  This is a "very nasty trick" according to Gábor so take care in using this
+# capture.output() or sink() despite them being printed to the R console.  This
+# is a "very nasty trick" according to Gábor so take care in using this
 really_capture_error <- function(expr) {
   tmp <- tempfile()
   on.exit(unlink(tmp), add = TRUE)
