@@ -16,6 +16,10 @@ simpol1 <- function(fx_groups) {
   constant <- 1.79 # b_0(T)
   vol_df <- 
     fx_groups %>%
+    # assume NAs are 0s for the sake of this calculation
+    dplyr::mutate(dplyr::across(dplyr::where(is.integer), function(x)
+      ifelse(is.na(x), 0L, x))) %>%
+    
     # mass is converted from grams to micrograms
     # 0.0000821 is universal gas constant
     # 293 is temperature in Kelvins (19.85ºC)
@@ -27,38 +31,37 @@ simpol1 <- function(fx_groups) {
       log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
-        #TODO deal with NAs before this step and get rid of %+% operator
         # b_k(T)  * v_k,i
-        (-0.438   * .data$carbons) %+%
-        (-0.935   * .data$ketones) %+%
-        (-1.35	  * .data$aldehydes) %+%
-        (-2.23	  * .data$hydroxyl_groups) %+%
-        (-3.58	  * .data$carbox_acids) %+%
-        (-0.368   * .data$peroxide) %+%
-        (-2.48	  * .data$hydroperoxide) %+%
-        (-2.23	  * .data$nitrate) %+%
-        (-2.15	  * .data$nitro) %+%
-        (-0.105   * .data$carbon_dbl_bonds) %+%
-        (-0.0104  * .data$rings) %+%
-        (-0.675	  * .data$rings_aromatic) %+%
-        (-2.14	  * .data$phenol) %+%
-        (0.0432 	* .data$nitrophenol) %+%
-        (-2.67	  * .data$nitroester) %+%
-        (-1.20	  * .data$ester) %+%
-        (-0.718   * .data$ether) %+%
-        (-0.683   * .data$ether_alicyclic) %+%
-        (-1.03	  * .data$ether_aromatic) %+%
-        (-1.03	  * .data$amine_primary) %+%
-        (-0.849	  * .data$amine_secondary) %+%
-        (-0.608 	* .data$amine_tertiary) %+%
-        (-1.61    * .data$amine_aromatic) %+%
-        (-2.23	  * .data$amines) %+%
-        (-2.23	  * .data$amides) %+%
-        (-2.23	  * .data$phosphoric_acid) %+%
-        (-2.23	  * .data$phosphoric_ester) %+%
-        (-2.23	  * .data$sulfate) %+%
-        (-2.23	  * .data$sulfonate) %+%
-        (-2.23	  * .data$thiol) %+%
+        (-0.438   * .data$carbons) +
+        (-0.935   * .data$ketones) +
+        (-1.35	  * .data$aldehydes) +
+        (-2.23	  * .data$hydroxyl_groups) +
+        (-3.58	  * .data$carbox_acids) +
+        (-0.368   * .data$peroxide) +
+        (-2.48	  * .data$hydroperoxide) +
+        (-2.23	  * .data$nitrate) +
+        (-2.15	  * .data$nitro) +
+        (-0.105   * .data$carbon_dbl_bonds) +
+        (-0.0104  * .data$rings) +
+        (-0.675	  * .data$rings_aromatic) +
+        (-2.14	  * .data$phenol) +
+        (0.0432 	* .data$nitrophenol) +
+        (-2.67	  * .data$nitroester) +
+        (-1.20	  * .data$ester) +
+        (-0.718   * .data$ether) +
+        (-0.683   * .data$ether_alicyclic) +
+        (-1.03	  * .data$ether_aromatic) +
+        (-1.03	  * .data$amine_primary) +
+        (-0.849	  * .data$amine_secondary) +
+        (-0.608 	* .data$amine_tertiary) +
+        (-1.61    * .data$amine_aromatic) +
+        (-2.23	  * .data$amines) +
+        (-2.23	  * .data$amides) +
+        (-2.23	  * .data$phosphoric_acid) +
+        (-2.23	  * .data$phosphoric_ester) +
+        (-2.23	  * .data$sulfate) +
+        (-2.23	  * .data$sulfonate) +
+        (-2.23	  * .data$thiol) +
         (-1.20	  * .data$carbothioester),
       
       #TODO shoud the following be part of simpol1() or part of calc_vol() ?
