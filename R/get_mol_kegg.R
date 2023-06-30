@@ -1,3 +1,4 @@
+utils::globalVariables(".data")
 #' Download compound .mol files from KEGG
 #'
 #' Downloads mol files corresponding to individual compounds or compounds in a
