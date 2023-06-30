@@ -19,6 +19,7 @@ calc_vol <-
            from = c("mol_path"),
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
+  #TODO: consider bringing back the fx_groups_df argument to pass a manually constructed dataframe since not all functional groups in Pankow & Asher are detected by get_fx_groups currently.
     
   from <- match.arg(from)
   

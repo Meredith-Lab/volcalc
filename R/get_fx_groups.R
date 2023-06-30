@@ -134,6 +134,7 @@ get_fx_groups <-
     )
   ) %>% 
     mutate(name = ifelse(name == "", NA_character_, name))
+  
   fx_groups_df <- 
     fx_groups_df %>%
     # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
