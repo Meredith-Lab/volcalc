@@ -69,6 +69,7 @@ test_that("get_mol_kegg works with pathways", {
 test_that(".mol files are correctly formed", {
   skip_if_offline()
   skip_on_cran()
+  skip_on_os("windows") # really_capture_error() errors on windows
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
   sdf <- ChemmineR::read.SDFset(out$mol_path)
