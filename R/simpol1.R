@@ -3,12 +3,12 @@ utils::globalVariables(".data")
 #' 
 #' Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 #' pressure of organic compounds as described in Pankow & Asher (2008).  Users
-#' will not usually use this function directly, but rather through `calc_vol()`
+#' will not usually use this function directly, but rather through [calc_vol()]
 #' which uses this as the default (currently only) method.
 #' 
 #'
 #' @param fx_groups a data.frame or tibble with counts of functional groups
-#'   produced by `get_fx_groups()` (or manually, with the same column names)
+#'   produced by [get_fx_groups()] (or manually, with the same column names)
 #'
 #' @return The `fx_groups` tibble with the additional columns:
 #'   * `log_alpha` — not sure! units?
@@ -20,7 +20,7 @@ utils::globalVariables(".data")
 #'   contribution method for predicting vapor pressures and enthalpies of
 #'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
 #'   https://doi.org/10.5194/acp-8-2773-2008
-#' 
+#' @seealso [calc_vol()]
 #' @export
 #'
 #' @examples

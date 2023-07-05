@@ -2,19 +2,30 @@
 % Please edit documentation in R/calc_vol.R
 \name{calc_vol}
 \alias{calc_vol}
-\title{Calculate volatility estimate for compound}
+\title{Calculate volatility estimate for a compound}
 \usage{
 calc_vol(
   input,
   from = c("mol_path"),
+  method = c("simpol1"),
+  fx_groups = NULL,
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
 }
 \arguments{
-\item{input}{a path to a .mol file or a character representation such as SMILES or InChI}
+\item{input}{a path to a .mol file or a character representation such as
+SMILES or InChI}
 
-\item{from}{the form of \code{input} (currently only a path to a .mol file is implemented)}
+\item{from}{the form of \code{input} (currently only a path to a .mol file is
+implemented)}
+
+\item{method}{the method for calculating estimated volatility. Currently only
+the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for more details.}
+
+\item{fx_groups}{optional data frame in the format produced by
+\code{\link[=get_fx_groups]{get_fx_groups()}}.  If provided, it will override calculated functional
+group counts---use with caution and see Details for more.}
 
 \item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
 final dataframe.}
@@ -24,9 +35,21 @@ calculation steps in final dataframe.}
 }
 \value{
 a tibble with columns of basic compound info and volatility value
-and category. See documentation for column descriptions.
+and category created by \code{\link[=get_fx_groups]{get_fx_groups()}} and \code{\link[=simpol1]{simpol1()}}.
 }
 \description{
-Volatility value and category is estimated for specified compound using the
-SIMPOL formula
+Relative volatility value and category is estimated for specified compound
+using group contribution methods.
+}
+\details{
+By default, \code{\link[=calc_vol]{calc_vol()}} uses \code{\link[=get_fx_groups]{get_fx_groups()}} to get counts of
+functional groups and other properties that contribute to volatility.
+However, not all functional groups are currently implemented, and it's
+possible that functional group counts may not be captured perfectly for all
+molecules.  Therefore, you may provide a data frame of manual counts to
+\code{fx_groups}.  It expects one row per compound, and exactly the column names
+produced by \code{\link[=get_fx_groups]{get_fx_groups()}}.
+}
+\seealso{
+\code{\link[=get_fx_groups(), simpol1]{get_fx_groups(), simpol1()}}
 }

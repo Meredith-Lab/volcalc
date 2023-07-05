@@ -7,7 +7,7 @@
 get_fx_groups(compound_sdf)
 }
 \arguments{
-\item{compound_sdf}{object created by \code{ChemmineR::read.SDFset()}}
+\item{compound_sdf}{object created by \code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}}}
 }
 \value{
 a tibble with columns of basic compound info and functional group
@@ -16,7 +16,7 @@ counts.
 \description{
 Return functional group counts relevant to calculating estimated volatility
 for specified compounds. Users will not typically interact with this function
-directly, but rather by using \code{calc_vol()}.
+directly, but rather by using \code{\link[=calc_vol]{calc_vol()}}.
 }
 \note{
 This function currently does not capture hydroperoxide, nitrophenol,
@@ -28,4 +28,7 @@ mol_path <- mol_example("C16181.mol")
 sdf <- ChemmineR::read.SDFset(mol_path)
 fx_groups <- get_fx_groups(sdf)
 
+}
+\seealso{
+\code{\link[=calc_vol]{calc_vol()}}
 }

@@ -14,7 +14,7 @@ test_that("error with SDFset with more than one molecule", {
 #' - Test that compound name is read correctly or is NA when empty
 
 test_that("get_fx_groups() distinguishes between ROOR, ROOH, and ROH", {
-  skip() #no pattern for hydroperoxide yet
+  skip("no pattern for hydroperoxide yet")
   #https://en.wikipedia.org/wiki/Tert-Butyl_hydroperoxide
   hydroperoxide <- ChemmineR::smiles2sdf("CC(C)(C)OO")
   

@@ -2,17 +2,17 @@
 #'
 #' Return functional group counts relevant to calculating estimated volatility
 #' for specified compounds. Users will not typically interact with this function
-#' directly, but rather by using `calc_vol()`.
+#' directly, but rather by using [calc_vol()].
 #' 
 #' @note This function currently does not capture hydroperoxide, nitrophenol,
 #'   nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
 #'   Contributions of SMARTS strings to capture these groups are welcome.
 #'
-#' @param compound_sdf object created by `ChemmineR::read.SDFset()`
+#' @param compound_sdf object created by [ChemmineR::read.SDFset()]
 #'
 #' @return a tibble with columns of basic compound info and functional group
 #'   counts.
-#'
+#' @seealso [calc_vol()]
 #' @examples
 #' mol_path <- mol_example("C16181.mol")
 #' sdf <- ChemmineR::read.SDFset(mol_path)

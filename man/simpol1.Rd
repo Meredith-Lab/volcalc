@@ -8,7 +8,7 @@ simpol1(fx_groups)
 }
 \arguments{
 \item{fx_groups}{a data.frame or tibble with counts of functional groups
-produced by \code{get_fx_groups()} (or manually, with the same column names)}
+produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
 }
 \value{
 The \code{fx_groups} tibble with the additional columns:
@@ -22,7 +22,7 @@ The \code{fx_groups} tibble with the additional columns:
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 pressure of organic compounds as described in Pankow & Asher (2008).  Users
-will not usually use this function directly, but rather through \code{calc_vol()}
+will not usually use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}}
 which uses this as the default (currently only) method.
 }
 \examples{
@@ -36,4 +36,7 @@ Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
 contribution method for predicting vapor pressures and enthalpies of
 vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
 https://doi.org/10.5194/acp-8-2773-2008
+}
+\seealso{
+\code{\link[=calc_vol]{calc_vol()}}
 }
