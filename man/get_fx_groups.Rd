@@ -14,18 +14,18 @@ a tibble with columns of basic compound info and functional group
 counts.
 }
 \description{
-Return functional group counts relevant to volatility calculation for
-specified compound
+Return functional group counts relevant to calculating estimated volatility
+for specified compounds. Users will not typically interact with this function
+directly, but rather by using \code{calc_vol()}.
 }
 \note{
-Users do not typically need to interact with this function, but it is
-used internally by \code{calc_vol()}
+This function currently does not capture hydroperoxide, nitrophenol,
+nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
+Contributions of SMARTS strings to capture these groups are welcome.
 }
 \examples{
-\dontrun{
-get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
-mol <- ChemmineR::read.SDFset(get_df$mol_path)
-get_fx_groups(mol)
-}
+mol_path <- mol_example("C16181.mol")
+sdf <- ChemmineR::read.SDFset(mol_path)
+fx_groups <- get_fx_groups(sdf)
 
 }

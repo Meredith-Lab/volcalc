@@ -1,10 +1,12 @@
 #' Count functional groups of a compound
 #'
-#' Return functional group counts relevant to volatility calculation for
-#' specified compound
+#' Return functional group counts relevant to calculating estimated volatility
+#' for specified compounds. Users will not typically interact with this function
+#' directly, but rather by using `calc_vol()`.
 #' 
-#' @note Users do not typically need to interact with this function, but it is
-#'   used internally by `calc_vol()`
+#' @note This function currently does not capture hydroperoxide, nitrophenol,
+#'   nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
+#'   Contributions of SMARTS strings to capture these groups are welcome.
 #'
 #' @param compound_sdf object created by `ChemmineR::read.SDFset()`
 #'
@@ -12,11 +14,9 @@
 #'   counts.
 #'
 #' @examples
-#' \dontrun{
-#' get_df <- get_mol_kegg(compound_ids = "C16181", dir = tempdir())
-#' mol <- ChemmineR::read.SDFset(get_df$mol_path)
-#' get_fx_groups(mol)
-#' }
+#' mol_path <- mol_example("C16181.mol")
+#' sdf <- ChemmineR::read.SDFset(mol_path)
+#' fx_groups <- get_fx_groups(sdf)
 #' 
 #' @export
 get_fx_groups <- function(compound_sdf) {
@@ -25,6 +25,7 @@ get_fx_groups <- function(compound_sdf) {
     stop("SDFset objects must contain a single molecule only")
     # this is partly because of type instability of groups():
     # https://github.com/girke-lab/ChemmineR/issues/15
+    #TODO the above bug has been fixed in the dev version, which may cause breaking changes here
   }
   
   #assign variables to quiet devtools::check()
