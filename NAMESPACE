@@ -2,6 +2,7 @@
 
 export(calc_vol)
 export(get_fx_groups)
+export(mol_example)
 export(save_compound_mol)
 export(simpol1)
 importFrom(grDevices,rgb)
