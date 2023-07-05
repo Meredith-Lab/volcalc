@@ -1,15 +1,33 @@
 utils::globalVariables(".data")
 #' SIMPOL.1 method for calculating estimated volatility
 #' 
-#' Implements SIMPOL.1
+#' Implements the SIMPOL.1 group contribution method for predicting liquid vapor
+#' pressure of organic compounds as described in Pankow & Asher (2008).  Users
+#' will not usually use this function directly, but rather through `calc_vol()`
+#' which uses this as the default (currently only) method.
+#' 
 #'
-#' @param fx_groups a data.frame with counts of functional groups produced by
-#'   `get_fx_groups()`
+#' @param fx_groups a data.frame or tibble with counts of functional groups
+#'   produced by `get_fx_groups()` (or manually, with the same column names)
 #'
-#' @return a `data.frame` object
+#' @return The `fx_groups` tibble with the additional columns:
+#'   * `log_alpha` — not sure! units?
+#'   * `log_Sum` — \eqn{\sum_k\nu_{k,i}b_k(T)}, or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the coefficients for each functional group (\eqn{b_K(T)}). units?
+#'   * `volatility` — relative volatility? units?
+#'   * `category` — category of volatility?
+#'
+#' @references Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
+#'   contribution method for predicting vapor pressures and enthalpies of
+#'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
+#'   https://doi.org/10.5194/acp-8-2773-2008
+#' 
 #' @export
 #'
 #' @examples
+#' mol_path <- mol_example("C16181.mol")
+#' sdf <- ChemmineR::read.SDFset(mol_path)
+#' fx_groups <- get_fx_groups(sdf)
+#' simpol1(fx_groups)
 simpol1 <- function(fx_groups) {
   
   # `constant` is vapor pressure baseline modified by functional group multipliers
@@ -31,6 +49,7 @@ simpol1 <- function(fx_groups) {
       log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
+        #TODO I think log_Sum should include `constant`, as it is equivalent to b_0(T) * 1
         # b_k(T)  * v_k,i
         (-0.438   * .data$carbons) +
         (-0.935   * .data$ketones) +
@@ -64,9 +83,9 @@ simpol1 <- function(fx_groups) {
         (-2.23	  * .data$thiol) +
         (-1.20	  * .data$carbothioester),
       
-      #TODO shoud the following be part of simpol1() or part of calc_vol() ?
+      #TODO should the following be part of simpol1() or part of calc_vol() ?
       # I think constant + log_Sum = log10Pº_{L,i}(T), not sure what adding log_alpha makes it
-      volatility = constant + .data$log_alpha + .data$log_Sum, #units are atm ?? (or log10 atm maybe)
+      volatility = constant + .data$log_alpha + .data$log_Sum, 
       category = dplyr::case_when(
         .data$volatility <  -2                        ~ "non",
         .data$volatility >= -2 & .data$volatility < 0 ~ "low",
@@ -74,4 +93,5 @@ simpol1 <- function(fx_groups) {
         .data$volatility >= 2                         ~ "high"
       )
     ) 
+  vol_df
 }

@@ -7,12 +7,33 @@
 simpol1(fx_groups)
 }
 \arguments{
-\item{fx_groups}{a data.frame with counts of functional groups produced by
-\code{get_fx_groups()}}
+\item{fx_groups}{a data.frame or tibble with counts of functional groups
+produced by \code{get_fx_groups()} (or manually, with the same column names)}
 }
 \value{
-a \code{data.frame} object
+The \code{fx_groups} tibble with the additional columns:
+\itemize{
+\item \code{log_alpha} — not sure! units?
+\item \code{log_Sum} — \eqn{\sum_k\nu_{k,i}b_k(T)}, or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the coefficients for each functional group (\eqn{b_K(T)}). units?
+\item \code{volatility} — relative volatility? units?
+\item \code{category} — category of volatility?
+}
 }
 \description{
-Implements SIMPOL.1
+Implements the SIMPOL.1 group contribution method for predicting liquid vapor
+pressure of organic compounds as described in Pankow & Asher (2008).  Users
+will not usually use this function directly, but rather through \code{calc_vol()}
+which uses this as the default (currently only) method.
+}
+\examples{
+mol_path <- mol_example("C16181.mol")
+sdf <- ChemmineR::read.SDFset(mol_path)
+fx_groups <- get_fx_groups(sdf)
+simpol1(fx_groups)
+}
+\references{
+Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
+contribution method for predicting vapor pressures and enthalpies of
+vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
+https://doi.org/10.5194/acp-8-2773-2008
 }
