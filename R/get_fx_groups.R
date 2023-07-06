@@ -59,8 +59,8 @@ get_fx_groups <- function(compound_sdf) {
   }
   # *_pattern are SMARTS strings:
   # https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
-  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]"
-  phenol_pattern <- "[OX2H][cX3]:[c]"
+  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]" #TODO: "[OX2]-[OX2]" matches R-O-O-R and not R-O-O-H
+  phenol_pattern <- "[OX2H][cX3]:[c]" #TODO I think this double counts because there are aromatic carbons ":[c]" on either side of the C bonded to OH.  A better pattern might be to fully specify the ring: [OH]c1ccccc1
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   amine_pattern <- "[NX3;H2,H1;!$(NC=O)]"
   amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
@@ -140,6 +140,7 @@ get_fx_groups <- function(compound_sdf) {
   fx_groups_df <- 
     fx_groups_df %>%
     # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
+    #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
     dplyr::mutate(
       phenol = ifelse(rings != 0 & rings_aromatic != 0 & phenol > 1, (phenol / 2) - (hydroxyl_groups - 1), phenol),
       rings = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
