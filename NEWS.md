@@ -1,6 +1,10 @@
 # volcalc (development version)
 
-- Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
+* Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
+
+# volcalc 1.0.1
+
+* Minor change in calculation in `calc_vol()`---use 293.15K for temperature (instead of 293K) to match the temperature used in Pankow & Asher (2008)
 
 # volcalc 1.0.0
 

@@ -64,7 +64,7 @@ calc_vol <-
     # mass is converted from grams to micrograms
     # 0.0000821 is universal gas constant
     # 293 is temperature in Kelvins
-    dplyr::mutate(log_alpha = log((1000000*mass)/(0.0000821*293), base = 10),
+    dplyr::mutate(log_alpha = log((1000000*mass)/(0.0000821*293.15), base = 10),
            # multiplier for each functional group is volatility contribution
            log_Sum =
              (-0.438  * carbons) %+%
