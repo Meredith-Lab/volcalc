@@ -46,7 +46,7 @@ simpol1 <- function(fx_groups) {
     # table of coefs and equation to calculate b_k(T) at different values of T.
     # Why wasn't this implemented?
     dplyr::mutate(
-      log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293), base = 10),
+      log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293.15), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
         #TODO I think log_Sum should include `constant`, as it is equivalent to b_0(T) * 1
