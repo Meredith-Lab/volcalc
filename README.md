@@ -50,7 +50,7 @@ To see an example of how to use `volcalc`, run the script
 
 ### Installing locally
 
-You can install `volcalc` from GitHub with
+You can install the development version of `volcalc` from GitHub with
 
 ``` r
 # install.packages("pak")
@@ -62,6 +62,13 @@ Or from r-universe with
 ``` r
 options(repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
 pak::pkg_install('volcalc')
+```
+
+You can install the ‘legacy’ version used in our in-prep publication
+with
+
+``` r
+pak::pkg_install("Meredith-Lab/volcalc@v1.0.1")
 ```
 
 Installation of `volcalc` requires the system libraries
@@ -116,7 +123,7 @@ calc_vol(compound_id = "C16181", path = out_path)
 #>      pathway compound  formula                                   name
 #> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
 #>      volatility category
-#> CMP1   6.975571     high
+#> CMP1   6.975349     high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -154,7 +161,7 @@ example_compound_vol <-
            fx_groups_df = example_compound_fx_groups,
            path = out_path)
 print(example_compound_vol$volatility)
-#> [1] 6.975571
+#> [1] 6.975349
 ```
 
 This example compound has a volatility around 7. It is in the high
@@ -172,7 +179,7 @@ pathway can be returned as below.
 example_pathway_vol <- calc_pathway_vol("map00361", path = out_path)
 print(example_pathway_vol[1,])
 #>       pathway compound formula name volatility category
-#> CMP1 map00361   C00011     CO2 CO2;   7.914336     high
+#> CMP1 map00361   C00011     CO2 CO2;   7.914113     high
 ```
 
 ## Dataframe columns
