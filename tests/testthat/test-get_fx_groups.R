@@ -41,3 +41,19 @@ test_that("get_fx_groups() distinguishes between ROOR, ROOH, and ROH", {
   expect_equal(roh$hydroperoxide, 0)
   
 })
+
+test_that("phenol groups are counted correctly", {
+  skip("worry about correctness tests later")
+  phenol <- ChemmineR::smiles2sdf("Oc1ccccc1")
+  bpa <- ChemmineR::smiles2sdf("Oc1ccc(cc1)C(c2ccc(O)cc2)(C)C")
+  phenol_groups <- get_fx_groups(phenol)
+  bpa_groups <- get_fx_groups(bpa)
+  expect_equal(phenol_groups$phenol, 1)
+  expect_equal(phenol_groups$rings, 0)
+  expect_equal(phenol_groups$hydroxyl_groups, 0)
+  expect_equal(phenol_groups$rings_aromatic, 1) #actually not sure if these should include phenols since already counted elsewhere?  Should this be 0 or 1?
+  expect_equal(bpa_groups$phenol, 2)
+  expect_equal(bpa_groups$hydroxyl_groups, 0)
+  expect_equal(bpa_groups$rings, 0)
+  expect_equal(bpa_gropus$rings_aromatic, 2) #actually not sure if these should include phenols since already counted elsewhere?  Should this be 0 or 2?
+})
