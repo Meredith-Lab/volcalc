@@ -29,7 +29,7 @@
 #' @return a tibble with columns of basic compound info and volatility value
 #'   and category created by [get_fx_groups()] and [simpol1()].
 #'   
-#' @seealso [get_fx_groups(), simpol1()]
+#' @seealso [get_fx_groups()], [simpol1()]
 #'
 #' @export
 calc_vol <-

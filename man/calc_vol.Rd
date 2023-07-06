@@ -51,5 +51,5 @@ molecules.  Therefore, you may provide a data frame of manual counts to
 produced by \code{\link[=get_fx_groups]{get_fx_groups()}}.
 }
 \seealso{
-\code{\link[=get_fx_groups(), simpol1]{get_fx_groups(), simpol1()}}
+\code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}
 }
