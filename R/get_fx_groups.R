@@ -72,6 +72,8 @@ get_fx_groups <- function(compound_sdf) {
   sulfonate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H0]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H0])]"
   thiol_pattern <- "[#16X2H]"
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
+  
+  #TODO make these column names as specific as possible.  E.g. instead of "hydroxyl_groups" it should be "alkyl_hydroxyls" (what we want to capture) or "total_hydroxyls" (what is currently captured).  Instead of "phenol" it should be "aromatic_hydroxyls".
   fx_groups_df <- data.frame(
     formula = ChemmineR::propOB(compound_sdf)$formula,
     name = ChemmineR::propOB(compound_sdf)$title,
