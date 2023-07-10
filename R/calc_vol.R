@@ -39,8 +39,21 @@ calc_vol <-
   fx_groups_df <- lapply(compound_sdf_list, get_fx_groups) %>% 
     dplyr::bind_rows()
   
-  # calculate volatility
-  vol_df <- simpol1(fx_groups_df) 
+  # calculate relative volatility & categories from logP
+  vol_df <- simpol1(fx_groups_df) %>% 
+    dplyr::mutate(
+      # mass is converted from grams to micrograms
+      # 0.0000821 is universal gas constant
+      # 293.15 is temperature in Kelvins (20ºC)
+      log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
+      volatility = .data$log_alpha + .data$log_Sum, 
+      category = dplyr::case_when(
+        .data$volatility <  -2                        ~ "non",
+        .data$volatility >= -2 & .data$volatility < 0 ~ "low",
+        .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
+        .data$volatility >= 2                         ~ "high"
+      )
+    )
   
   # wrangle output
   cols_fx <- NULL

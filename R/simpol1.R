@@ -29,28 +29,20 @@ utils::globalVariables(".data")
 #' fx_groups <- get_fx_groups(sdf)
 #' simpol1(fx_groups)
 simpol1 <- function(fx_groups) {
-  
-  # `constant` is vapor pressure baseline modified by functional group multipliers
-  constant <- 1.79 # b_0(T)
-  vol_df <- 
-    fx_groups %>%
+  fx_groups %>%
     # assume NAs are 0s for the sake of this calculation
     dplyr::mutate(dplyr::across(dplyr::where(is.integer), function(x)
       ifelse(is.na(x), 0L, x))) %>%
     
-    # mass is converted from grams to micrograms
-    # 0.0000821 is universal gas constant
-    # 293 is temperature in Kelvins (19.85ºC)
-    # TODO: not sure why hard-coded at 293K.  The coefficients below are from a
-    # table that used 293.15K (table 6 in Pankow & Asher 2008).  There is also a
-    # table of coefs and equation to calculate b_k(T) at different values of T.
-    # Why wasn't this implemented?
+    
+    # TODO: There is also a table of coefs and equation to calculate b_k(T) at
+    # different values of T. Why wasn't this implemented?
     dplyr::mutate(
-      log_alpha = log((1000000 * .data$mass) / (0.0000821 * 293.15), base = 10),
       # multiplier for each functional group is volatility contribution
       log_Sum = #TODO why is this called log_Sum?  There's no log operation, right?
         #TODO I think log_Sum should include `constant`, as it is equivalent to b_0(T) * 1
         # b_k(T)  * v_k,i
+        (1.79     * 1) + #b_0(T) is an intercept/constant
         (-0.438   * .data$carbons) +
         (-0.935   * .data$ketones) +
         (-1.35	  * .data$aldehydes) +
@@ -81,17 +73,6 @@ simpol1 <- function(fx_groups) {
         (-2.23	  * .data$sulfate) +
         (-2.23	  * .data$sulfonate) +
         (-2.23	  * .data$thiol) +
-        (-1.20	  * .data$carbothioester),
-      
-      #TODO should the following be part of simpol1() or part of calc_vol() ?
-      # I think constant + log_Sum = log10Pº_{L,i}(T), not sure what adding log_alpha makes it
-      volatility = constant + .data$log_alpha + .data$log_Sum, 
-      category = dplyr::case_when(
-        .data$volatility <  -2                        ~ "non",
-        .data$volatility >= -2 & .data$volatility < 0 ~ "low",
-        .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
-        .data$volatility >= 2                         ~ "high"
-      )
+        (-1.20	  * .data$carbothioester)
     ) 
-  vol_df
 }
