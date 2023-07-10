@@ -8,7 +8,7 @@ utils::globalVariables(".data")
 #'   prepended with a "C".
 #' @param pathway_ids character vector of KEGG pathway IDs---5 digits prepended
 #'   with "map".
-#' @param dir path to a folder to save mol files in.
+#' @param dir path to a folder to save mol files in. Folder will be created if it does not already exist
 #'
 #' @returns a tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files)
