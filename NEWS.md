@@ -4,6 +4,7 @@
 * `get_fx_groups()` and `calc_vol()` no longer depend on KEGG or take KEGG compound IDs or pathway IDs.  Instead, `calc_vol()` accepts a path to a .mol file as input.
 * `calc_vol()` is vectorized and accepts multiple compounds as input.
 * Moved SIMPOL.1 calculations out of `calc_vol()` and into to their own function, `simpol1()`, to pave the way for future expansions using other methods.  The "manual" workflow is now .mol file |> `ChemmineR::read.SDFset()` |> `get_fx_groups()` |> `simpol1()`
+* The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
 
 # volcalc 1.0.1
 

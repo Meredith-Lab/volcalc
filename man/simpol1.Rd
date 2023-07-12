@@ -11,19 +11,22 @@ simpol1(fx_groups)
 produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
 }
 \value{
-The \code{fx_groups} tibble with the additional columns:
-\itemize{
-\item \code{log_alpha} — not sure! units?
-\item \code{log_Sum} — \eqn{\sum_k\nu_{k,i}b_k(T)}, or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the coefficients for each functional group (\eqn{b_K(T)}). units?
-\item \code{volatility} — relative volatility? units?
-\item \code{category} — category of volatility?
-}
+The \code{fx_groups} tibble with an additional column for \code{log10_P}.
+\eqn{\textrm{log}{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)},
+or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
+coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
+atmospheres.
 }
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 pressure of organic compounds as described in Pankow & Asher (2008).  Users
 will not usually use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}}
 which uses this as the default (currently only) method.
+}
+\details{
+The method described in Pankow & Asher (2008) allows for
+calculations of logP at different temperatures.  This implementation
+currently only calculates values at 20ºC.
 }
 \examples{
 mol_path <- mol_example("C16181.mol")

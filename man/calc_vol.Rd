@@ -29,8 +29,8 @@ final dataframe.}
 calculation steps in final dataframe.}
 }
 \value{
-a tibble with columns of basic compound info and volatility value
-and category created by \code{\link[=get_fx_groups]{get_fx_groups()}} and \code{\link[=simpol1]{simpol1()}}.
+a tibble with relative volatility index (\code{volatility}) and volatility
+category (\code{category}).
 }
 \description{
 Relative volatility value and category is estimated for specified compound

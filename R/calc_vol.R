@@ -15,8 +15,8 @@
 #'   calculation steps in final dataframe.
 #' 
 #'
-#' @return a tibble with columns of basic compound info and volatility value
-#'   and category created by [get_fx_groups()] and [simpol1()].
+#' @return a tibble with relative volatility index (`volatility`) and volatility
+#'   category (`category`).
 #'   
 #' @seealso [get_fx_groups()], [simpol1()]
 #'
@@ -46,7 +46,8 @@ calc_vol <-
       # 0.0000821 is universal gas constant
       # 293.15 is temperature in Kelvins (20ºC)
       log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
-      volatility = .data$log_alpha + .data$log_Sum, 
+      volatility = .data$log_alpha + .data$log10_P, 
+      #TODO add @details to documentation explaining categories.  Make sure they match manuscript
       category = dplyr::case_when(
         .data$volatility <  -2                        ~ "non",
         .data$volatility >= -2 & .data$volatility < 0 ~ "low",
@@ -62,7 +63,8 @@ calc_vol <-
     cols_fx <- colnames(fx_groups_df)[!colnames(fx_groups_df) %in% c("formula", "name", "mass")]
   }
   if (isTRUE(return_calc_steps)) {
-    cols_calc <- c("mass", "log_alpha", "log_Sum")
+    #TODO document log_alpha (need to figure out why it's called that first)
+    cols_calc <- c("mass", "log_alpha", "log10_P")
   }
   
   #return:
