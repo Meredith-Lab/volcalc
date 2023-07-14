@@ -6,6 +6,10 @@
 * Moved SIMPOL.1 calculations out of `calc_vol()` and into to their own function, `simpol1()`, to pave the way for future expansions using other methods.  The "manual" workflow is now .mol file |> `ChemmineR::read.SDFset()` |> `get_fx_groups()` |> `simpol1()`
 * The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
 
+# volcalc 1.0.2
+
+* Minor change in calculation in `calc_vol()`---remove amines functional group to avoid double counting with primary amines (#49)
+
 # volcalc 1.0.1
 
 * Minor change in calculation in `calc_vol()`---use 293.15K for temperature (instead of 293K) to match the temperature used in Pankow & Asher (2008)

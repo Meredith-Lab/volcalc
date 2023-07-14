@@ -70,5 +70,6 @@ calc_vol <-
   #return:
   vol_df %>% 
     dplyr::select(dplyr::all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
+
   }
 
