@@ -1,6 +1,5 @@
 # volcalc (development version)
 
-# volcalc 1.0.2
 
 * Minor change in calculation in `calc_vol()`---remove amines functional group to avoid double counting with primary amines
 
