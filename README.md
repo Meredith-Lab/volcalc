@@ -68,7 +68,7 @@ You can install the ‘legacy’ version used in our in-prep publication
 with
 
 ``` r
-pak::pkg_install("Meredith-Lab/volcalc@v1.0.1")
+pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
 Installation of `volcalc` requires the system libraries
