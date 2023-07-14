@@ -104,7 +104,7 @@ get_fx_groups <- function(compound_sdf) {
     amine_secondary = groups$R2NH,
     amine_tertiary = groups$R3N,
     amine_aromatic = NA_integer_,
-    amines = ChemmineR::smartsSearchOB(compound_sdf, amine_pattern),
+    amines = ChemmineR::smartsSearchOB(compound_sdf, amine_pattern), #TODO remove or keep as amines_total?
     amides = ChemmineR::smartsSearchOB(compound_sdf, amide_pattern),
     phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
     phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),

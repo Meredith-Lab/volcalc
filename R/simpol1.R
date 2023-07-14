@@ -67,7 +67,6 @@ simpol1 <- function(fx_groups) {
         (-0.849	  * .data$amine_secondary) +
         (-0.608 	* .data$amine_tertiary) +
         (-1.61    * .data$amine_aromatic) +
-        (-2.23	  * .data$amines) + #TODO doesn't this double count amines?
         (-2.23	  * .data$amides) +
         (-2.23	  * .data$phosphoric_acid) +
         (-2.23	  * .data$phosphoric_ester) +
