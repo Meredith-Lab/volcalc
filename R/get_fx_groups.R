@@ -62,7 +62,6 @@ get_fx_groups <- function(compound_sdf) {
   peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]" #TODO: "[OX2]-[OX2]" matches R-O-O-R and not R-O-O-H
   phenol_pattern <- "[OX2H][cX3]:[c]" #TODO I think this double counts because there are aromatic carbons ":[c]" on either side of the C bonded to OH.  A better pattern might be to fully specify the ring: [OH]c1ccccc1
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
-  amine_pattern <- "[NX3;H2,H1;!$(NC=O)]"
   amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   ether_pattern <- "[OD2]([#6])[#6]"
@@ -104,7 +103,6 @@ get_fx_groups <- function(compound_sdf) {
     amine_secondary = groups$R2NH,
     amine_tertiary = groups$R3N,
     amine_aromatic = NA_integer_,
-    amines = ChemmineR::smartsSearchOB(compound_sdf, amine_pattern), #TODO remove or keep as amines_total?
     amides = ChemmineR::smartsSearchOB(compound_sdf, amide_pattern),
     phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
     phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
