@@ -4,9 +4,8 @@ Version: 1.0.2.9000
 Authors@R: c(
     person("Kristina", "Riemer", , "kristinariemer@arizona.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-3802-3331")),
-    person("Eric R.", "Scott", role = "ctb",
-           comment = c(ORCID = "0000-0002-7430-7879")),
-    person("S. Marshall", "Ledford", role = "ctb")
+    person("Eric R.", "Scott", role = "aut",
+           comment = c(ORCID = "0000-0002-7430-7879"))
   )
 Description: Use this package to calculate estimated volatility values for
     individual compounds of interest or for all compounds in a pathway.
