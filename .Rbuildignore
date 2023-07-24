@@ -7,3 +7,6 @@ README.Rmd
 ^CITATION\.cff$
 ^CODE_OF_CONDUCT\.md$
 ^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

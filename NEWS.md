@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
+* Added pkgdown website
 
 # volcalc 1.0.2
 
