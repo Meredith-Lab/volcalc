@@ -42,9 +42,11 @@ calc_vol <-
   #   compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
   # }
   
-  fx_groups_df <-
-    lapply(compound_sdf_list, get_fx_groups) %>% 
-    dplyr::bind_rows(.id = {{from}}) #adds column for input named "mol_path" or "smiles"
+  fx_groups_df_list <-
+    lapply(compound_sdf_list, get_fx_groups)
+  names(fx_groups_df_list) <- input
+  fx_groups_df <- 
+    dplyr::bind_rows(fx_groups_df_list, .id = {{from}}) #adds column for input named "mol_path" or "smiles"
   
   # calculate relative volatility & categories from logP
   vol_df <- simpol1(fx_groups_df) %>% 
