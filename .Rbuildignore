@@ -8,3 +8,6 @@ README.Rmd
 ^CODE_OF_CONDUCT\.md$
 ^codecov\.yml$
 ^notes/*$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

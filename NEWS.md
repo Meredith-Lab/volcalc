@@ -6,6 +6,7 @@
 * Moved SIMPOL.1 calculations out of `calc_vol()` and into to their own function, `simpol1()`, to pave the way for future expansions using other methods.  The "manual" workflow is now .mol file |> `ChemmineR::read.SDFset()` |> `get_fx_groups()` |> `simpol1()`
 * The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
 * Output of `calc_vol()` now contains a column with the inputs, named whatever is supplied to `from` (eg. a column called `mol_path` containing paths to mol files)
+* Added pkgdown website
 
 # volcalc 1.0.2
 
