@@ -67,6 +67,7 @@ calc_vol <-
     cols_calc <- c("mass", "log_alpha", "log10_P")
   }
   
+  #TODO: append `input` column to output df
   #return:
   vol_df %>% 
     dplyr::select(dplyr::all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
