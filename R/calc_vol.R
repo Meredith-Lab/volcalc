@@ -30,14 +30,21 @@ calc_vol <-
     
   from <- match.arg(from)
   #for future extensions in case other methods are added
+    
   method <- match.arg(method)
   
   if(from == "mol_path") {
     compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
   }
   
-  fx_groups_df <- lapply(compound_sdf_list, get_fx_groups) %>% 
-    dplyr::bind_rows()
+  #TODO: needs testing before implementing
+  # if(from == "smiles") { 
+  #   compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
+  # }
+  
+  fx_groups_df <-
+    lapply(compound_sdf_list, get_fx_groups) %>% 
+    dplyr::bind_rows(.id = {{from}}) #adds column for input named "mol_path" or "smiles"
   
   # calculate relative volatility & categories from logP
   vol_df <- simpol1(fx_groups_df) %>% 
@@ -67,10 +74,9 @@ calc_vol <-
     cols_calc <- c("mass", "log_alpha", "log10_P")
   }
   
-  #TODO: append `input` column to output df
   #return:
   vol_df %>% 
-    dplyr::select(dplyr::all_of(c("formula", "name", "volatility", "category", cols_fx, cols_calc)))
+    dplyr::select(dplyr::all_of(c({{from}}, "formula", "name", "volatility", "category", cols_fx, cols_calc)))
 
   }
 
