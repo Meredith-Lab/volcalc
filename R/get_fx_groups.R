@@ -75,6 +75,7 @@ get_fx_groups <- function(compound_sdf) {
   #TODO make these column names as specific as possible.  E.g. instead of "hydroxyl_groups" it should be "alkyl_hydroxyls" (what we want to capture) or "total_hydroxyls" (what is currently captured).  Instead of "phenol" it should be "aromatic_hydroxyls".
   fx_groups_df <- data.frame(
     formula = ChemmineR::propOB(compound_sdf)$formula,
+    #TODO should name be moved to `calc_vol`? `formula` also?
     name = ChemmineR::propOB(compound_sdf)$title,
     mass = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
     #TODO these columns should all be integer
@@ -135,6 +136,7 @@ get_fx_groups <- function(compound_sdf) {
                        as.integer(atoms$CMP1.F), 0L
     )
   ) %>% 
+    #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
   
   fx_groups_df <- 
