@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * Added pkgdown website
+* `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 
 # volcalc 1.0.2
 
