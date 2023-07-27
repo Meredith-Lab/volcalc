@@ -40,7 +40,7 @@ get_fx_groups <-
     groups = "fctgroup",
     type = "countMA"
   )))
-  rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE)))
+  rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
   atoms <- data.frame(t(unlist(ChemmineR::atomcount(compound_sdf))))
   carbon_bond_data <- data.frame(ChemmineR::conMA(compound_sdf)[[1]]) %>%
     dplyr::select(tidyselect::contains("C_")) %>%
