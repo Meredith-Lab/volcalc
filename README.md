@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# volcalc
+# volcalc <a href="https://meredith-lab.github.io/volcalc/"><img src="man/figures/logo.PNG" align="right" height="120" alt="volcalc website" /></a>
 
 <!-- badges: start -->
 
