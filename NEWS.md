@@ -7,6 +7,7 @@
 * The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
 * Output of `calc_vol()` now contains a column with the inputs, named whatever is supplied to `from` (eg. a column called `mol_path` containing paths to mol files)
 * Added pkgdown website
+* `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 
 # volcalc 1.0.2
 

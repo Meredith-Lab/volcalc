@@ -27,6 +27,7 @@ get_fx_groups <- function(compound_sdf) {
     # https://github.com/girke-lab/ChemmineR/issues/15
     #TODO the above bug has been fixed in the dev version, which may cause breaking changes here
   }
+<<<<<<< HEAD
   
   #assign variables to quiet devtools::check()
   rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <-
@@ -38,6 +39,19 @@ get_fx_groups <- function(compound_sdf) {
                                             type = "countMA")) %>%
     dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
   rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE)))
+=======
+  if (!fs::file_exists(mol_path)) {
+    stop("compound file has either not been downloaded or is in wrong location")
+  }
+  compound_sdf <- ChemmineR::read.SDFset(sdfstr = mol_path)
+  kegg_data <- KEGGREST::keggGet(compound_id)
+  #TODO: could use as_tibble_row() for many of these
+  groups <- data.frame(t(ChemmineR::groups(compound_sdf,
+    groups = "fctgroup",
+    type = "countMA"
+  )))
+  rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
+>>>>>>> 4c0c1d7210146c6d5b1554d5e4868243eaa561a3
   atoms <- data.frame(t(unlist(ChemmineR::atomcount(compound_sdf))))
   carbon_bond_data <- data.frame(ChemmineR::conMA(compound_sdf)[[1]]) %>%
     dplyr::select(dplyr::contains("C_")) %>%
