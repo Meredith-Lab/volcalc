@@ -23,7 +23,7 @@ get_fx_groups <-
            path = "data") {
   
     #assign variables to quiet devtools::check()
-    rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+    rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
     
   if(!is.null(pathway_id)){
     mol_path <- fs::path(path, pathway_id, compound_id, ext = "mol")
@@ -140,9 +140,8 @@ get_fx_groups <-
     )
   )
   fx_groups_df <- fx_groups_df %>%
-    # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
+    # to fix double counting of rings, aromatic rings, hydroxyls, carbon double bonds, and phosphoric acids/esters
     dplyr::mutate(
-      # phenol = ifelse(rings != 0 & rings_aromatic != 0 & phenol > 1, (phenol / 2) - (hydroxyl_groups - 1), phenol),
       rings = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
       hydroxyl_groups = hydroxyl_groups - hydroxyl_aromatic,
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds),

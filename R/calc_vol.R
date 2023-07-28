@@ -56,7 +56,7 @@ calc_vol <-
   }
     
   #assign variables to quiet devtools::check()
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- phenol <- rings <- rings_aromatic <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
+  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- hydroxyl_aromatic <- rings <- rings_aromatic <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
   
   # `constant` is vapor pressure baseline modified by functional group multipliers
   constant <- 1.79
@@ -79,7 +79,7 @@ calc_vol <-
              (-0.105  * carbon_dbl_bonds) %+%
              (-0.0104 * rings) %+%
              (-0.675	* rings_aromatic) %+%
-             (-2.14	  * phenol) %+%
+             (-2.14	  * hydroxyl_aromatic) %+%
              (0.0432 	* nitrophenol) %+%
              (-2.67	  * nitroester) %+%
              (-1.20	  * ester) %+%
