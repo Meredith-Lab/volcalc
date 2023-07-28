@@ -2,6 +2,7 @@
 
 * Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
 * Added pkgdown website
+* `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 
 # volcalc 1.0.2
 
