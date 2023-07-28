@@ -2,6 +2,7 @@
 
 * Added pkgdown website
 * `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
+* Fixed a bug that caused the number of aromatic hydroxyl groups (e.g. phenols) to be miscounted (#46)
 
 # volcalc 1.0.2
 
