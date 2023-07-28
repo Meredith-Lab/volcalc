@@ -18,11 +18,13 @@ test_that("correct number of rings", {
   expect_equal(bpa$rings, 0)
 })
 
-test_that("correct number of aromatic hydroxyl", {
+test_that("correct number of aromatic and non-aromatic hydroxyl", {
   bpa <- get_fx_groups(compound_id = "C13624", path = "data")
   expect_equal(bpa$hydroxyl_groups, 0)
   expect_equal(bpa$hydroxyl_aromatic, 2)
   ldopa <- get_fx_groups(compound_id = "C00355", path = "data")
   expect_equal(ldopa$hydroxyl_groups, 0)
   expect_equal(ldopa$hydroxyl_aromatic, 2)
+  glucose <- get_fx_groups(compound_id = "C00031", path = "data")
+  expect_equal(glucose$hydroxyl_groups, 5)
 })
