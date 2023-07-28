@@ -6,18 +6,20 @@ utils::globalVariables(".data")
 #' will not usually use this function directly, but rather through [calc_vol()]
 #' which uses this as the default (currently only) method.
 #' 
-#' @details The method described in Pankow & Asher (2008) allows for
+#' @details The output includes a column for `log10_P` where
+#' \eqn{\textrm{log}_{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)}, or
+#' the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
+#' coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
+#' atmospheres.
+#' 
+#' @note The method described in Pankow & Asher (2008) allows for
 #' calculations of logP at different temperatures.  This implementation
 #' currently only calculates values at 20ºC.
 #' 
 #' @param fx_groups a data.frame or tibble with counts of functional groups
 #'   produced by [get_fx_groups()] (or manually, with the same column names)
 #'
-#' @return The `fx_groups` tibble with an additional column for `log10_P`.
-#'   \eqn{\textrm{log}{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)},
-#'   or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
-#'   coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
-#'   atmospheres.
+#' @return a tibble
 #'
 #' @references Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
 #'   contribution method for predicting vapor pressures and enthalpies of

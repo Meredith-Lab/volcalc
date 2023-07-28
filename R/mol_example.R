@@ -9,7 +9,10 @@
 #' @export
 #'
 #' @examples
+#' #list all examples
 #' mol_example()
+#' 
+#' #return path to specific example file
 #' mol_example("C16181.mol")
 mol_example <- function(path = NULL) {
   if (is.null(path)) {

@@ -1,6 +1,6 @@
-#' Count functional groups of a compound
+#' Count compound functional groups
 #'
-#' Return functional group counts relevant to calculating estimated volatility
+#' Returns functional group counts relevant to calculating estimated volatility
 #' for specified compounds. Users will not typically interact with this function
 #' directly, but rather by using [calc_vol()].
 #' 
@@ -8,7 +8,8 @@
 #'   nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
 #'   Contributions of SMARTS strings to capture these groups are welcome.
 #'
-#' @param compound_sdf object created by [ChemmineR::read.SDFset()]
+#' @param compound_sdf a [ChemmineR::SDFset] object returned by
+#'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
 #'
 #' @return a tibble with columns of basic compound info and functional group
 #'   counts.

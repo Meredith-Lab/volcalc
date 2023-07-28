@@ -12,7 +12,15 @@
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
-#'   calculation steps in final dataframe.
+#'   calculation steps in final dataframe. See **Details**
+#' 
+#' @details \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
+#'   volatility index (`volatility`). \eqn{\textrm{log}_{10}C^\ast =
+#'   \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
+#'   the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
+#'   universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
+#'   `return_calc_steps = TRUE`, the log of estimated vapor pressure, `log10_P`,
+#'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha` are also returned.
 #' 
 #'
 #' @return a tibble with relative volatility index (`volatility`) and volatility
@@ -21,6 +29,16 @@
 #' @seealso [get_fx_groups()], [simpol1()]
 #'
 #' @export
+#' @examples
+#' mol_path <- mol_example("C16181.mol")
+#' calc_vol(mol_path)
+#' 
+#' # Return functional group counts from get_fx_groups()
+#' calc_vol(mol_path,  return_fx_groups = TRUE)
+#' 
+#' # Return intermediate calculations
+#' calc_vol(mol_path, return_calc_steps = TRUE)
+#' 
 calc_vol <-
   function(input, 
            from = c("mol_path"),

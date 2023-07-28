@@ -26,7 +26,7 @@ the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for m
 final dataframe.}
 
 \item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility
-calculation steps in final dataframe.}
+calculation steps in final dataframe. See \strong{Details}}
 }
 \value{
 a tibble with relative volatility index (\code{volatility}) and volatility
@@ -35,6 +35,26 @@ category (\code{category}).
 \description{
 Relative volatility value and category is estimated for specified compound
 using group contribution methods.
+}
+\details{
+\eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
+volatility index (\code{volatility}). \eqn{\textrm{log}_{10}C^\ast =
+  \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
+the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
+universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
+\code{return_calc_steps = TRUE}, the log of estimated vapor pressure, \code{log10_P},
+and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha} are also returned.
+}
+\examples{
+mol_path <- mol_example("C16181.mol")
+calc_vol(mol_path)
+
+# Return functional group counts from get_fx_groups()
+calc_vol(mol_path,  return_fx_groups = TRUE)
+
+# Return intermediate calculations
+calc_vol(mol_path, return_calc_steps = TRUE)
+
 }
 \seealso{
 \code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}

@@ -2,19 +2,20 @@
 % Please edit documentation in R/get_fx_groups.R
 \name{get_fx_groups}
 \alias{get_fx_groups}
-\title{Count functional groups of a compound}
+\title{Count compound functional groups}
 \usage{
 get_fx_groups(compound_sdf)
 }
 \arguments{
-\item{compound_sdf}{object created by \code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}}}
+\item{compound_sdf}{a \link[ChemmineR:SDFset-class]{ChemmineR::SDFset} object returned by
+\code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}} or \code{\link[ChemmineR:smiles2sdf]{ChemmineR::smiles2sdf()}}, for example.}
 }
 \value{
 a tibble with columns of basic compound info and functional group
 counts.
 }
 \description{
-Return functional group counts relevant to calculating estimated volatility
+Returns functional group counts relevant to calculating estimated volatility
 for specified compounds. Users will not typically interact with this function
 directly, but rather by using \code{\link[=calc_vol]{calc_vol()}}.
 }

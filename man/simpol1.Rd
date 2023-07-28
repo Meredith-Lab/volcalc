@@ -11,11 +11,7 @@ simpol1(fx_groups)
 produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
 }
 \value{
-The \code{fx_groups} tibble with an additional column for \code{log10_P}.
-\eqn{\textrm{log}{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)},
-or the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
-coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
-atmospheres.
+a tibble
 }
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
@@ -24,6 +20,13 @@ will not usually use this function directly, but rather through \code{\link[=cal
 which uses this as the default (currently only) method.
 }
 \details{
+The output includes a column for \code{log10_P} where
+\eqn{\textrm{log}_{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)}, or
+the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
+coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
+atmospheres.
+}
+\note{
 The method described in Pankow & Asher (2008) allows for
 calculations of logP at different temperatures.  This implementation
 currently only calculates values at 20ºC.
