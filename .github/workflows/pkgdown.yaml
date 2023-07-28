@@ -31,9 +31,9 @@ jobs:
           use-public-rspm: true
       
       - name: Setup System Deps
-          run: |
-            sudo apt-get install libopenbabel-dev
-            sudo apt-get install libeigen3-dev
+        run: |
+          sudo apt-get install libopenbabel-dev
+          sudo apt-get install libeigen3-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
