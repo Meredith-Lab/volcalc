@@ -6,6 +6,8 @@
 \alias{volcalc-package}
 \title{volcalc: Calculate Volatility of Chemical Compounds}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Use this package to calculate estimated volatility values for individual compounds of interest or for all compounds in a pathway. Calculation uses the SIMPOL method (Prankow and Asher, 2008), and is only currently applicable to compounds and pathways in KEGG.
 }
 \seealso{

@@ -57,3 +57,23 @@ test_that("phenol groups are counted correctly", {
   expect_equal(bpa_groups$rings, 0)
   expect_equal(bpa_gropus$rings_aromatic, 2) #actually not sure if these should include phenols since already counted elsewhere?  Should this be 0 or 2?
 })
+
+test_that("correct number of rings", {
+  ex_df <- get_fx_groups(compound_id = "C07481", path = "data")
+  bpa <- get_fx_groups(compound_id = "C13624", path = "data")
+  expect_equal(ex_df$rings_aromatic, 2)
+  expect_equal(ex_df$rings, 0)
+  expect_equal(bpa$rings_aromatic, 2)
+  expect_equal(bpa$rings, 0)
+})
+
+test_that("correct number of aromatic and non-aromatic hydroxyl", {
+  bpa <- get_fx_groups(compound_id = "C13624", path = "data")
+  expect_equal(bpa$hydroxyl_groups, 0)
+  expect_equal(bpa$hydroxyl_aromatic, 2)
+  ldopa <- get_fx_groups(compound_id = "C00355", path = "data")
+  expect_equal(ldopa$hydroxyl_groups, 0)
+  expect_equal(ldopa$hydroxyl_aromatic, 2)
+  glucose <- get_fx_groups(compound_id = "C00031", path = "data")
+  expect_equal(glucose$hydroxyl_groups, 5)
+})

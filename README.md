@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# volcalc
+# volcalc <a href="https://meredith-lab.github.io/volcalc/"><img src="man/figures/logo.PNG" align="right" height="120" alt="volcalc website" /></a>
 
 <!-- badges: start -->
 
@@ -206,7 +206,7 @@ print(example_pathway_vol[1,])
 - carbon_dbl_bonds
 - rings
 - rings_aromatic
-- phenol
+- hydroxyl_aromatic
 - nitrophenol
 - nitroester
 - ester
@@ -257,7 +257,7 @@ print(example_pathway_vol[1,])
 | Carbon double bond | Y          | ChemmineR conMA     | -0.105      | Pankow & Asher   |
 | Non-aromatic rings | Y          | ChemmineR rings     | –0.0104     | Pankow & Asher   |
 | Aromatic rings     | Y          | ChemmineR rings     | -0.675      | Pankow & Asher   |
-| Phenol             | Y          | SMARTS              | -2.14       | Pankow & Asher   |
+| Aromatic hydroxyl  | Y          | SMARTS              | -2.14       | Pankow & Asher   |
 | Nitrophenol        | Y          | NA                  | 0.0432      | Pankow & Asher   |
 | Nitroester         | Y          | NA                  | -2.67       | Pankow & Asher   |
 | Ester              | Y          | ChemmineR groups    | -1.20       | Pankow & Asher   |

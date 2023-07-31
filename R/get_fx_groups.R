@@ -28,10 +28,9 @@ get_fx_groups <- function(compound_sdf) {
     # https://github.com/girke-lab/ChemmineR/issues/15
     #TODO the above bug has been fixed in the dev version, which may cause breaking changes here
   }
-  
+    
   #assign variables to quiet devtools::check()
-  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <-
-    phenol <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
   
   groups <- 
     tibble::as_tibble_row(ChemmineR::groups(compound_sdf,
@@ -58,10 +57,9 @@ get_fx_groups <- function(compound_sdf) {
   if (nrow(carbon_dbl_count) == 0) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
-  # *_pattern are SMARTS strings:
-  # https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
-  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]" #TODO: "[OX2]-[OX2]" matches R-O-O-R and not R-O-O-H
-  phenol_pattern <- "[OX2H][cX3]:[c]" #TODO I think this double counts because there are aromatic carbons ":[c]" on either side of the C bonded to OH.  A better pattern might be to fully specify the ring: [OH]c1ccccc1
+  # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]"
+  hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
@@ -91,12 +89,12 @@ get_fx_groups <- function(compound_sdf) {
     hydroperoxide = NA_integer_,
     nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
     nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
-    carbon_dbl_bonds = as.integer(carbon_dbl_count$n),
-    rings = as.integer(rings$RINGS),
-    rings_aromatic = as.integer(rings$AROMATIC),
-    phenol = ChemmineR::smartsSearchOB(compound_sdf, phenol_pattern, uniqueMatches = FALSE),
-    nitrophenol = NA_integer_,
-    nitroester = NA_integer_,
+    carbon_dbl_bonds = carbon_dbl_count$n,
+    rings = rings$RINGS,
+    rings_aromatic = rings$AROMATIC,
+    hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
+    nitrophenol = NA,
+    nitroester = NA,
     ester = groups$RCOOR,
     ether = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern),
     ether_alicyclic = NA_integer_,
@@ -142,12 +140,11 @@ get_fx_groups <- function(compound_sdf) {
   
   fx_groups_df <- 
     fx_groups_df %>%
-    # to fix double counting of rings, aromatic rings, phenols, hydroxyls, carbon double bonds, and phosphoric acids/esters
+    # to fix double counting of rings, aromatic rings, hydroxyls, carbon double bonds, and phosphoric acids/esters
     #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
     dplyr::mutate(
-      phenol = ifelse(rings != 0 & rings_aromatic != 0 & phenol > 1, (phenol / 2) - (hydroxyl_groups - 1), phenol),
       rings = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
-      hydroxyl_groups = hydroxyl_groups - phenol,
+      hydroxyl_groups = hydroxyl_groups - hydroxyl_aromatic,
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds),
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)

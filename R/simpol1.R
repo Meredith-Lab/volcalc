@@ -58,7 +58,7 @@ simpol1 <- function(fx_groups) {
         (-0.105   * .data$carbon_dbl_bonds) +
         (-0.0104  * .data$rings) +
         (-0.675	  * .data$rings_aromatic) +
-        (-2.14	  * .data$phenol) +
+        (-2.14	  * .data$hydroxyl_aromatic) +
         (0.0432 	* .data$nitrophenol) +
         (-2.67	  * .data$nitroester) +
         (-1.20	  * .data$ester) +
