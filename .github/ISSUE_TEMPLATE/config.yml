@@ -2,4 +2,4 @@ blank_issues_enabled: true
 contact_links:
   - name: Discussions
     url: https://github.com/Meredith-Lab/volcalc/discussions
-    about: Ask for help using `volcalc` or propose and idea.
+    about: Ask for help using `volcalc` or propose an idea.
