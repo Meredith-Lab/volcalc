@@ -81,29 +81,35 @@ get_fx_groups <- function(compound_sdf) {
     carbons = ifelse("CMP1.C" %in% colnames(atoms),
                      atoms$CMP1.C, 0L
     ),
-    ketones = groups$RCOR,
-    aldehydes = groups$RCHO,
-    hydroxyl_groups = groups$ROH,
-    carbox_acids = groups$RCOOH,
-    peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
-    hydroperoxide = NA_integer_,
-    nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
-    nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
-    carbon_dbl_bonds = carbon_dbl_count$n,
-    rings = rings$RINGS,
+    carbons_asa = NA_integer_, #carbon number on the acid-side of amide
     rings_aromatic = rings$AROMATIC,
-    hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
-    nitrophenol = NA,
-    nitroester = NA,
+    rings = rings$RINGS, #TODO: call this rings_total?
+    carbon_dbl_bonds = carbon_dbl_count$n, #TODO: this should be only non-aromatic double bonds
+    CCCO_aliphatic_ring = NA_integer_, # C=C-C=O in a non-aromatic ring
+    hydroxyl_groups = groups$ROH, #TODO: this is total, should be just aliphatic for SIMPOL.1
+    aldehydes = groups$RCHO,
+    ketones = groups$RCOR,
+    carbox_acids = groups$RCOOH,
     ester = groups$RCOOR,
     ether = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern),
     ether_alicyclic = NA_integer_,
     ether_aromatic = NA_integer_,
+    nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
+    nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
+    hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
     amine_primary = groups$RNH2,
     amine_secondary = groups$R2NH,
     amine_tertiary = groups$R3N,
     amine_aromatic = NA_integer_,
     amides = ChemmineR::smartsSearchOB(compound_sdf, amide_pattern),
+    #TODO should have primary, secondary, tertiary amides
+    carbonylperoxynitrate = NA_integer_,
+    peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
+    hydroperoxide = NA_integer_,
+    carbonylperoxyacid = NA_integer_,
+    nitrophenol = NA_integer_,
+    nitroester = NA_integer_,
+
     phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
     phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
     sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),

@@ -6,10 +6,10 @@ test_that("volatility estimate is correct for example compound for entire workfl
 
 test_that("returns correct number of columns depending on return arguments", {
   expect_equal(ncol(calc_vol("data/C16181.mol")), 5)
-  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE)), 43)
+  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE)), 47)
   expect_equal(ncol(calc_vol("data/C16181.mol", return_calc_steps = TRUE)), 8)
   expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE,
-                             return_calc_steps = TRUE)), 46)
+                             return_calc_steps = TRUE)), 50)
 })
 
 test_that("calc_vol() works with multiple inputs", {
