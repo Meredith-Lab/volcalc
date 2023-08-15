@@ -3,6 +3,7 @@
 export(calc_pathway_vol)
 export(calc_vol)
 export(get_fx_groups)
+export(get_mol_kegg)
 export(save_compound_mol)
 importFrom(grDevices,rgb)
 importFrom(magrittr,"%>%")

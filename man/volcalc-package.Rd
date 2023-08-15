@@ -20,9 +20,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Kristina Riemer \email{kristinariemer@arizona.edu} (\href{https://orcid.org/0000-0003-3802-3331}{ORCID}) [copyright holder]
 
-Other contributors:
+Authors:
 \itemize{
-  \item Eric R. Scott (\href{https://orcid.org/0000-0002-7430-7879}{ORCID}) [contributor]
+  \item Eric R. Scott (\href{https://orcid.org/0000-0002-7430-7879}{ORCID})
 }
 
 }

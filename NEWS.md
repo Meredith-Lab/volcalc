@@ -1,12 +1,12 @@
 # volcalc (development version)
 
+* Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
 * Added pkgdown website
 * `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 * Fixed a bug that caused the number of phenols to be miscounted. Rather than counting phenols, `get_fx_groups` now counts aromatic hydroxyl groups (e.g. phenols) to more closely align with Pankow & Asher (2008) (#46)
 * package now has a hex logo!
 
 # volcalc 1.0.2
-
 
 * Minor change in calculation in `calc_vol()`---remove amines functional group to avoid double counting with primary amines (#49)
 

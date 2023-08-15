@@ -4,7 +4,7 @@ Version: 1.0.2.9000
 Authors@R: c(
     person("Kristina", "Riemer", , "kristinariemer@arizona.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-3802-3331")),
-    person("Eric R.", "Scott", role = "ctb",
+    person("Eric R.", "Scott", role = "aut",
            comment = c(ORCID = "0000-0002-7430-7879"))
   )
 Description: Use this package to calculate estimated volatility values for
@@ -22,14 +22,15 @@ Imports:
     magrittr,
     stringr,
     tibble,
+    tidyr,
     tidyselect
 Suggests: 
+    processx,
     testthat (>= 3.0.0),
     withr
 biocViews: 
 Config/testthat/edition: 3
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 URL: https://meredith-lab.github.io/volcalc/
