@@ -97,6 +97,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
 #' pushed into KEGGREST package
 #'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
+#' @noRd
 keggGetCompounds <- function(pathway){
   
   resp <- 
