@@ -103,6 +103,7 @@ keggGetCompounds <- function(pathway){
     httr2::request("https://rest.kegg.jp/")  %>%  
     httr2::req_url_path("link/cpd/") %>%  
     httr2::req_url_path_append(pathway) %>% 
+    httr2::req_retry(max_tries = 3) %>% 
     httr2::req_perform()
   
   out <- resp %>% 
