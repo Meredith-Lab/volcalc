@@ -13,7 +13,7 @@ Description: Use this package to calculate estimated volatility values for
     only currently applicable to compounds and pathways in KEGG.
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
-BugReports: https://meredith-lab.github.io/volcalc/issues
+BugReports: https://github.com/Meredith-Lab/volcalc/issues
 Imports: 
     ChemmineOB,
     ChemmineR,

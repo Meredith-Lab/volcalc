@@ -14,7 +14,7 @@ Use this package to calculate estimated volatility values for individual compoun
 Useful links:
 \itemize{
   \item \url{https://meredith-lab.github.io/volcalc/}
-  \item Report bugs at \url{https://meredith-lab.github.io/volcalc/issues}
+  \item Report bugs at \url{https://github.com/Meredith-Lab/volcalc/issues}
 }
 
 }
