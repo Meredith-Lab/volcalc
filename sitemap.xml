@@ -22,9 +22,6 @@
     <loc>https://meredith-lab.github.io/volcalc/news/index.html</loc>
   </url>
   <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/calc_pathway_vol.html</loc>
-  </url>
-  <url>
     <loc>https://meredith-lab.github.io/volcalc/reference/calc_vol.html</loc>
   </url>
   <url>
@@ -37,10 +34,13 @@
     <loc>https://meredith-lab.github.io/volcalc/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/keggGetCompounds.html</loc>
+    <loc>https://meredith-lab.github.io/volcalc/reference/mol_example.html</loc>
   </url>
   <url>
     <loc>https://meredith-lab.github.io/volcalc/reference/save_compound_mol.html</loc>
+  </url>
+  <url>
+    <loc>https://meredith-lab.github.io/volcalc/reference/simpol1.html</loc>
   </url>
   <url>
     <loc>https://meredith-lab.github.io/volcalc/reference/volcalc-package.html</loc>
