@@ -1,5 +1,11 @@
 # volcalc (development version)
 
+* Change output of `get_fx_groups()` and `calc_vol()` from data frame to tibble
+* `get_fx_groups()` and `calc_vol()` no longer depend on KEGG or take KEGG compound IDs or pathway IDs.  Instead, `calc_vol()` accepts a path to a .mol file as input.
+* `calc_vol()` is vectorized and accepts multiple compounds as input.
+* Moved SIMPOL.1 calculations out of `calc_vol()` and into to their own function, `simpol1()`, to pave the way for future expansions using other methods.  The "manual" workflow is now .mol file |> `ChemmineR::read.SDFset()` |> `get_fx_groups()` |> `simpol1()`
+* The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
+* Output of `calc_vol()` now contains a column with the inputs, named whatever is supplied to `from` (eg. a column called `mol_path` containing paths to mol files)
 * Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
 * Added pkgdown website
 * `get_fx_groups()` now only counts the smallest set of smallest rings (#57)

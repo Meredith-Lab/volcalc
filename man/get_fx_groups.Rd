@@ -2,29 +2,34 @@
 % Please edit documentation in R/get_fx_groups.R
 \name{get_fx_groups}
 \alias{get_fx_groups}
-\title{Count functional groups of a compound}
+\title{Count compound functional groups}
 \usage{
-get_fx_groups(compound_id, pathway_id = NULL, path = "data")
+get_fx_groups(compound_sdf)
 }
 \arguments{
-\item{compound_id}{A character string that is 5 digits prepended with a "C".}
-
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
-format of 5 digits prepended with "map".}
-
-\item{path}{An optional parameter to set relative path to location to
-download data.}
+\item{compound_sdf}{a \link[ChemmineR:SDFset-class]{ChemmineR::SDFset} object returned by
+\code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}} or \code{\link[ChemmineR:smiles2sdf]{ChemmineR::smiles2sdf()}}, for example.}
 }
 \value{
-Dataframe with columns of basic compound info and functional group
+a tibble with columns of basic compound info and functional group
 counts.
 }
 \description{
-Return functional group counts relevant to volatility calculation for
-specified compound
+Returns functional group counts relevant to calculating estimated volatility
+for specified compounds. Users will not typically interact with this function
+directly, but rather by using \code{\link[=calc_vol]{calc_vol()}}.
+}
+\note{
+This function currently does not capture hydroperoxide, nitrophenol,
+nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
+Contributions of SMARTS strings to capture these groups are welcome.
 }
 \examples{
-\dontrun{
-ex_groups <- get_fx_groups(compound_id = "C16181")
+mol_path <- mol_example("C16181.mol")
+sdf <- ChemmineR::read.SDFset(mol_path)
+fx_groups <- get_fx_groups(sdf)
+
 }
+\seealso{
+\code{\link[=calc_vol]{calc_vol()}}
 }

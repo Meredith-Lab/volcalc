@@ -1,119 +1,102 @@
-#' Calculate volatility estimate for compound
+#' Calculate volatility estimate for a compound
 #'
-#' Volatility value and category is estimated for specified compound using the
-#' SIMPOL formula
+#' Relative volatility value and category is estimated for specified compound
+#' using group contribution methods.
 #'
-#' @param compound_id A character string that is 5 digits prepended with a "C".
-#' @param compound_formula A character string detailing a compound formula.
-#' @param pathway_id An optional character string specifying KEGG pathway ID, in
-#'   format of 5 digits prepended with "map".
-#' @param path An optional parameter to set relative path to location to
-#'   download data.
-#' @param save_file Whether to save downloaded compound mol files.
-#' @param redownload Download file again even if it has already been downloaded
-#'   at path.
-#' @param get_groups When `FALSE`, will expect a dataframe to be read in with
-#'   `fx_groups_df` argument.
-#' @param fx_groups_df A dataframe of functional group counts for compounds
-#'   generated from [`get_fx_groups()`].
+#' @param input a path to a .mol file or a character representation such as
+#'   SMILES or InChI
+#' @param from the form of `input` (currently only a path to a .mol file is
+#'   implemented)
+#' @param method the method for calculating estimated volatility. Currently only
+#'   the SIMPOL.1 method is implemented---see [simpol1()] for more details.
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
-#'   calculation steps in final dataframe.
+#'   calculation steps in final dataframe. See **Details**
+#' 
+#' @details \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
+#'   volatility index (`volatility`). \eqn{\textrm{log}_{10}C^\ast =
+#'   \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
+#'   the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
+#'   universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
+#'   `return_calc_steps = TRUE`, the log of estimated vapor pressure, `log10_P`,
+#'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha` are also returned.
+#' 
 #'
-#' @return Dataframe with columns of basic compound info and volatility value
-#'   and category. See documentation for column descriptions.
+#' @return a tibble with relative volatility index (`volatility`) and volatility
+#'   category (`category`).
+#'   
+#' @seealso [get_fx_groups()], [simpol1()]
 #'
-#' @examples
-#' \dontrun{
-#' ex_compound <- calc_vol(compound_id = "C16181")
-#' }
 #' @export
+#' @examples
+#' mol_path <- mol_example("C16181.mol")
+#' calc_vol(mol_path)
+#' 
+#' # Return functional group counts from get_fx_groups()
+#' calc_vol(mol_path,  return_fx_groups = TRUE)
+#' 
+#' # Return intermediate calculations
+#' calc_vol(mol_path, return_calc_steps = TRUE)
+#' 
 calc_vol <-
-  function(compound_id = NULL,
-           compound_formula = NULL,
-           pathway_id = NULL,
-           path = "data",
-           redownload = FALSE,
-           save_file = TRUE,
-           get_groups = TRUE,
-           fx_groups_df = NULL,
+  function(input, 
+           from = c("mol_path"),
+           method = c("simpol1"),
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
     
-  if (is.null(compound_id) & is.null(compound_formula)) {
-    stop("either compound_id or compound_formula needs to be specified")
-  }
-  if ((!isTRUE(save_file) & is.null(fx_groups_df)) | (!isTRUE(get_groups) & is.null(fx_groups_df)) |
-      (!isTRUE(save_file) & !isTRUE(get_groups) & is.null(fx_groups_df))) {
-    stop("either read in functional groups dataframe or set save_file and get_groups to true")
-  }
-  if (isTRUE(save_file)) {
-    save_compound_mol(compound_id, compound_formula, pathway_id, path, redownload)
-  }
-  if (isTRUE(get_groups)) {
-    fx_groups_df <- get_fx_groups(compound_id, pathway_id, path)
-  }
+    from <- match.arg(from)
+    #for future extensions in case other methods are added
     
-  #assign variables to quiet devtools::check()
-  aldehydes <- amine_aromatic <- amine_primary <- amine_secondary <- amine_tertiary <- carbon_dbl_bonds <- carbons <- carbox_acids <- case_when <- ester <- ether <- ether_alicyclic <- ether_aromatic <- hydroperoxide <- hydroxyl_groups <- ketones <- log_Sum <- log_alpha <- mass <- mutate <- nitrate <- nitro <- nitroester <- nitrophenol <- peroxide <- hydroxyl_aromatic <- rings <- rings_aromatic <- amides <- phosphoric_acid <- phosphoric_ester <- sulfate <- sulfonate <- thiol <- carbothioester <- pathway <- name <- volatility <- category <- fluorines <- NULL
-  
-  # `constant` is vapor pressure baseline modified by functional group multipliers
-  constant <- 1.79
-  vol_df <- fx_groups_df %>%
-    # mass is converted from grams to micrograms
-    # 0.0000821 is universal gas constant
-    # 293 is temperature in Kelvins
-    dplyr::mutate(log_alpha = log((1000000*mass)/(0.0000821*293.15), base = 10),
-           # multiplier for each functional group is volatility contribution
-           log_Sum =
-             (-0.438  * carbons) %+%
-             (-0.935  * ketones) %+%
-             (-1.35	  * aldehydes) %+%
-             (-2.23	  * hydroxyl_groups) %+%
-             (-3.58	  * carbox_acids) %+%
-             (-0.368  * peroxide) %+%
-             (-2.48	  * hydroperoxide) %+%
-             (-2.23	  * nitrate) %+%
-             (-2.15	  * nitro) %+%
-             (-0.105  * carbon_dbl_bonds) %+%
-             (-0.0104 * rings) %+%
-             (-0.675	* rings_aromatic) %+%
-             (-2.14	  * hydroxyl_aromatic) %+%
-             (0.0432 	* nitrophenol) %+%
-             (-2.67	  * nitroester) %+%
-             (-1.20	  * ester) %+%
-             (-0.718  * ether) %+%
-             (-0.683  * ether_alicyclic) %+%
-             (-1.03	  * ether_aromatic) %+%
-             (-1.03	  * amine_primary) %+%
-             (-0.849	* amine_secondary) %+%
-             (-0.608 	* amine_tertiary) %+%
-             (-1.61   * amine_aromatic) %+%
-             (-2.23	  * amides) %+%
-             (-2.23	  * phosphoric_acid) %+%
-             (-2.23	  * phosphoric_ester) %+%
-             (-2.23	  * sulfate) %+%
-             (-2.23	  * sulfonate) %+%
-             (-2.23	  * thiol) %+%
-             (-1.20	  * carbothioester),
-           volatility = log_alpha + constant + log_Sum,
-           category = dplyr::case_when(
-             volatility <  -2                  ~ "non", #less than -2
-             volatility >= -2 & volatility < 0 ~ "low", #great than or equal to -2, less than 0
-             volatility >= 0 & volatility < 2  ~ "intermediate", #greater than or equal to 0, less than 2
-             volatility >= 2                   ~ "high" #greater than or equal to 2
-           )) 
-  if (isTRUE(return_fx_groups) & !isTRUE(return_calc_steps)){
-    subset_vol_df <-
-      dplyr::select(vol_df, pathway:name, volatility:category, carbons:fluorines)
-  } else if (!isTRUE(return_fx_groups) & isTRUE(return_calc_steps)){
-    subset_vol_df <- 
-      dplyr::select(vol_df, pathway:name, volatility:category, mass, log_alpha:log_Sum)
-  } else if (isTRUE(return_fx_groups) & isTRUE(return_calc_steps)) {
-    subset_vol_df <- vol_df
-  } else {
-    subset_vol_df <- dplyr::select(vol_df, pathway:name, volatility:category)
+    method <- match.arg(method)
+    
+    if(from == "mol_path") {
+      compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
+    }
+    
+    #TODO: needs testing before implementing
+    # if(from == "smiles") { 
+    #   compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
+    # }
+    
+    fx_groups_df_list <-
+      lapply(compound_sdf_list, get_fx_groups)
+    names(fx_groups_df_list) <- input
+    fx_groups_df <- 
+      dplyr::bind_rows(fx_groups_df_list, .id = {{from}}) #adds column for input named "mol_path" or "smiles"
+    
+    # calculate relative volatility & categories from logP
+    vol_df <- simpol1(fx_groups_df) %>% 
+      dplyr::mutate(
+        # mass is converted from grams to micrograms
+        # 0.0000821 is universal gas constant
+        # 293.15 is temperature in Kelvins (20ºC)
+        log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
+        volatility = .data$log_alpha + .data$log10_P, 
+        #TODO add @details to documentation explaining categories.  Make sure they match manuscript
+        category = dplyr::case_when(
+          .data$volatility <  -2                        ~ "non",
+          .data$volatility >= -2 & .data$volatility < 0 ~ "low",
+          .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
+          .data$volatility >= 2                         ~ "high"
+        )
+      )
+    
+    # wrangle output
+    cols_fx <- NULL
+    cols_calc <- NULL
+    if (isTRUE(return_fx_groups)) {
+      cols_fx <- colnames(fx_groups_df)[!colnames(fx_groups_df) %in% c("formula", "name", "mass")]
+    }
+    if (isTRUE(return_calc_steps)) {
+      #TODO document log_alpha (need to figure out why it's called that first)
+      cols_calc <- c("mass", "log_alpha", "log10_P")
+    }
+    
+    #return:
+    vol_df %>% 
+      dplyr::select(dplyr::all_of(c({{from}}, "formula", "name", "volatility", "category", cols_fx, cols_calc)))
+    
   }
-  return(subset_vol_df)
-}
+

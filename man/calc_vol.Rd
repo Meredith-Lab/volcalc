@@ -2,59 +2,60 @@
 % Please edit documentation in R/calc_vol.R
 \name{calc_vol}
 \alias{calc_vol}
-\title{Calculate volatility estimate for compound}
+\title{Calculate volatility estimate for a compound}
 \usage{
 calc_vol(
-  compound_id = NULL,
-  compound_formula = NULL,
-  pathway_id = NULL,
-  path = "data",
-  redownload = FALSE,
-  save_file = TRUE,
-  get_groups = TRUE,
-  fx_groups_df = NULL,
+  input,
+  from = c("mol_path"),
+  method = c("simpol1"),
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
 }
 \arguments{
-\item{compound_id}{A character string that is 5 digits prepended with a "C".}
+\item{input}{a path to a .mol file or a character representation such as
+SMILES or InChI}
 
-\item{compound_formula}{A character string detailing a compound formula.}
+\item{from}{the form of \code{input} (currently only a path to a .mol file is
+implemented)}
 
-\item{pathway_id}{An optional character string specifying KEGG pathway ID, in
-format of 5 digits prepended with "map".}
-
-\item{path}{An optional parameter to set relative path to location to
-download data.}
-
-\item{redownload}{Download file again even if it has already been downloaded
-at path.}
-
-\item{save_file}{Whether to save downloaded compound mol files.}
-
-\item{get_groups}{When \code{FALSE}, will expect a dataframe to be read in with
-\code{fx_groups_df} argument.}
-
-\item{fx_groups_df}{A dataframe of functional group counts for compounds
-generated from \code{\link[=get_fx_groups]{get_fx_groups()}}.}
+\item{method}{the method for calculating estimated volatility. Currently only
+the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for more details.}
 
 \item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
 final dataframe.}
 
 \item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility
-calculation steps in final dataframe.}
+calculation steps in final dataframe. See \strong{Details}}
 }
 \value{
-Dataframe with columns of basic compound info and volatility value
-and category. See documentation for column descriptions.
+a tibble with relative volatility index (\code{volatility}) and volatility
+category (\code{category}).
 }
 \description{
-Volatility value and category is estimated for specified compound using the
-SIMPOL formula
+Relative volatility value and category is estimated for specified compound
+using group contribution methods.
+}
+\details{
+\eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
+volatility index (\code{volatility}). \eqn{\textrm{log}_{10}C^\ast =
+  \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
+the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
+universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
+\code{return_calc_steps = TRUE}, the log of estimated vapor pressure, \code{log10_P},
+and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha} are also returned.
 }
 \examples{
-\dontrun{
-ex_compound <- calc_vol(compound_id = "C16181")
+mol_path <- mol_example("C16181.mol")
+calc_vol(mol_path)
+
+# Return functional group counts from get_fx_groups()
+calc_vol(mol_path,  return_fx_groups = TRUE)
+
+# Return intermediate calculations
+calc_vol(mol_path, return_calc_steps = TRUE)
+
 }
+\seealso{
+\code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}
 }

@@ -9,8 +9,7 @@ Authors@R: c(
   )
 Description: Use this package to calculate estimated volatility values for
     individual compounds of interest or for all compounds in a pathway.
-    Calculation uses the SIMPOL method (Prankow and Asher, 2008), and is
-    only currently applicable to compounds and pathways in KEGG.
+    Calculation uses the SIMPOL method (Prankow and Asher, 2008).
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
