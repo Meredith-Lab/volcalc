@@ -21,22 +21,38 @@
 #' 
 #' @export
 get_fx_groups <- function(compound_sdf) {
-  
-  if(length(compound_sdf) != 1) {
+
+  # For now at least, this code only works with SDFset objects that contain single molecules.
+  # TODO: make this function work with SDFset objects with multiple molecules?
+  if (length(compound_sdf) != 1) {
     stop("SDFset objects must contain a single molecule only")
-    # this is partly because of type instability of groups():
-    # https://github.com/girke-lab/ChemmineR/issues/15
-    #TODO the above bug has been fixed in the dev version, which may cause breaking changes here
+  }
+  
+  chem_groups <- ChemmineR::groups(compound_sdf,
+                                   groups = "fctgroup",
+                                   type = "countMA")
+  
+  # Handle different behavior of CHemmineR::groups() depending on version. See
+  # more here: https://github.com/girke-lab/ChemmineR/issues/15
+  if (utils::packageVersion("ChemmineR") < "3.53.1") {
+    # then groups() returns a named vector (when length(compound_sdf)==1) and
+    # needs different handling
+    groups <- 
+      tibble::as_tibble_row(chem_groups) %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
+    
+  } else {
+    # doesn't matter if it's length 1 or greater, the result of groups() is an
+    # array
+    groups <- 
+      tibble::as_tibble(chem_groups) %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
   }
     
   #assign variables to quiet devtools::check()
   rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
   
-  groups <- 
-    tibble::as_tibble_row(ChemmineR::groups(compound_sdf,
-                                            groups = "fctgroup",
-                                            type = "countMA")) %>%
-    dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
+
   rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
   atoms <- data.frame(t(unlist(ChemmineR::atomcount(compound_sdf))))
   carbon_bond_data <- data.frame(ChemmineR::conMA(compound_sdf)[[1]]) %>%
