@@ -11,6 +11,7 @@
 * `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 * Fixed a bug that caused the number of phenols to be miscounted. Rather than counting phenols, `get_fx_groups` now counts aromatic hydroxyl groups (e.g. phenols) to more closely align with Pankow & Asher (2008) (#46)
 * package now has a hex logo!
+* Fixes a bug in `volcalc` introduced by a bug-fix in `ChemmineR` v3.53.1 (#54)
 
 # volcalc 1.0.2
 
