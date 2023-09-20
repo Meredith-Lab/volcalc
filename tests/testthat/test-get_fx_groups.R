@@ -7,7 +7,7 @@ test_that("a functional group count is correct for example compound", {
 test_that("error with SDFset with more than one molecule", {
   data(sdfsample,package = "ChemmineR")
   sdfset <- sdfsample
-  expect_error(get_fx_groups(sdfset[1:4]))
+  expect_error(get_fx_groups(sdfset[1:4]), "SDFset objects must contain a single molecule only")
 })
 #' TODO:
 #' - Additional correctness tests
