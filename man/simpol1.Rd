@@ -11,7 +11,7 @@ simpol1(fx_groups)
 produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
 }
 \value{
-a tibble
+the \code{fx_groups} tibble with the additional \code{log10_P} column
 }
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
