@@ -79,3 +79,16 @@ test_that(".mol files are correctly formed", {
   )
   
 })
+
+test_that("file downloads with correct counts block", {
+  skip_on_cran()
+  
+  dir <- withr::local_tempdir()
+  out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
+  ex_file_contents <- readLines(out$mol_path)
+  expect_equal(
+    ex_file_contents[4],
+    "12 12  0  0  1  0  0  0  0  0999 V2000"
+  )
+})
+
