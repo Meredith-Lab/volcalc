@@ -13,7 +13,7 @@ prepended with a "C".}
 \item{pathway_ids}{character vector of KEGG pathway IDs---5 digits prepended
 with "map".}
 
-\item{dir}{path to a folder to save mol files in. Folder will be created if
+\item{dir}{path to a folder to save .mol files in. Folder will be created if
 it does not already exist}
 }
 \value{

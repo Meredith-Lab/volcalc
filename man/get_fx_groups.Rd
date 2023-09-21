@@ -20,8 +20,21 @@ for specified compounds. Users will not typically interact with this function
 directly, but rather by using \code{\link[=calc_vol]{calc_vol()}}.
 }
 \note{
-This function currently does not capture hydroperoxide, nitrophenol,
-nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
+This function currently does \strong{not} capture the following functional
+groups used in SIMPOL.1:
+\itemize{
+\item carbon number on the acid-side of amide
+\item C=C-C=O in a non-aromatic ring
+\item alicyclic ether
+\item aromatic ether
+\item aromatic amine
+\item carbonylperoxynitrate
+\item hydroperoxide
+\item carbonylperoxyacid
+\item nitrophenol,
+\item nitroesther
+}
+
 Contributions of SMARTS strings to capture these groups are welcome.
 }
 \examples{

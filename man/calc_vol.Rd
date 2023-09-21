@@ -43,7 +43,7 @@ volatility index (\code{volatility}). \eqn{\textrm{log}_{10}C^\ast =
 the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
 universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 \code{return_calc_steps = TRUE}, the log of estimated vapor pressure, \code{log10_P},
-and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha} are also returned.
+and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha}, are also returned.
 }
 \examples{
 mol_path <- mol_example("C16181.mol")

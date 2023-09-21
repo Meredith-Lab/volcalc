@@ -20,7 +20,7 @@
 #'   the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
 #'   universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 #'   `return_calc_steps = TRUE`, the log of estimated vapor pressure, `log10_P`,
-#'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha` are also returned.
+#'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha`, are also returned.
 #' 
 #'
 #' @return a tibble with relative volatility index (`volatility`) and volatility
