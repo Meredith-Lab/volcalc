@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# volcalc <a href="https://meredith-lab.github.io/volcalc/"><img src="man/figures/logo.PNG" align="right" height="120" alt="volcalc website" /></a>
+# volcalc <a href="https://meredith-lab.github.io/volcalc/"><img src="man/figures/logo.PNG" alt="volcalc website" align="right" height="120"/></a>
 
 <!-- badges: start -->
 
@@ -12,6 +12,7 @@ has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Codecov test
 coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
+
 <!-- badges: end -->
 
 ## Overview
@@ -19,19 +20,24 @@ coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.s
 The goal of `volcalc` is to automate calculating estimates of volatility
 for chemical compounds.
 
-**`volcalc` is a work in progress—use at your own risk!**
+> [!WARNING]
+> `volcalc` is a work in progress---use at your own risk!
 
 It is still in a stage of development likely to introduce many breaking
 changes. For a bit of a road map of where development is headed, see our
 [proposal](https://cct-datascience.github.io/volcalc-isc-proposal/) for
 the R Consortium grant.
 
-Volatility can be estimated for most chemical compounds that are in the
-[KEGG](https://www.genome.jp/kegg/) database, using just the [KEGG
+Volatility can be estimated for most chemical compounds using a .mol
+file. The [KEGG](https://www.genome.jp/kegg/) database provides .mol
+files for most compounds and they can be downloaded using just the [KEGG
 unique identifier](https://www.genome.jp/kegg/compound/) for the
 compound of interest. Alternatively, volatility can be estimated for
 multiple compounds that are in a [KEGG
 pathway](https://www.genome.jp/kegg/pathway.html).
+
+Volatility estimation is done using a modified version of the SIMPOL.1
+method (Pankow & Asher 2008).
 
 ## Installation
 
@@ -119,11 +125,13 @@ KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is
 
 ``` r
 out_path <- tempdir()
-calc_vol(compound_id = "C16181", path = out_path)
-#>      pathway compound  formula                                   name
-#> CMP1      NA   C16181 C6H7Cl5O beta-2,3,4,5,6-Pentachlorocyclohexanol
-#>      volatility category
-#> CMP1   6.975349     high
+# download a .mol file from KEGG
+files <- get_mol_kegg("C16181", dir = out_path)
+calc_vol(files$mol_path)
+#> # A tibble: 1 × 5
+#>   mol_path                                     formula name  volatility category
+#>   <chr>                                        <chr>   <chr>      <dbl> <chr>   
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf434000… C6H7Cl… beta…       6.98 high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -131,120 +139,62 @@ compound, and the compound’s calculated volatility and corresponding
 volatility category. The functional group counts underlying the
 volatility can be additionally returned with `return_fx_groups = TRUE`,
 and the intermediate calculation steps with `return_calc_steps = TRUE`.
-A list of all possible dataframe columns is included below.
 
-There are other possible input arguments to the function. The compound
-can alternatively be specified with its chemical formula using the
-`compound_formula` argument instead of `compound_id` as in the example.
-The KEGG pathway that a compound is part of can be included with the
-`pathway_id` argument, which will generate a data subfolder for all
-compounds in that specified pathway. You can specify where the compound
-files are downloaded by setting the desired relative path using
-`path = "path/to/folder"`; otherwise, the path will be in a `data`
-folder in the current directory. If the underlying data file for a
-compound has already been downloaded in the specified path, it will not
-be downloaded again unless `redownload = TRUE`.
-
-#### Multiple function approach
-
-This breaks the steps done by `calc_vol` into three parts: 1) download
-the compound’s .mol file from KEGG, 2) count occurrences of different
-functional groups, and 3) estimate volatility. This calculation uses the
-SIMPOL approach[^1].
-
-``` r
-save_compound_mol(compound_id = "C16181", path = out_path)
-example_compound_fx_groups <-
-  get_fx_groups(compound_id = "C16181", path = out_path)
-example_compound_vol <-
-  calc_vol(compound_id = "C16181",
-           fx_groups_df = example_compound_fx_groups,
-           path = out_path)
-print(example_compound_vol$volatility)
-#> [1] 6.975349
-```
-
-This example compound has a volatility around 7. It is in the high
-volatility category.
-
-Many of the arguments described for `calc_vol` can be used in these
-intermediate functions. See function documentation for details.
-
-## Multiple compounds from a pathway usage
-
-A dataframe with volatility estimates for all compounds in a chosen
-pathway can be returned as below.
-
-``` r
-example_pathway_vol <- calc_pathway_vol("map00361", path = out_path)
-print(example_pathway_vol[1,])
-#>       pathway compound formula name volatility category
-#> CMP1 map00361   C00011     CO2 CO2;   7.914113     high
-```
-
+<!--
 ## Dataframe columns
-
-### Basic compound information
-
-- pathway: KEGG pathway identifier
-- compound: KEGG compound identifier
-- formula: compound chemical formula
-- name: compound name
-- mass: compound mass
-
-### Counted functional groups and atoms
-
-- carbons
-- ketones
-- aldehydes
-- hydroxyl_groups
-- carbox_acids
-- peroxide
-- hydroperoxide
-- nitrate
-- nitro
-- carbon_dbl_bonds
-- rings
-- rings_aromatic
-- hydroxyl_aromatic
-- nitrophenol
-- nitroester
-- ester
-- ether_alicyclic
-- ether_aromatic
-- amine_primary
-- amine_secondary
-- amine_tertiary
-- amine_aromatic
-- amines
-- amides
-- phosphoric_acid
-- phosphoric_ester
-- sulfate
-- sulfonate
-- thiol
-- carbothioester
-- oxygens
-- chlorines
-- nitrogens
-- sulfurs
-- phosphoruses
-- bromines
-- iodines
-- fluorines
-
-### Volatility calculation steps
-
-- log_alpha: intermediate step
-- log_Sum: intermediate step
-- volatility: estimated volatility
-- category: volatility category, where values less than 0 are “none”,
-  values between 0 and 2 are “moderate”, and values above 2 are “high”
-
-### Functional group details
-
-| Functional group   | In manual? | Count method        | Coefficient | Coef source      |
-|--------------------|------------|---------------------|-------------|------------------|
+&#10;### Basic compound information
+&#10;-   pathway: KEGG pathway identifier
+-   compound: KEGG compound identifier
+-   formula: compound chemical formula
+-   name: compound name
+-   mass: compound mass
+&#10;### Counted functional groups and atoms
+&#10;-   carbons
+-   ketones
+-   aldehydes
+-   hydroxyl_groups
+-   carbox_acids
+-   peroxide
+-   hydroperoxide
+-   nitrate
+-   nitro
+-   carbon_dbl_bonds
+-   rings
+-   rings_aromatic
+-   hydroxyl_aromatic
+-   nitrophenol
+-   nitroester
+-   ester
+-   ether_alicyclic
+-   ether_aromatic
+-   amine_primary
+-   amine_secondary
+-   amine_tertiary
+-   amine_aromatic
+-   amines
+-   amides
+-   phosphoric_acid
+-   phosphoric_ester
+-   sulfate
+-   sulfonate
+-   thiol
+-   carbothioester
+-   oxygens
+-   chlorines
+-   nitrogens
+-   sulfurs
+-   phosphoruses
+-   bromines
+-   iodines
+-   fluorines
+&#10;### Volatility calculation steps
+&#10;-   log_alpha: intermediate step
+-   log_Sum: intermediate step
+-   volatility: estimated volatility
+-   category: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
+&#10;### Functional group details
+&#10;| Functional group   | In manual? | Count method        | Coefficient | Coef source      |
+|---------------|---------------|---------------|---------------|---------------|
 | Carbons            | Y          | ChemmineR atomcount | -0.438      | ?                |
 | Ketones            | Y          | ChemmineR groups    | -0.935      | Pankow & Asher   |
 | Aldehydes          | Y          | ChemmineR groups    | -1.35       | Pankow & Asher   |
@@ -255,7 +205,7 @@ print(example_pathway_vol[1,])
 | Nitrate            | Y          | SMARTS              | -2.23       | Pankow & Asher   |
 | Nitro              | Y          | SMARTS              | -2.15       | Pankow & Asher   |
 | Carbon double bond | Y          | ChemmineR conMA     | -0.105      | Pankow & Asher   |
-| Non-aromatic rings | Y          | ChemmineR rings     | –0.0104     | Pankow & Asher   |
+| Non-aromatic rings | Y          | ChemmineR rings     | --0.0104    | Pankow & Asher   |
 | Aromatic rings     | Y          | ChemmineR rings     | -0.675      | Pankow & Asher   |
 | Aromatic hydroxyl  | Y          | SMARTS              | -2.14       | Pankow & Asher   |
 | Nitrophenol        | Y          | NA                  | 0.0432      | Pankow & Asher   |
@@ -275,6 +225,7 @@ print(example_pathway_vol[1,])
 | Sulfonate          | N          | SMARTS              | -2.23       | Same as nitrate  |
 | Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
 | Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
+&#10;-->
 
 ## Code of Conduct
 
@@ -302,7 +253,7 @@ reference below:
 
 ### References
 
-[^1]: Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
-    contribution method for predicting vapor pressures and enthalpies of
-    vaporization of multifunctional organic compounds. Atmos. Chem.
-    Phys. <https://doi.org/10.5194/acp-8-2773-2008>
+Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group contribution
+method for predicting vapor pressures and enthalpies of vaporization of
+multifunctional organic compounds. Atmos. Chem. Phys.
+<https://doi.org/10.5194/acp-8-2773-2008>
