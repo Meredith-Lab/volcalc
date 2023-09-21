@@ -16,6 +16,7 @@ to see the new usage of functions.
 * Fixed a bug that caused the number of phenols to be miscounted. Rather than counting phenols, `get_fx_groups` now counts aromatic hydroxyl groups (e.g. phenols) to more closely align with Pankow & Asher (2008) (#46)
 * package now has a hex logo!
 * Fixes a bug in `volcalc` introduced by a bug-fix in `ChemmineR` v3.53.1 (#54)
+* The `volatility` column in the output of `calc_vol()` has been renamed to `rvi` (relative volatility index)
 
 # volcalc 1.0.2
 

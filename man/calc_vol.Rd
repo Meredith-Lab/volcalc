@@ -29,7 +29,7 @@ final dataframe.}
 calculation steps in final dataframe. See \strong{Details}}
 }
 \value{
-a tibble with relative volatility index (\code{volatility}) and volatility
+a tibble with relative volatility index (\code{rvi}) and volatility
 category (\code{category}).
 }
 \description{
@@ -38,7 +38,7 @@ using group contribution methods.
 }
 \details{
 \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
-volatility index (\code{volatility}). \eqn{\textrm{log}_{10}C^\ast =
+volatility index (\code{rvi}). \eqn{\textrm{log}_{10}C^\ast =
   \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
 the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
 universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When

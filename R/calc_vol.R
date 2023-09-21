@@ -15,7 +15,7 @@
 #'   calculation steps in final dataframe. See **Details**
 #' 
 #' @details \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
-#'   volatility index (`volatility`). \eqn{\textrm{log}_{10}C^\ast =
+#'   volatility index (`rvi`). \eqn{\textrm{log}_{10}C^\ast =
 #'   \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
 #'   the compound, \eqn{M} is molecular mass of the compound, \eqn{R} is the
 #'   universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
@@ -23,7 +23,7 @@
 #'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha`, are also returned.
 #' 
 #'
-#' @return a tibble with relative volatility index (`volatility`) and volatility
+#' @return a tibble with relative volatility index (`rvi`) and volatility
 #'   category (`category`).
 #'   
 #' @seealso [get_fx_groups()], [simpol1()]
@@ -73,13 +73,13 @@ calc_vol <-
         # 0.0000821 is universal gas constant
         # 293.15 is temperature in Kelvins (20ºC)
         log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
-        volatility = .data$log_alpha + .data$log10_P, 
+        rvi = .data$log_alpha + .data$log10_P, 
         #TODO add @details to documentation explaining categories.  Make sure they match manuscript
         category = dplyr::case_when(
-          .data$volatility <  -2                        ~ "non",
-          .data$volatility >= -2 & .data$volatility < 0 ~ "low",
-          .data$volatility >= 0  & .data$volatility < 2 ~ "intermediate",
-          .data$volatility >= 2                         ~ "high"
+          .data$rvi <  -2                 ~ "non",
+          .data$rvi >= -2 & .data$rvi < 0 ~ "low",
+          .data$rvi >= 0  & .data$rvi < 2 ~ "intermediate",
+          .data$rvi >= 2                  ~ "high"
         )
       )
     
@@ -96,7 +96,7 @@ calc_vol <-
     
     #return:
     vol_df %>% 
-      dplyr::select(dplyr::all_of(c({{from}}, "formula", "name", "volatility", "category", cols_fx, cols_calc)))
+      dplyr::select(dplyr::all_of(c({{ from }}, "formula", "name", "rvi", "category", cols_fx, cols_calc)))
     
   }
 
