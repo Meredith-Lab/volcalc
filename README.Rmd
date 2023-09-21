@@ -233,7 +233,7 @@ If you find a bug, are interested in an additional feature, or have made improve
 If you use this package in your published work, please cite it using the reference below:
 
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J., Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for estimating metabolite volatility.
-> In prep.
+> In review.
 
 ### References
 

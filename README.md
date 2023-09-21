@@ -249,7 +249,7 @@ reference below:
 
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
 > Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
-> estimating metabolite volatility. In prep.
+> estimating metabolite volatility. In review.
 
 ### References
 
