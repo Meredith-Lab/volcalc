@@ -78,10 +78,10 @@ pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
 Installation of `volcalc` requires the system libraries
-[OpenBabel](https://openbabel.org/) and Eigen3 (requirements of the
-`ChemmineOB` package, which `volcalc` depends on). `pak` will take care
-of the installation of these libraries for you on some systems, but you
-may need to install them manually.
+[OpenBabel](https://openbabel.org/wiki/Main_Page) and Eigen3
+(requirements of the `ChemmineOB` package, which `volcalc` depends on).
+`pak` will take care of the installation of these libraries for you on
+some systems, but you may need to install them manually.
 
 For macOS, they can be installed via homebrew by running the following
 shell command:
