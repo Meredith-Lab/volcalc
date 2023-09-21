@@ -1,6 +1,6 @@
 test_that("volatility estimate is correct for example compound for entire workflow", {
   ex_vol_df <- calc_vol("data/C16181.mol")
-  expect_equal(round(ex_vol_df$volatility, 6), 6.975349)
+  expect_equal(round(ex_vol_df$rvi, 6), 6.975349)
 })
 
 

@@ -22,7 +22,7 @@ c(
       person("M", "Tfaily"),
       person("SK", "Ledford")
     ),
-    year = "in prep",
+    year = "in review",
     journal = "Frontiers in Microbiology",
     header = "Please also cite the related manuscript:"
   )

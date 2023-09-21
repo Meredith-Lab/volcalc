@@ -1,17 +1,22 @@
 # volcalc (development version)
 
+This version includes big (breaking) changes in how the package works!  Please
+read the changelog below carefully and check function documentation and examples
+to see the new usage of functions.
+
 * Change output of `get_fx_groups()` and `calc_vol()` from data frame to tibble
 * `get_fx_groups()` and `calc_vol()` no longer depend on KEGG or take KEGG compound IDs or pathway IDs.  Instead, `calc_vol()` accepts a path to a .mol file as input.
 * `calc_vol()` is vectorized and accepts multiple compounds as input.
 * Moved SIMPOL.1 calculations out of `calc_vol()` and into to their own function, `simpol1()`, to pave the way for future expansions using other methods.  The "manual" workflow is now .mol file |> `ChemmineR::read.SDFset()` |> `get_fx_groups()` |> `simpol1()`
 * The output of `calc_vol()` (and `simpol1()`) now contains a column called `log10_P` instead of `log_Sum`, equivalent to `log_Sum` + the coefficient for b_0(T)
 * Output of `calc_vol()` now contains a column with the inputs, named whatever is supplied to `from` (eg. a column called `mol_path` containing paths to mol files)
-* Addition of `get_mol_kegg()` which will eventually replace `save_compound_mol`
+* A new function, `get_mol_kegg()`, replaces `save_compound_mol()` for downloading mol files from KEGG
 * Added pkgdown website
 * `get_fx_groups()` now only counts the smallest set of smallest rings (#57)
 * Fixed a bug that caused the number of phenols to be miscounted. Rather than counting phenols, `get_fx_groups` now counts aromatic hydroxyl groups (e.g. phenols) to more closely align with Pankow & Asher (2008) (#46)
 * package now has a hex logo!
 * Fixes a bug in `volcalc` introduced by a bug-fix in `ChemmineR` v3.53.1 (#54)
+* The `volatility` column in the output of `calc_vol()` has been renamed to `rvi` (relative volatility index)
 
 # volcalc 1.0.2
 

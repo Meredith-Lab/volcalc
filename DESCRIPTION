@@ -7,9 +7,10 @@ Authors@R: c(
     person("Eric R.", "Scott", role = "aut",
            comment = c(ORCID = "0000-0002-7430-7879"))
   )
-Description: Use this package to calculate estimated volatility values for
-    individual compounds of interest or for all compounds in a pathway.
-    Calculation uses the SIMPOL method (Prankow and Asher, 2008).
+Description: Use this package to calculate estimated relative volatility
+    index values for organic compounds based on functional group
+    contributions.  Calculation uses the SIMPOL method (Prankow and Asher,
+    2008).
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues

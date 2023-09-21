@@ -8,7 +8,7 @@ utils::globalVariables(".data")
 #'   prepended with a "C".
 #' @param pathway_ids character vector of KEGG pathway IDs---5 digits prepended
 #'   with "map".
-#' @param dir path to a folder to save mol files in. Folder will be created if
+#' @param dir path to a folder to save .mol files in. Folder will be created if
 #'   it does not already exist
 #'
 #' @returns a tibble with the columns `compound_ids`, `pathway_ids` (if used),
@@ -22,7 +22,7 @@ utils::globalVariables(".data")
 #' }
 get_mol_kegg <- function(compound_ids, pathway_ids, dir){
   
-  #TODO: implement redownload=FALSE arg
+  #TODO: implement redownload=FALSE arg?
   
   if(missing(dir)) stop("`dir` is required")
   if ((missing(compound_ids) & missing(pathway_ids)) |
@@ -65,9 +65,9 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
     
     # Adds title to mol file because it is used later on by get_fx_groups()
     names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
-    #just use the first name and remove separator
+    # Only use the first name and remove separator
     title <- stringr::str_remove(names[1], ";")
-    #add title line to mol file
+    # add title line to mol file
     mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
     mol_clean
   }

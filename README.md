@@ -115,11 +115,11 @@ library(volcalc)
 
 ## Single compound usage
 
-This is a basic example which shows you how to get a volatility estimate
-for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*. The
-KEGG compound identifier for the compound, as found on [the compound’s
-KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is
-*C16181*.
+This is a basic example which shows you how to get an estimated relative
+volatility index (`rvi`) for an example compound
+*beta-2,3,4,5,6-Pentachlorocyclohexanol*. The KEGG compound identifier
+for the compound, as found on [the compound’s KEGG
+page](https://www.genome.jp/dbget-bin/www_bget?C16181), is *C16181*.
 
 #### Single function approach
 
@@ -129,9 +129,9 @@ out_path <- tempdir()
 files <- get_mol_kegg("C16181", dir = out_path)
 calc_vol(files$mol_path)
 #> # A tibble: 1 × 5
-#>   mol_path                                     formula name  volatility category
-#>   <chr>                                        <chr>   <chr>      <dbl> <chr>   
-#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf434000… C6H7Cl… beta…       6.98 high
+#>   mol_path                                          formula name    rvi category
+#>   <chr>                                             <chr>   <chr> <dbl> <chr>   
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high
 ```
 
 This returns a dataframe with columns specifying general info about the
@@ -249,7 +249,7 @@ reference below:
 
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
 > Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
-> estimating metabolite volatility. In prep.
+> estimating metabolite volatility. In review.
 
 ### References
 

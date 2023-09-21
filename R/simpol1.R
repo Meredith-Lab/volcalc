@@ -19,7 +19,7 @@ utils::globalVariables(".data")
 #' @param fx_groups a data.frame or tibble with counts of functional groups
 #'   produced by [get_fx_groups()] (or manually, with the same column names)
 #'
-#' @return a tibble
+#' @return the `fx_groups` tibble with the additional `log10_P` column 
 #'
 #' @references Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group
 #'   contribution method for predicting vapor pressures and enthalpies of
@@ -34,7 +34,9 @@ utils::globalVariables(".data")
 #' fx_groups <- get_fx_groups(sdf)
 #' simpol1(fx_groups)
 simpol1 <- function(fx_groups) {
-  #TODO: this is actually a *modified* version of SIMPOL.1 with additional functional group coefs added.  Should there be a separate function for the original SMIPOL.1 method that doesn't count these additional groups
+  # TODO: this is actually a *modified* version of SIMPOL.1 with additional
+  # functional group coefs added.  Should there be a separate function for the
+  # original SMIPOL.1 method that doesn't count these additional groups
   fx_groups %>%
     # assume NAs are 0s for the sake of this calculation
     dplyr::mutate(dplyr::across(dplyr::where(is.integer), function(x)
@@ -74,7 +76,7 @@ simpol1 <- function(fx_groups) {
         (-2.48    * .data$carbonylperoxyacid) +
         (0.0432 	* .data$nitrophenol) +
         (-2.67	  * .data$nitroester) +
-
+        # Below are additions from Meredith et al.
         (-2.23	  * .data$amides) + #TODO remove once 1º, 2º, 3º amides are added
         (-2.23	  * .data$phosphoric_acid) +
         (-2.23	  * .data$phosphoric_ester) +

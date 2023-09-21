@@ -4,9 +4,21 @@
 #' for specified compounds. Users will not typically interact with this function
 #' directly, but rather by using [calc_vol()].
 #' 
-#' @note This function currently does not capture hydroperoxide, nitrophenol,
-#'   nitroesther, alicyclic ether, aromatic ether, or armoatic amine groups.
-#'   Contributions of SMARTS strings to capture these groups are welcome.
+#' @note This function currently does **not** capture the following functional
+#'   groups used in SIMPOL.1:
+#' 
+#' - carbon number on the acid-side of amide
+#' - C=C-C=O in a non-aromatic ring
+#' - alicyclic ether
+#' - aromatic ether
+#' - aromatic amine
+#' - carbonylperoxynitrate
+#' - hydroperoxide
+#' - carbonylperoxyacid
+#' - nitrophenol,
+#' - nitroesther
+#' 
+#' Contributions of SMARTS strings to capture these groups are welcome.
 #'
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
