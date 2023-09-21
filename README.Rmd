@@ -105,7 +105,7 @@ library(volcalc)
 
 ## Single compound usage
 
-This is a basic example which shows you how to get a volatility estimate for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*.
+This is a basic example which shows you how to get an estimated relative volatility index (`rvi`) for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*.
 The KEGG compound identifier for the compound, as found on [the compound's KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is *C16181*.
 
 #### Single function approach
