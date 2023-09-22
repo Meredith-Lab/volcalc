@@ -1,5 +1,7 @@
 # volcalc (development version)
 
+* It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
+
 # volcalc 2.0.0
 
 This version includes big (breaking) changes in how the package works!  Please
