@@ -55,9 +55,7 @@ calc_vol <-
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
     }
     
-    #TODO: needs testing before implementing
     if(from == "smiles") {
-      #TODO: validate smiles
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
     

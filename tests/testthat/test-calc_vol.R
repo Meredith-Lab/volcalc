@@ -14,13 +14,20 @@ test_that("returns correct number of columns depending on return arguments", {
 
 test_that("calc_vol() works with multiple inputs", {
   paths <- c("data/map00361/C00011.mol", "data/map00361/C00042.mol")
+  smiles <- c("O=C=O", "C(CC(=O)O)C(=O)O")
   expect_s3_class(calc_vol(paths), "data.frame")
+  expect_s3_class(calc_vol(smiles, from = "smiles"), "data.frame")
 })
 
 test_that("smiles and .mol give same results", {
-  #mol file is chiral and smiles is not, but shouldn't make a difference for group contribution methods
+  paths <- c("data/C16181.mol", "data/map00361/C00011.mol", "data/map00361/C00042.mol")
+  smiles <- c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O", "O=C=O", "C(CC(=O)O)C(=O)O")
   expect_equal(
-    calc_vol("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O", from = "smiles") %>% dplyr::select(-name, -smiles),
-    calc_vol("data/C16181.mol") %>% dplyr::select(-name, -mol_path)
+    calc_vol(smiles, from = "smiles") %>% dplyr::select(-name, -smiles),
+    calc_vol(paths) %>% dplyr::select(-name, -mol_path)
   )
+})
+
+test_that("errors with invalid SMILES", {
+  expect_error(calc_vol("hello", from = "smiles"))
 })
