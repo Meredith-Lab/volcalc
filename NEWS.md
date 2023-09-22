@@ -1,4 +1,4 @@
-# volcalc (development version)
+# volcalc 2.0.0
 
 This version includes big (breaking) changes in how the package works!  Please
 read the changelog below carefully and check function documentation and examples
