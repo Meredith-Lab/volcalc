@@ -73,10 +73,9 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
       b_19 = (-0.849	 * .data$amine_secondary),
       b_20 = (-0.608 	 * .data$amine_tertiary),
       b_21 = (-1.61    * .data$amine_aromatic),
-      # TODO add amides to get_fx_groups() and uncomment these
-      # b_22 = (-4.49    * .data$amide_primary),
-      # b_23 = (-5.26    * .data$amide_secondary),
-      # b_24 = (-2.63    * .data$amide_tertiary),
+      b_22 = (-4.49    * .data$amide_primary),
+      b_23 = (-5.26    * .data$amide_secondary),
+      b_24 = (-2.63    * .data$amide_tertiary),
       b_25 = (-2.34    * .data$carbonylperoxynitrate),
       b_26 = (-0.368   * .data$peroxide),
       b_27 = (-2.48	   * .data$hydroperoxide),
@@ -89,7 +88,7 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
     betas <- betas %>% 
       dplyr::mutate(
         # # Below are additions from Meredith et al.
-        b_31 = (-2.23	  * .data$amides), #TODO remove once 1º, 2º, 3º amides are added
+        # b_31 = (-2.23	  * .data$amides), #TODO remove once 1º, 2º, 3º amides are added
         b_32 = (-2.23	  * .data$phosphoric_acid),
         b_33 = (-2.23	  * .data$phosphoric_ester),
         b_34 = (-2.23	  * .data$sulfate),
