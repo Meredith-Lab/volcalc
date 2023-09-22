@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * `simpol1()` gains an argument `meredith` that controls whether just the functional groups in the original SIMPOL.1 method (Pankow & Asher, 2008) is used or if additional coefficients used in Meredith et al. (2023) are also included.
+* The default for the `method` argument to `calc_vol()` has now been renamed to `"meredith"`.  `"simpol1"` now uses the original SIMPOL.1 method without additional coefficients added in Meredith et al. (2023).
 
 # volcalc 2.0.0
 
