@@ -3,16 +3,15 @@
 #' Relative volatility value and category is estimated for specified compound
 #' using group contribution methods.
 #'
-#' @param input a path to a .mol file or a character representation such as
-#'   SMILES or InChI
-#' @param from the form of `input` (currently only a path to a .mol file is
-#'   implemented)
+#' @param input a path to a .mol file or a SMILES string.
+#' @param from the form of `input`. Either `"mol_path"` or `"smiles"` (default
+#'   is `"mol_path"`).
 #' @param method the method for calculating estimated volatility. Currently only
 #'   the SIMPOL.1 method is implemented---see [simpol1()] for more details.
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
-#'   calculation steps in final dataframe. See **Details**
+#'   calculation steps in final dataframe. See **Details**.
 #' 
 #' @details \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
 #'   volatility index (`rvi`). \eqn{\textrm{log}_{10}C^\ast =
@@ -41,7 +40,7 @@
 #' 
 calc_vol <-
   function(input, 
-           from = c("mol_path"),
+           from = c("mol_path", "smiles"),
            method = c("simpol1"),
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
@@ -52,13 +51,15 @@ calc_vol <-
     method <- match.arg(method)
     
     if(from == "mol_path") {
+      #TODO: validate mol files??
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
     }
     
     #TODO: needs testing before implementing
-    # if(from == "smiles") { 
-    #   compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
-    # }
+    if(from == "smiles") {
+      #TODO: validate smiles
+      compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
+    }
     
     fx_groups_df_list <-
       lapply(compound_sdf_list, get_fx_groups)
