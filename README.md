@@ -113,25 +113,33 @@ Use the package with:
 library(volcalc)
 ```
 
-## Single compound usage
+## Usage
 
 This is a basic example which shows you how to get an estimated relative
-volatility index (`rvi`) for an example compound
-*beta-2,3,4,5,6-Pentachlorocyclohexanol*. The KEGG compound identifier
-for the compound, as found on [the compound’s KEGG
-page](https://www.genome.jp/dbget-bin/www_bget?C16181), is *C16181*.
-
-#### Single function approach
+volatility index (`rvi`) for two example compounds
+*beta-2,3,4,5,6-Pentachlorocyclohexanol*, and *Succinate*. The KEGG
+compound identifiers for the compounds, as found on [the compound’s KEGG
+page](https://www.genome.jp/dbget-bin/www_bget?C16181), are C16181, and
+C00042.
 
 ``` r
 out_path <- tempdir()
 # download a .mol file from KEGG
-files <- get_mol_kegg("C16181", dir = out_path)
+files <- get_mol_kegg(c("C16181", "C00042"), dir = out_path)
 calc_vol(files$mol_path)
-#> # A tibble: 1 × 5
+#> # A tibble: 2 × 5
 #>   mol_path                                          formula name    rvi category
 #>   <chr>                                             <chr>   <chr> <dbl> <chr>   
-#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    
+#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high
+
+#alternatively, supply a SMILES representation
+calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
+#> # A tibble: 2 × 5
+#>   smiles                        formula  name    rvi category
+#>   <chr>                         <chr>    <chr> <dbl> <chr>   
+#> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>   6.98 high    
+#> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>   2.57 high
 ```
 
 This returns a dataframe with columns specifying general info about the
