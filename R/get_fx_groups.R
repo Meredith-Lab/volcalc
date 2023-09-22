@@ -59,7 +59,7 @@ get_fx_groups <- function(compound_sdf) {
   #convert counts to integer
   groups <- groups %>% dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
   rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
-  atoms <- data.frame(t(unlist(ChemmineR::atomcount(compound_sdf))))
+  atoms <- atomcount2tibble(ChemmineR::atomcount(compound_sdf))
   carbon_bond_data <- data.frame(ChemmineR::conMA(compound_sdf)[[1]]) %>%
     dplyr::select(dplyr::contains("C_")) %>%
     tibble::rownames_to_column() %>%
@@ -99,8 +99,8 @@ get_fx_groups <- function(compound_sdf) {
     name = ChemmineR::propOB(compound_sdf)$title,
     mass = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
     #TODO these columns should all be integer
-    carbons = ifelse("CMP1.C" %in% colnames(atoms),
-                     atoms$CMP1.C, 0L
+    carbons = ifelse("C" %in% colnames(atoms),
+                     atoms$C, 0L
     ),
     carbons_asa = NA_integer_, #carbon number on the acid-side of amide
     rings_aromatic = rings$AROMATIC,
