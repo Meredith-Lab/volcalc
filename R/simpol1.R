@@ -87,7 +87,7 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
   
   if (isTRUE(meredith)) {
     betas <- betas %>% 
-      mutate(
+      dplyr::mutate(
         # # Below are additions from Meredith et al.
         b_31 = (-2.23	  * .data$amides), #TODO remove once 1º, 2º, 3º amides are added
         b_32 = (-2.23	  * .data$phosphoric_acid),
