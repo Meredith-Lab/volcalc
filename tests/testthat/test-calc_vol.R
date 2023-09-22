@@ -17,3 +17,10 @@ test_that("calc_vol() works with multiple inputs", {
   expect_s3_class(calc_vol(paths), "data.frame")
 })
   
+test_that("meredith and original method give different results", {
+  #thiol and sulfonate groups, respectively
+  paths <- c("data/C00409.mol", "data/C03349.mol")
+  meredith <- calc_vol(paths, method = "meredith")
+  simpol   <- calc_vol(paths, method = "simpol1")
+  expect_true(all(meredith$rvi < simpol$rvi))
+})
