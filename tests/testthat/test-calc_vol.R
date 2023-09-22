@@ -18,6 +18,7 @@ test_that("calc_vol() works with multiple inputs", {
 })
 
 test_that("smiles and .mol give same results", {
+  #mol file is chiral and smiles is not, but shouldn't make a difference for group contribution methods
   expect_equal(
     calc_vol("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O", from = "smiles") %>% dplyr::select(-name, -smiles),
     calc_vol("data/C16181.mol") %>% dplyr::select(-name, -mol_path)
