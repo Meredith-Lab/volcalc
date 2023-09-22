@@ -7,8 +7,8 @@
 #'   SMILES or InChI
 #' @param from the form of `input` (currently only a path to a .mol file is
 #'   implemented)
-#' @param method the method for calculating estimated volatility. Currently only
-#'   the SIMPOL.1 method is implemented---see [simpol1()] for more details.
+#' @param method the method for calculating estimated volatility. See
+#'   [simpol1()] for more details.
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
@@ -42,14 +42,20 @@
 calc_vol <-
   function(input, 
            from = c("mol_path"),
-           method = c("simpol1"),
+           method = c("meredith", "simpol1"),
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
     
     from <- match.arg(from)
-    #for future extensions in case other methods are added
     
+    # logic here will likely need to change if new method functions are added
     method <- match.arg(method)
+    
+    if (method == "meredith") {
+      meredith <- TRUE
+    } else {
+      meredith <- FALSE
+    }
     
     if(from == "mol_path") {
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
@@ -64,10 +70,11 @@ calc_vol <-
       lapply(compound_sdf_list, get_fx_groups)
     names(fx_groups_df_list) <- input
     fx_groups_df <- 
-      dplyr::bind_rows(fx_groups_df_list, .id = {{from}}) #adds column for input named "mol_path" or "smiles"
+      #adds column for input named "mol_path" or "smiles"
+      dplyr::bind_rows(fx_groups_df_list, .id = {{ from }}) 
     
     # calculate relative volatility & categories from logP
-    vol_df <- simpol1(fx_groups_df) %>% 
+    vol_df <- simpol1(fx_groups_df, meredith = meredith) %>% 
       dplyr::mutate(
         # mass is converted from grams to micrograms
         # 0.0000821 is universal gas constant
