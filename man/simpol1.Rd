@@ -29,6 +29,17 @@ The output includes a column for \code{log10_P} where
 the sum of the counts of functional groups (\eqn{\nu_{k,i}}) times the
 coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
 atmospheres.
+
+The modified method in Meredith et al. (2023) adds the following additional
+functional groups and coefficients:
+\itemize{
+\item Phosphoric acid (-2.23)
+\item Phosphoric ester (-2.23)
+\item Sulfate (-2.23)
+\item Sulfonate (-2.23)
+\item Thiol (-2.23)
+\item Carbothioester (-1.20)
+}
 }
 \note{
 The method described in Pankow & Asher (2008) allows for

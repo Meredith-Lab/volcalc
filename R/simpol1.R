@@ -13,6 +13,16 @@ utils::globalVariables(".data")
 #' coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
 #' atmospheres.
 #' 
+#' The modified method in Meredith et al. (2023) adds the following additional
+#' functional groups and coefficients:
+#' 
+#' - Phosphoric acid (-2.23)
+#' - Phosphoric ester (-2.23)
+#' - Sulfate (-2.23)
+#' - Sulfonate (-2.23)
+#' - Thiol (-2.23)
+#' - Carbothioester (-1.20)
+#' 
 #' @note The method described in Pankow & Asher (2008) allows for
 #' calculations of logP at different temperatures.  This implementation
 #' currently only calculates values at 20ºC.
