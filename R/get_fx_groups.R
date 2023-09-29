@@ -15,7 +15,7 @@
 #' - carbonylperoxynitrate
 #' - hydroperoxide
 #' - carbonylperoxyacid
-#' - nitrophenol,
+#' - nitrophenol
 #' - nitroesther
 #' 
 #' Contributions of SMARTS strings to capture these groups are welcome.

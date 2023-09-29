@@ -31,7 +31,7 @@ groups used in SIMPOL.1:
 \item carbonylperoxynitrate
 \item hydroperoxide
 \item carbonylperoxyacid
-\item nitrophenol,
+\item nitrophenol
 \item nitroesther
 }
 
