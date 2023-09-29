@@ -7,7 +7,17 @@ test_that("a functional group count is correct for example compound", {
 test_that("error with SDFset with more than one molecule", {
   data(sdfsample,package = "ChemmineR")
   sdfset <- sdfsample
-  expect_error(get_fx_groups(sdfset[1:4]), "SDFset objects must contain a single molecule only")
+  expect_error(get_fx_groups(sdfset[1:4]),
+               "SDFset objects must contain a single molecule only")
+})
+
+test_that("SMILES and mol give same results", {
+  from_mol <- ChemmineR::read.SDFset("data/C16181.mol")
+  from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
+  expect_equal(
+    get_fx_groups(from_mol) %>% dplyr::select(-name),
+    get_fx_groups(from_smiles) %>% dplyr::select(-name)
+  )
 })
 #' TODO:
 #' - Additional correctness tests

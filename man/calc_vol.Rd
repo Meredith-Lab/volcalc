@@ -6,18 +6,17 @@
 \usage{
 calc_vol(
   input,
-  from = c("mol_path"),
+  from = c("mol_path", "smiles"),
   method = c("meredith", "simpol1"),
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
 }
 \arguments{
-\item{input}{a path to a .mol file or a character representation such as
-SMILES or InChI}
+\item{input}{a path to a .mol file or a SMILES string.}
 
-\item{from}{the form of \code{input} (currently only a path to a .mol file is
-implemented)}
+\item{from}{the form of \code{input}. Either \code{"mol_path"} or \code{"smiles"} (default
+is \code{"mol_path"}).}
 
 \item{method}{the method for calculating estimated volatility. See
 \code{\link[=simpol1]{simpol1()}} for more details.}
@@ -26,7 +25,7 @@ implemented)}
 final dataframe.}
 
 \item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility
-calculation steps in final dataframe. See \strong{Details}}
+calculation steps in final dataframe. See \strong{Details}.}
 }
 \value{
 a tibble with relative volatility index (\code{rvi}) and volatility

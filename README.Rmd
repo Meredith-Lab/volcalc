@@ -103,18 +103,20 @@ Use the package with:
 library(volcalc)
 ```
 
-## Single compound usage
+## Usage
 
-This is a basic example which shows you how to get an estimated relative volatility index (`rvi`) for an example compound *beta-2,3,4,5,6-Pentachlorocyclohexanol*.
-The KEGG compound identifier for the compound, as found on [the compound's KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), is *C16181*.
+This is a basic example which shows you how to get an estimated relative volatility index (`rvi`) for two example compounds *beta-2,3,4,5,6-Pentachlorocyclohexanol*, and *Succinate*.
+The KEGG compound identifiers for the compounds, as found on [the compound's KEGG page](https://www.genome.jp/dbget-bin/www_bget?C16181), are C16181, and C00042.
 
-#### Single function approach
 
 ```{r}
 out_path <- tempdir()
 # download a .mol file from KEGG
-files <- get_mol_kegg("C16181", dir = out_path)
+files <- get_mol_kegg(c("C16181", "C00042"), dir = out_path)
 calc_vol(files$mol_path)
+
+#alternatively, supply a SMILES representation
+calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
 ```
 
 This returns a dataframe with columns specifying general info about the compound, and the compound's calculated volatility and corresponding volatility category.
