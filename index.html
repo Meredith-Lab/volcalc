@@ -132,21 +132,27 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="single-compound-usage">Single compound usage<a class="anchor" aria-label="anchor" href="#single-compound-usage"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>This is a basic example which shows you how to get an estimated relative volatility index (<code>rvi</code>) for an example compound <em>beta-2,3,4,5,6-Pentachlorocyclohexanol</em>. The KEGG compound identifier for the compound, as found on <a href="https://www.genome.jp/dbget-bin/www_bget?C16181" class="external-link">the compound’s KEGG page</a>, is <em>C16181</em>.</p>
-<div class="section level4">
-<h4 id="single-function-approach">Single function approach<a class="anchor" aria-label="anchor" href="#single-function-approach"></a>
-</h4>
+<p>This is a basic example which shows you how to get an estimated relative volatility index (<code>rvi</code>) for two example compounds <em>beta-2,3,4,5,6-Pentachlorocyclohexanol</em>, and <em>Succinate</em>. The KEGG compound identifiers for the compounds, as found on <a href="https://www.genome.jp/dbget-bin/www_bget?C16181" class="external-link">the compound’s KEGG page</a>, are C16181, and C00042.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># download a .mol file from KEGG</span></span>
-<span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_mol_kegg.html">get_mol_kegg</a></span><span class="op">(</span><span class="st">"C16181"</span>, dir <span class="op">=</span> <span class="va">out_path</span><span class="op">)</span></span>
+<span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_mol_kegg.html">get_mol_kegg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C16181"</span>, <span class="st">"C00042"</span><span class="op">)</span>, dir <span class="op">=</span> <span class="va">out_path</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">files</span><span class="op">$</span><span class="va">mol_path</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 5</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
 <span><span class="co">#&gt;   mol_path                                          formula name    rvi category</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   </span></span>
-<span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    </span></span>
+<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high</span></span>
+<span></span>
+<span><span class="co">#alternatively, supply a SMILES representation</span></span>
+<span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O"</span>,  <span class="st">"C(CC(=O)O)C(=O)O"</span><span class="op">)</span>, from <span class="op">=</span> <span class="st">"smiles"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
+<span><span class="co">#&gt;   smiles                        formula  name    rvi category</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt; 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O &lt;NA&gt;   6.98 high    </span></span>
+<span><span class="co">#&gt; 2 C(CC(=O)O)C(=O)O              C4H6O4   &lt;NA&gt;   2.57 high</span></span></code></pre></div>
 <p>This returns a dataframe with columns specifying general info about the compound, and the compound’s calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with <code>return_fx_groups = TRUE</code>, and the intermediate calculation steps with <code>return_calc_steps = TRUE</code>.</p>
 <!--
 ## Dataframe columns
@@ -234,7 +240,6 @@
 | Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
 | Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
 &#10;-->
-</div>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
