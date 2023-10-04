@@ -1,7 +1,7 @@
 test_that("a functional group count is correct for example compound", {
   sdf <- ChemmineR::read.SDFset("data/C16181.mol")
   ex_df <- get_fx_groups(sdf)
-  expect_equal(ex_df$hydroxyl_groups, 1)
+  expect_equal(ex_df$hydroxyl_aliphatic, 1)
 })
 
 test_that("error with SDFset with more than one molecule", {
@@ -22,6 +22,16 @@ test_that("SMILES and mol give same results", {
 #' TODO:
 #' - Additional correctness tests
 #' - Test that compound name is read correctly or is NA when empty
+
+# test_compounds <- read_csv("tests/testthat/data/test_compounds.csv")
+# test_fx_groups <-
+#   test_compounds$smiles %>% 
+#   map(ChemmineR::smiles2sdf) %>% 
+#   map(get_fx_groups) %>% 
+#   list_rbind()
+# 
+# colnames(test_compounds)
+# colnames(test_fx_groups)
 
 test_that("get_fx_groups() distinguishes between ROOR, ROOH, and ROH", {
   skip("no pattern for hydroperoxide yet")
@@ -80,11 +90,11 @@ test_that("correct number of rings", {
 test_that("correct number of aromatic and non-aromatic hydroxyl", {
   
   bpa <- get_fx_groups(ChemmineR::read.SDFset("data/C13624.mol"))
-  expect_equal(bpa$hydroxyl_groups, 0)
+  expect_equal(bpa$hydroxyl_aliphatic, 0)
   expect_equal(bpa$hydroxyl_aromatic, 2)
   ldopa <- get_fx_groups(ChemmineR::read.SDFset("data/C00355.mol"))
-  expect_equal(ldopa$hydroxyl_groups, 0)
+  expect_equal(ldopa$hydroxyl_aliphatic, 0)
   expect_equal(ldopa$hydroxyl_aromatic, 2)
   glucose <- get_fx_groups(ChemmineR::read.SDFset("data/C00031.mol"))
-  expect_equal(glucose$hydroxyl_groups, 5)
+  expect_equal(glucose$hydroxyl_aliphatic, 5)
 })

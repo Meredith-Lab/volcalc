@@ -15,7 +15,7 @@
 #' - carbonylperoxynitrate
 #' - hydroperoxide
 #' - carbonylperoxyacid
-#' - nitrophenol,
+#' - nitrophenol
 #' - nitroesther
 #' 
 #' Contributions of SMARTS strings to capture these groups are welcome.
@@ -54,7 +54,7 @@ get_fx_groups <- function(compound_sdf) {
   }
     
   #assign variables to quiet devtools::check()
-  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_groups <- carbon_dbl_bonds <- NULL
+  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_total <- carbon_dbl_bonds <- NULL
   
   #convert counts to integer
   groups <- groups %>% dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
@@ -107,7 +107,7 @@ get_fx_groups <- function(compound_sdf) {
     rings = rings$RINGS, #TODO: call this rings_total?
     carbon_dbl_bonds = carbon_dbl_count$n, #TODO: this should be only non-aromatic double bonds
     CCCO_aliphatic_ring = NA_integer_, # C=C-C=O in a non-aromatic ring
-    hydroxyl_groups = groups$ROH, #TODO: this is total, should be just aliphatic for SIMPOL.1
+    hydroxyl_total = groups$ROH, #this is total, need just aliphatic for SIMPOL.1, corrected below
     aldehydes = groups$RCHO,
     ketones = groups$RCOR,
     carbox_acids = groups$RCOOH,
@@ -171,7 +171,7 @@ get_fx_groups <- function(compound_sdf) {
     #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
     dplyr::mutate(
       rings = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
-      hydroxyl_groups = hydroxyl_groups - hydroxyl_aromatic,
+      hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds),
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)
