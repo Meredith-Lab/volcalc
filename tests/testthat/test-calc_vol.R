@@ -5,11 +5,12 @@ test_that("volatility estimate is correct for example compound for entire workfl
 
 
 test_that("returns correct number of columns depending on return arguments", {
+  #TODO re-write test to check for number of columns *more* than baseline so adding functional groups doesn't break tests
   expect_equal(ncol(calc_vol("data/C16181.mol")), 5)
-  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE)), 47)
+  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE)), 51)
   expect_equal(ncol(calc_vol("data/C16181.mol", return_calc_steps = TRUE)), 8)
   expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE,
-                             return_calc_steps = TRUE)), 50)
+                             return_calc_steps = TRUE)), 54)
 })
 
 test_that("calc_vol() works with multiple inputs", {

@@ -51,7 +51,7 @@ simpol1 <- function(fx_groups) {
         (-0.438   * .data$carbons) +
         (-0.0338  * .data$carbons_asa) +
         (-0.675	  * .data$rings_aromatic) +
-        (-0.0104  * .data$rings) +
+        (-0.0104  * .data$rings_aliphatic) +
         (-0.105   * .data$carbon_dbl_bonds) +
         (-0.506   * .data$CCCO_aliphatic_ring) +
         (-2.23	  * .data$hydroxyl_aliphatic) +

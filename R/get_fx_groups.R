@@ -79,7 +79,7 @@ get_fx_groups <- function(compound_sdf) {
     carbon_dbl_count <- tibble::add_row(carbon_dbl_count, n = 0)
   }
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
-  peroxide_pattern <- "[OX2,OX1-][OX2,OX1-]"
+  peroxide_pattern <- "[OX2D2][OX2D2]" 
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   # amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
@@ -106,9 +106,9 @@ get_fx_groups <- function(compound_sdf) {
                      atoms$C, 0L
     ),
     carbons_asa = NA_integer_, #carbon number on the acid-side of amide
-    rings_aromatic = rings$AROMATIC,
-    rings = rings$RINGS, #TODO: call this rings_total?
-    carbon_dbl_bonds = carbon_dbl_count$n, #TODO: this should be only non-aromatic double bonds
+    rings_aromatic = as.integer(rings$AROMATIC),
+    rings_total = as.integer(rings$RINGS),
+    carbon_dbl_bonds = as.integer(carbon_dbl_count$n), #TODO: this should be only non-aromatic double bonds
     CCCO_aliphatic_ring = NA_integer_, # C=C-C=O in a non-aromatic ring
     hydroxyl_total = groups$ROH, #this is total, need just aliphatic for SIMPOL.1, corrected below
     aldehydes = groups$RCHO,
@@ -174,9 +174,11 @@ get_fx_groups <- function(compound_sdf) {
     # to fix double counting of rings, aromatic rings, hydroxyls, carbon double bonds, and phosphoric acids/esters
     #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
     dplyr::mutate(
-      rings = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
+      # rings_aliphatic = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
+      rings_aliphatic = rings_total - rings_aromatic,
       hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
-      carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds),
+      #TODO Check what this correction for carbon_dbl_bonds is doing.  Should be gettig just non-aromatic double-bonds, but I don't think that's what's going on here.
+      carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds), 
       carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)
     )
