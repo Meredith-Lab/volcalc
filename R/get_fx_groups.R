@@ -80,6 +80,7 @@ get_fx_groups <- function(compound_sdf) {
   }
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   peroxide_pattern <- "[OX2D2][OX2D2]" 
+  hydroperoxide_pattern <- "[OX2][OX2H,OX1-]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   # amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
@@ -130,7 +131,7 @@ get_fx_groups <- function(compound_sdf) {
     amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
     carbonylperoxynitrate = NA_integer_,
     peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
-    hydroperoxide = NA_integer_,
+    hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
     carbonylperoxyacid = NA_integer_,
     nitrophenol = NA_integer_,
     nitroester = NA_integer_,
