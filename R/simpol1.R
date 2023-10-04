@@ -69,7 +69,9 @@ simpol1 <- function(fx_groups) {
         (-0.849	  * .data$amine_secondary) +
         (-0.608 	* .data$amine_tertiary) +
         (-1.61    * .data$amine_aromatic) +
-        #TODO: missing amides
+        (-4.49    * .data$amide_primary) +
+        (-5.26    * .data$amide_secondary) +
+        (-2.63    * .data$amide_tertiary) +
         (-2.34    * .data$carbonylperoxynitrate) +
         (-0.368   * .data$peroxide) +
         (-2.48	  * .data$hydroperoxide) +
@@ -77,7 +79,6 @@ simpol1 <- function(fx_groups) {
         (0.0432 	* .data$nitrophenol) +
         (-2.67	  * .data$nitroester) +
         # Below are additions from Meredith et al.
-        (-2.23	  * .data$amides) + #TODO remove once 1º, 2º, 3º amides are added
         (-2.23	  * .data$phosphoric_acid) +
         (-2.23	  * .data$phosphoric_ester) +
         (-2.23	  * .data$sulfate) +
