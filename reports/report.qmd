@@ -56,7 +56,8 @@ There are currently two issues that we view as part of [milestone 2](https://git
 
 -   Allowing users to specify the environment (air or soil) for categorizing relative volatility into "low", "medium", and "high"
 
--   Allowing users to specify the method of calculation as the original SIMPOL.1 method or the version modified by Meredith et al. This has an open [pull request](https://github.com/Meredith-Lab/volcalc/pull/72) waiting for review.
+-   Allowing users to specify the method of calculation as the original SIMPOL.1 method or the version modified by Meredith et al.
+    This has an open [pull request](https://github.com/Meredith-Lab/volcalc/pull/72) waiting for review.
 
 After these last two elements are completed, we plan to make a v2.1.0 release.
 Then, we hope to distribute the package to a small group of chemoinformatics and metabolomics researchers to get feedback on the user interface, functionality, and documentation of the package.
