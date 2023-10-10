@@ -77,10 +77,12 @@ calc_vol <-
       lapply(compound_sdf_list, get_fx_groups)
     names(fx_groups_df_list) <- input
     fx_groups_df <- 
-      dplyr::bind_rows(fx_groups_df_list, .id = {{from}}) #adds column for input named "mol_path" or "smiles"
+      #adds column for input named "mol_path" or "smiles"
+      dplyr::bind_rows(fx_groups_df_list, .id = {{from}}) 
     
-    # calculate relative volatility & categories from logP
-    vol_df <- simpol1(fx_groups_df) %>% 
+    vol_df <- 
+      simpol1(fx_groups_df) %>% 
+      # calculate relative volatility & categories from logP
       dplyr::mutate(
         # mass is converted from grams to micrograms
         # 0.0000821 is universal gas constant
@@ -88,7 +90,7 @@ calc_vol <-
         log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
         rvi = .data$log_alpha + .data$log10_P, 
         category = cut(
-          rvi,
+          .data$rvi,
           breaks = cutoffs,
           labels = c("non-volatile", "low", "moderate", "high"),
           right = FALSE
