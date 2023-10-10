@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
+* Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
 
 # volcalc 2.0.0
 
