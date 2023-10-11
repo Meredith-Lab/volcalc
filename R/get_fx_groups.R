@@ -83,13 +83,14 @@ get_fx_groups <- function(compound_sdf) {
   ether_pattern <- "[OD2]([#6])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
-  peroxide_pattern <- "[OX2D2][OX2D2]" 
-  hydroperoxide_pattern <- "[OX2][OX2H,OX1-]"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
   # amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
+  peroxide_pattern <- "[OX2D2][OX2D2]" 
+  hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #TODO this captures peroxyacids too
+  carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]"
   nitroester_pattern <- "[OX2][N+]([O-])=O"
   
   #groups added by Meredith et al.
@@ -136,7 +137,7 @@ get_fx_groups <- function(compound_sdf) {
     carbonylperoxynitrate = NA_integer_,
     peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
     hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
-    carbonylperoxyacid = NA_integer_,
+    carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
     nitrophenol = NA_integer_,
     nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
 

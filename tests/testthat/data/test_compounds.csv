@@ -41,4 +41,6 @@ OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O,https://en.wikipedia.org/wiki/Glucose,,1,
 Oc1ccccc1,https://en.wikipedia.org/wiki/Phenol,phenol,0,1,0,0,,,,,,,,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Oc1ccc(cc1)C(c2ccc(O)cc2)(C)C,https://en.wikipedia.org/wiki/Bisphenol_A,BPA,0,2,,0,,,,,,,,,,2,,,,,,,,,,,,,,
 CN1C=NC2=C1C(=O)N(C(=O)N2C)C,https://en.wikipedia.org/wiki/Caffeine,,0,2,,,,,,,,,,,,,,,,,,,,,,,,,,
-O=C(O)[C@@H](N)Cc1cc(O)c(O)cc1,https://en.wikipedia.org/wiki/L-DOPA,,0,1,,0,,,,,,,,,,2,1,,,,,,,,,,,,,
+O=C(O)[C@@H](N)Cc1cc(O)c(O)cc1,https://en.wikipedia.org/wiki/L-DOPA,,0,1,,1,,,,,,,,,,2,1,,,,,,,,,,,,,
+Oc1ccccc1[N+]([O-])=O,https://pubchem.ncbi.nlm.nih.gov/compound/2-Nitrophenol#section=InChI,example for nitrophenol.  Paper says to ignore hydroxyls when nitro present on ring,0,1,,0,,,,,,,,,1,0,,,,,,,,,,,,,1,
+Oc1ccc(cc1[N+]([O-])=O)[N+]([O-])=O,https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:42017,"2,4-dinitrophenol",,1,,0,,,,,,,,,2,0,,,,,,,,,,,,,1,
