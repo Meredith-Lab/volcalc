@@ -84,7 +84,8 @@ get_fx_groups <- function(compound_sdf) {
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
-  # amide_pattern <- "[NX3][CX3](=[OX1])[#6]"
+  amine_aromatic_pattern <-  "[cR][NX3;!$(NO)]" 
+  # amide_total_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3;$([H2]),$([H1][#6;!$(C=[O,N,S])]),$([#7]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])])]"
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
@@ -130,7 +131,7 @@ get_fx_groups <- function(compound_sdf) {
     amine_primary = groups$RNH2,
     amine_secondary = groups$R2NH,
     amine_tertiary = groups$R3N,
-    amine_aromatic = NA_integer_,
+    amine_aromatic = ChemmineR::smartsSearchOB(compound_sdf, amine_aromatic_pattern),
     amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
     amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
     amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
