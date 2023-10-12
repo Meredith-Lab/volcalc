@@ -93,8 +93,7 @@ get_fx_groups <- function(compound_sdf) {
   hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #TODO this captures peroxyacids too
   carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]"
   nitroester_pattern <- "[OX2][N+]([O-])=O"
-  
-  #groups added by Meredith et al.
+  nitrophenol_pattern <- "([OX2H][cr6]).([cr6$([NX3](=O)=O),$([NX3+](=O)[O-])])" #TODO Defined as # of hydroxyl on an aromatic ring when there's also a nitro on that ring.  I.e. nitro groups get counted, but count of aromatic hydroxyls goes into nitrophenol instead. Still not working
   phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
   phosphoric_ester_pattern <- "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
   sulfate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
@@ -140,8 +139,9 @@ get_fx_groups <- function(compound_sdf) {
     hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
     carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
     nitrophenol = NA_integer_,
+    # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
     nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
-
+  
     phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
     phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
     sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),
