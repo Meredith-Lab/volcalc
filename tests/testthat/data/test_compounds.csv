@@ -5,7 +5,7 @@ OOC(c1ccccc1)(C)C,https://en.wikipedia.org/wiki/Cumene_hydroperoxide,,0,1,0,0,0,
 CC(C)(C1=CC=CC=C1)OOC(C)(C)C2=CC=CC=C2,https://en.wikipedia.org/wiki/Dicumyl_peroxide,,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 CC(C)(C)OOC(=O)c1ccccc1,https://en.wikipedia.org/wiki/Tert-Butyl_peroxybenzoate,,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 c1ccc(cc1)C(=O)OOC(=O)c2ccccc2,https://en.wikipedia.org/wiki/Benzoyl_peroxide,,0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
-COC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/17206,"this is the example given in the paper, but it is not truly a nitroester",,,0,0,,,0,,0,0,0,0,0,0,,,,0,0,0,0,0,0,0,0,0,,1
+COC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/17206,"this is the example given in the paper, but it is not truly a nitroester",,,0,0,,,0,,0,0,0,0,1,0,,,,0,0,0,0,0,0,0,0,0,,1
 C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-],https://en.wikipedia.org/wiki/Nitroglycerin,,,,0,0,,,0,,0,0,0,3,0,0,,,,0,0,0,0,0,0,0,0,0,,3
 [O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O[N+]([O-])=O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_dinitrate,,,,0,0,,,0,,0,2,0,2,0,0,,,,0,0,0,0,0,0,0,0,0,,2
 [O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_mononitrate,,,,0,1,,,0,,0,2,0,1,0,0,,,,0,0,0,0,0,0,0,0,0,,1
@@ -44,3 +44,4 @@ CN1C=NC2=C1C(=O)N(C(=O)N2C)C,https://en.wikipedia.org/wiki/Caffeine,,0,2,,,,,,,,
 O=C(O)[C@@H](N)Cc1cc(O)c(O)cc1,https://en.wikipedia.org/wiki/L-DOPA,,0,1,,1,,,,,,,,,,2,1,,,,,,,,,,,,,
 Oc1ccccc1[N+]([O-])=O,https://pubchem.ncbi.nlm.nih.gov/compound/2-Nitrophenol#section=InChI,example for nitrophenol.  Paper says to ignore hydroxyls when nitro present on ring,0,1,,0,,,,,,,,,1,0,,,,,,,,,,,,,1,
 Oc1ccc(cc1[N+]([O-])=O)[N+]([O-])=O,https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:42017,"2,4-dinitrophenol",,1,,0,,,,,,,,,2,0,,,,,,,,,,,,,1,
+Cc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-],https://en.wikipedia.org/wiki/TNT,"not a nitrophenol, not a nitro ester, just aromatic ring and nitro groups",0,1,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
