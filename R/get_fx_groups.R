@@ -84,7 +84,7 @@ get_fx_groups <- function(compound_sdf) {
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
-  amine_aromatic_pattern <-  "[cR][NX3;!$(NO)]" 
+  amine_aromatic_pattern <-  "[NX3;!$(NO)]c" 
   # amide_total_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3;$([H2]),$([H1][#6;!$(C=[O,N,S])]),$([#7]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])])]"
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
