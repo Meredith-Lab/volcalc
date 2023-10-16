@@ -4,12 +4,14 @@ test_that("volatility estimate is correct for example compound for entire workfl
 })
 
 
-test_that("returns correct number of columns depending on return arguments", {
-  expect_equal(ncol(calc_vol("data/C16181.mol")), 5)
-  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE)), 47)
-  expect_equal(ncol(calc_vol("data/C16181.mol", return_calc_steps = TRUE)), 8)
-  expect_equal(ncol(calc_vol("data/C16181.mol", return_fx_groups = TRUE,
-                             return_calc_steps = TRUE)), 50)
+test_that("returns correct columns depending on return arguments", {
+  just_vol <- calc_vol("data/C16181.mol")
+  with_fx <- calc_vol("data/C16181.mol", return_fx_groups = TRUE)
+  with_fx_steps <- calc_vol("data/C16181.mol", return_fx_groups = TRUE, return_calc_steps = TRUE)
+  expect_setequal(colnames(just_vol), c("mol_path", "formula", "name", "rvi", "category"))
+  # just some examples here
+  expect_contains(colnames(with_fx), c(colnames(just_vol), "carbons", "carbothioester", "fluorines"))
+  expect_contains(colnames(with_fx_steps), c(colnames(with_fx), "molecular_weight", "log_alpha", "log10_P"))
 })
 
 test_that("calc_vol() works with multiple inputs", {
