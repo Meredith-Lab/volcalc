@@ -8,6 +8,10 @@
 #'   is `"mol_path"`).
 #' @param method the method for calculating estimated volatility. See
 #'   [simpol1()] for more details.
+#' @param environment the environment for calculating relative volatility
+#'   categories. RVI thresholds for low, moderate, and high volatility are as
+#'   follows: `"clean"` (clean atmosphere, default) -2, 0, 2; `"polluted"`
+#'   (polluted atmosphere) 0, 2, 4; `"soil"` 4, 6, 8.
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
@@ -42,6 +46,7 @@ calc_vol <-
   function(input, 
            from = c("mol_path", "smiles"),
            method = c("meredith", "simpol1"),
+           environment = c("clean", "polluted", "soil"),
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
     
@@ -55,7 +60,15 @@ calc_vol <-
     } else {
       meredith <- FALSE
     }
+    environment <- match.arg(environment)
     
+    cutoffs <- switch(
+      environment,
+      "clean" = c(-Inf, -2, 0, 2, Inf),
+      "polluted" = c(-Inf, 0, 2, 4, Inf),
+      "soil" = c(-Inf, 4, 6, 8, Inf)
+    )
+
     if(from == "mol_path") {
       #TODO: validate mol files??
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
@@ -80,12 +93,11 @@ calc_vol <-
         # 293.15 is temperature in Kelvins (20ºC)
         log_alpha = log10((1000000 * .data$mass) / (0.0000821 * 293.15)),
         rvi = .data$log_alpha + .data$log10_P, 
-        #TODO add @details to documentation explaining categories.  Make sure they match manuscript
-        category = dplyr::case_when(
-          .data$rvi <  -2                 ~ "non",
-          .data$rvi >= -2 & .data$rvi < 0 ~ "low",
-          .data$rvi >= 0  & .data$rvi < 2 ~ "intermediate",
-          .data$rvi >= 2                  ~ "high"
+        category = cut(
+          .data$rvi,
+          breaks = cutoffs,
+          labels = c("non-volatile", "low", "moderate", "high"),
+          right = FALSE
         )
       )
     
