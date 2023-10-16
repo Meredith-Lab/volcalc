@@ -8,6 +8,7 @@ calc_vol(
   input,
   from = c("mol_path", "smiles"),
   method = c("simpol1"),
+  environment = c("clean", "polluted", "soil"),
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
@@ -20,6 +21,11 @@ is \code{"mol_path"}).}
 
 \item{method}{the method for calculating estimated volatility. Currently only
 the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for more details.}
+
+\item{environment}{the environment for calculating relative volatility
+categories. RVI thresholds for low, moderate, and high volatility are as
+follows: \code{"clean"} (clean atmosphere, default) -2, 0, 2; \code{"polluted"}
+(polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8.}
 
 \item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
 final dataframe.}
