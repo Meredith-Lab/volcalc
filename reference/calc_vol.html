@@ -58,6 +58,7 @@ using group contribution methods.</p>
 <span>  <span class="va">input</span>,</span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mol_path"</span>, <span class="st">"smiles"</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"simpol1"</span><span class="op">)</span>,</span>
+<span>  environment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clean"</span>, <span class="st">"polluted"</span>, <span class="st">"soil"</span><span class="op">)</span>,</span>
 <span>  return_fx_groups <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_calc_steps <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -77,6 +78,13 @@ is <code>"mol_path"</code>).</p></dd>
 <dt>method</dt>
 <dd><p>the method for calculating estimated volatility. Currently only
 the SIMPOL.1 method is implemented---see <code><a href="simpol1.html">simpol1()</a></code> for more details.</p></dd>
+
+
+<dt>environment</dt>
+<dd><p>the environment for calculating relative volatility
+categories. RVI thresholds for low, moderate, and high volatility are as
+follows: <code>"clean"</code> (clean atmosphere, default) -2, 0, 2; <code>"polluted"</code>
+(polluted atmosphere) 0, 2, 4; <code>"soil"</code> 4, 6, 8.</p></dd>
 
 
 <dt>return_fx_groups</dt>
@@ -117,14 +125,14 @@ and \(\textrm{log}_{10}(M/RT)\), <code>log_alpha</code>, are also returned.</p>
 <span class="r-in"><span><span class="fu">calc_vol</span><span class="op">(</span><span class="va">mol_path</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path                                          formula name    rvi category</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work/_temp/Library/volcalc/extdata/… C6H7Cl… <span style="color: #BB0000;">NA</span>     6.98 high    </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return functional group counts from get_fx_groups()</span></span></span>
 <span class="r-in"><span><span class="fu">calc_vol</span><span class="op">(</span><span class="va">mol_path</span>,  return_fx_groups <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 47</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path formula name    rvi category carbons carbons_asa rings_aromatic rings</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/r… C6H7Cl… <span style="color: #BB0000;">NA</span>     6.98 high           6           0              0     1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more variables: carbon_dbl_bonds &lt;dbl&gt;, CCCO_aliphatic_ring &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hydroxyl_groups &lt;int&gt;, aldehydes &lt;int&gt;, ketones &lt;int&gt;, carbox_acids &lt;int&gt;,</span></span>
@@ -138,7 +146,7 @@ and \(\textrm{log}_{10}(M/RT)\), <code>log_alpha</code>, are also returned.</p>
 <span class="r-in"><span><span class="fu">calc_vol</span><span class="op">(</span><span class="va">mol_path</span>, return_calc_steps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path                  formula name    rvi category  mass log_alpha log10_P</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work/_temp/… C6H7Cl… <span style="color: #BB0000;">NA</span>     6.98 high      272.      10.1   -<span style="color: #BB0000;">3.08</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
