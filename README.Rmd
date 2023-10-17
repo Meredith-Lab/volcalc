@@ -132,7 +132,7 @@ The functional group counts underlying the volatility can be additionally return
 -   compound: KEGG compound identifier
 -   formula: compound chemical formula
 -   name: compound name
--   mass: compound mass
+-   molecular_weight: molecular weight
 
 ### Counted functional groups and atoms
 

@@ -106,7 +106,8 @@ get_fx_groups <- function(compound_sdf) {
     formula = ChemmineR::propOB(compound_sdf)$formula,
     #TODO should name be moved to `calc_vol`? `formula` also?
     name = ChemmineR::propOB(compound_sdf)$title,
-    mass = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
+    exact_mass = ChemmineR::exactMassOB(compound_sdf),
+    molecular_weight = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
     #TODO these columns should all be integer
     carbons = ifelse("C" %in% colnames(atoms),
                      atoms$C, 0L
