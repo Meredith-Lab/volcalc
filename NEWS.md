@@ -4,6 +4,7 @@
 * The default for the `method` argument to `calc_vol()` has now been renamed to `"meredith"`.  `"simpol1"` now uses the original SIMPOL.1 method without additional coefficients added in Meredith et al. (2023).
 * It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
 * Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
+* Chagnes to the output of `get_fx_groups()`: `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
 * `simpol1()` now takes into account amide functional groups.
 
 
