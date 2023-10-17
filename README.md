@@ -155,7 +155,7 @@ and the intermediate calculation steps with `return_calc_steps = TRUE`.
 -   compound: KEGG compound identifier
 -   formula: compound chemical formula
 -   name: compound name
--   mass: compound mass
+-   molecular_weight: molecular weight
 &#10;### Counted functional groups and atoms
 &#10;-   carbons
 -   ketones
