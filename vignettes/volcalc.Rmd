@@ -63,11 +63,11 @@ calc_vol(mol_path, return_calc_steps = TRUE)
 
 Finally, all of this can be done using SMILES strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
 
-```{r error=TRUE}
-calc_vol("CC/C=C\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
-```
 ```{r}
-#escape \C as \\C
+## This will error even though the SMILES is correct
+# calc_vol("CC/C=C\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
+
+# To solve this, escape \C as \\C
 calc_vol("CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
 ```
 
