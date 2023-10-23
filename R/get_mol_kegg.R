@@ -10,6 +10,9 @@ utils::globalVariables(".data")
 #'   digits prepended with "map" or "M", respectively.
 #' @param dir path to a folder to save .mol files in. Folder will be created if
 #'   it does not already exist
+#' @param force logical; by default (`FALSE`), .mol files will not be downloaded
+#'   if they are found in `dir`.  Set this to `TRUE` to download and overwrite
+#'   existing files.
 #'
 #' @returns a tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files)
@@ -20,9 +23,7 @@ utils::globalVariables(".data")
 #' get_mol_kegg(compound_ids = c("C16181", "C06074"), dir = tempdir())
 #' get_mol_kegg(pathway_ids = "map00253", dir = tempdir())
 #' }
-get_mol_kegg <- function(compound_ids, pathway_ids, dir){
-  
-  #TODO: implement redownload=FALSE arg?
+get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
   
   if(missing(dir)) stop("`dir` is required")
   if ((missing(compound_ids) & missing(pathway_ids)) |
@@ -55,39 +56,52 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
     
   }
   
-  # Download mols
-  .get_mol_kegg <- function(compound_id) {
-    #TODO I think the KEGG API can handle up to 10 requests at once separated by
-    #"+".  Unfortunately all the mol files come out in a single textfile and
-    #would need parsing to separate.  Could speed things up by reducing API
-    #calls, but would require additional code.
-    mol <- KEGGREST::keggGet(compound_id, option = "mol")
+  if(isFALSE(force)) {
+    to_dl <- out_tbl$compound_id[!fs::file_exists(out_tbl$mol_path)]
+    out_paths <- out_tbl$mol_path[!fs::file_exists(out_tbl$mol_path)]
+  } else {
+    to_dl <- out_tbl$compound_id
+    out_paths <- out_tbl$mol_path
+  }
+  
+  if (length(to_dl) == 0) {
+    #if nothing to download, return early
+    return(out_tbl)
+  } else {
     
-    # Adds title to mol file because it is used later on by get_fx_groups()
-    names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
-    # Only use the first name and remove separator
-    title <- stringr::str_remove(names[1], ";")
-    # add title line to mol file
-    mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
-    mol_clean
+    # Download mols
+    .get_mol_kegg <- function(compound_id) {
+      #TODO I think the KEGG API can handle up to 10 requests at once separated by
+      #"+".  Unfortunately all the mol files come out in a single textfile and
+      #would need parsing to separate.  Could speed things up by reducing API
+      #calls, but would require additional code.
+      mol <- KEGGREST::keggGet(compound_id, option = "mol")
+      
+      # Adds title to mol file because it is used later on by get_fx_groups()
+      names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
+      # Only use the first name and remove separator
+      title <- stringr::str_remove(names[1], ";")
+      # add title line to mol file
+      mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
+      mol_clean
+    }
+    mols <- lapply(to_dl, .get_mol_kegg)
+    
+    # write mol files
+    .write_mol <- function(mol_clean, file_path) {
+      utils::write.table(
+        mol_clean,
+        file = file_path,
+        row.names = FALSE,
+        col.names = FALSE,
+        quote = FALSE
+      )
+    }
+    
+    mapply(.write_mol, mol_clean = mols, file_path = out_paths)
+    
+    return(out_tbl)
   }
-  mols <- lapply(out_tbl$compound_id, .get_mol_kegg)
-  
-  # write mol files
-  .write_mol <- function(mol_clean, file_path) {
-    utils::write.table(
-      mol_clean,
-      file = file_path,
-      row.names = FALSE,
-      col.names = FALSE,
-      quote = FALSE
-    )
-  }
-
-  mapply(.write_mol, mol_clean = mols, file_path = out_tbl$mol_path)
-  
-  #return
-  out_tbl
 }
 
 
@@ -112,7 +126,7 @@ keggGetCompounds <- function(pathway){
     stringr::str_split_1("\n") %>%  
     stringr::str_extract("(?<=cpd:).*")
   out[!is.na(out)]
-
+  
 }
 
 
