@@ -1,0 +1,80 @@
+---
+title: "Downloading from KEGG"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Downloading from KEGG}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(volcalc)
+library(dplyr) #for left_join()
+```
+
+The `volcalc` package also has the ability to download .mol files directly from KEGG given either compound IDs or pathway IDs.
+
+First, choose a directory to download files to.  For this vignette, we will use a temporary directory, but you should choose somewhere in your project.
+
+```{r}
+dl_path <- tempdir()
+```
+
+### Single compound usage
+
+Let's download .mol files for jasmonic acid (C08491) and methyl jasmonate (C11512) from KEGG
+
+```{r}
+mols <- get_mol_kegg(compound_ids = c("C08491", "C11512"), dir = dl_path)
+mols
+```
+
+The data frame returned by `get_mol_kegg()` contains the paths the files were downloaded to in `mol_path`, making for convenient passage on to `calc_vol()`.
+
+```{r}
+rvi <- calc_vol(mols$mol_path)
+rvi
+```
+
+`calc_vol()` also returns the file paths, so these two data frames can be easily joined.
+
+```{r}
+left_join(mols, rvi, by = join_by(mol_path)) %>%
+  select(-mol_path)
+```
+
+
+### Pathway usage
+<!-- TODO: change this example to a pathway module or smaller pathway -->
+
+We can download single or multiple compounds with `compound_ids`, but we can also download entire KEGG pathways with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway (map00592) that the above two compounds are part of.
+
+```{r}
+lino_acid <- get_mol_kegg(pathway_ids = "map00592", dir = dl_path)
+head(lino_acid)
+dim(lino_acid)
+```
+
+Notice that this returns pathway IDs and compound IDs.  We can do the same as above and pass the `mol_path` column to `calc_vol()` and then join the resulting data frame and do some basic data wrangling to find the top 10 most volatile compounds in that pathway.
+
+```{r}
+rvi_path <- calc_vol(lino_acid$mol_path)
+```
+
+
+```{r}
+left_join(lino_acid, rvi_path, by = join_by(mol_path)) %>% 
+  select(-mol_path) %>% 
+  #arrange from most to least volatile
+  arrange(desc(rvi)) %>% 
+  #take just the top 10
+  slice_head(n = 10)
+```
+
