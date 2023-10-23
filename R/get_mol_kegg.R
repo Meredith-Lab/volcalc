@@ -69,7 +69,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
   } else {
     
     # Download mols
-    mols <- getMolKegg(to_dl)
+    mols <- dl_mol_kegg(to_dl)
     
     # write mol files
     .write_mol <- function(mol_clean, file_path) {
@@ -113,7 +113,7 @@ keggGetCompounds <- function(pathway){
   
 }
 
-getMolKegg <- function(compound_ids) {
+dl_mol_kegg <- function(compound_ids) {
   #balances compound_ids into groups of less than 10 to meet API guidelines
   compound_id_list <- split_to_list(compound_ids, max_len = 10)
   
