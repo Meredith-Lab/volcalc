@@ -6,8 +6,8 @@ utils::globalVariables(".data")
 #'
 #' @param compound_ids character vector of KEGG compound IDs---5 digits
 #'   prepended with a "C".
-#' @param pathway_ids character vector of KEGG pathway IDs---5 digits prepended
-#'   with "map".
+#' @param pathway_ids character vector of KEGG pathway or pathway module IDs---5
+#'   digits prepended with "map" or "M", respectively.
 #' @param dir path to a folder to save .mol files in. Folder will be created if
 #'   it does not already exist
 #'
@@ -42,7 +42,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
   }
   # if pathways are provided
   if (!missing(pathway_ids)) {
-    if (!all(stringr::str_detect(pathway_ids, "^[m][a][p][:digit:]{5}$"))) {
+    if (!all(stringr::str_detect(pathway_ids, "^(map|M)\\d{5}$"))) {
       stop("Some pathway_ids are not in the correct KEGG format")
     }
     fs::dir_create(dir, pathway_ids)
@@ -114,3 +114,6 @@ keggGetCompounds <- function(pathway){
   out[!is.na(out)]
 
 }
+
+
+

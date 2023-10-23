@@ -92,3 +92,12 @@ test_that("file downloads with correct counts block", {
   )
 })
 
+test_that("works with pathway modules", {
+  skip_on_cran()
+  
+  dir <- withr::local_tempdir()
+  out <- get_mol_kegg(pathway_ids = "M00082", dir = dir)
+  expect_equal(nrow(out), 5)
+  expect_true(all(file.exists(out$mol_path)))
+})
+
