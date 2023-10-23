@@ -53,7 +53,6 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
       tibble::enframe(compound_ids_list, name = "pathway_id", value = "compound_id") %>% 
       tidyr::unnest(tidyselect::everything()) %>% 
       dplyr::mutate(mol_path = fs::path(dir, .data$pathway_id, .data$compound_id, ext = "mol"))
-    
   }
   
   if(isFALSE(force)) {
@@ -70,22 +69,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
   } else {
     
     # Download mols
-    .get_mol_kegg <- function(compound_id) {
-      #TODO I think the KEGG API can handle up to 10 requests at once separated by
-      #"+".  Unfortunately all the mol files come out in a single textfile and
-      #would need parsing to separate.  Could speed things up by reducing API
-      #calls, but would require additional code.
-      mol <- KEGGREST::keggGet(compound_id, option = "mol")
-      
-      # Adds title to mol file because it is used later on by get_fx_groups()
-      names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
-      # Only use the first name and remove separator
-      title <- stringr::str_remove(names[1], ";")
-      # add title line to mol file
-      mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
-      mol_clean
-    }
-    mols <- lapply(to_dl, .get_mol_kegg)
+    mols <- getMolKegg(to_dl)
     
     # write mol files
     .write_mol <- function(mol_clean, file_path) {
@@ -129,5 +113,44 @@ keggGetCompounds <- function(pathway){
   
 }
 
+getMolKegg <- function(compound_ids) {
+  #balances compound_ids into groups of less than 10 to meet API guidelines
+  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+  
+  #maps over list, but returns it to a single character vector to simplify wrangling code
+  raw <- 
+    purrr::map(compound_id_list, function(x) KEGGREST::keggGet(x, option = "mol")) %>% 
+    purrr::list_c() %>% 
+    glue::glue_collapse()
+  #split into multiples
+  mols <- stringr::str_split(raw, "(?<=\\${4})", n = length(compound_ids)) %>%
+    unlist() %>% 
+    stringr::str_trim(side = "left")
+  
+  # Adds title to mol file because it is used later on by get_fx_groups()
+  titles <- purrr::map(compound_id_list, function(x) { #for every group of <10 IDs
+    KEGGREST::keggGet(x) %>% 
+      purrr::map_chr(function(names) { #for every ID
+        purrr::pluck(names, "NAME", 1) %>% #get first element of NAME
+          stringr::str_remove(";")
+      })
+  }) %>% unlist()
+  purrr::map2(mols, titles, function(mol, title) {
+    paste0(title, "\n\n\n", gsub(">.*", "", mol))
+  })
+  
+}
 
 
+
+split_to_list <- function(x, max_len = 10) {
+  
+  if(length(x) > max_len) {
+    n_groups <- ceiling(length(x) / max_len)
+    split(x, f = cut(seq_along(x), breaks = n_groups)) %>%
+      purrr::set_names(NULL)
+  } else {
+    list(x)
+  }
+  
+}
