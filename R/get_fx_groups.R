@@ -82,7 +82,9 @@ get_fx_groups <- function(compound_sdf) {
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   carbon_dbl_bonds_pattern <- "C=C" #non-aromatic carbon double bonds
   CCCO_pattern <- "C(C=C[AR1])(=O)[AR1]" #C=C-C=O in a non-aromatic ring
-  ether_pattern <- "[OD2]([#6])[#6]"
+  ether_pattern <- "[OD2]([C!R1!X1])[C!R1!X1]" #TODO disambiguate ether and esther.
+  ether_alicyclic_pattern <- "[OD2]([C!R0])[C!R0]"
+  ether_aromatic_pattern <- "[OD2]([cX2])[cX2]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
@@ -125,8 +127,8 @@ get_fx_groups <- function(compound_sdf) {
     carbox_acids = groups$RCOOH,
     ester = groups$RCOOR,
     ether = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern),
-    ether_alicyclic = NA_integer_,
-    ether_aromatic = NA_integer_,
+    ether_alicyclic = ChemmineR::smartsSearchOB(compound_sdf, ether_alicyclic_pattern),
+    ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
     nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
     nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
     hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
@@ -187,7 +189,9 @@ get_fx_groups <- function(compound_sdf) {
       # rings_aliphatic = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
       rings_aliphatic = rings_total - rings_aromatic,
       hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
-      phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)
+      phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid),
+      #TODO probably should change name of `ether` to `ether_alkyl`
+      ether_total = sum(ether, ether_alicyclic, ether_aromatic)
     )
   tibble::as_tibble(fx_groups_df)
 }

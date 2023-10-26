@@ -6,7 +6,7 @@
 * Change to how non-aromatic carbon double bonds are counted.  Now using SMARTS pattern "C=C"
 * `get_fx_groups()` now returns `hydroxyl_total` and `hydroxyl_aliphatic` instead of `hydroxyl_groups`
 * `get_fx_groups()` now returns `rings_total` and `rings_aliphatic` instead of `rings`
-* `get_fx_groups()` counts additional groups: aromatic amines; primary, secondary, and tertiary amides, hydroperoxides, carbonylperoxyacids, nitroesters
+* `get_fx_groups()` counts additional groups: aromatic amines; primary, secondary, and tertiary amides; hydroperoxides; carbonylperoxyacids; nitroesters; alicyclic ethers; and aromatic ethers
 * A coefficient for amides has been removed from the "Meredith" method of `simpol1()` to avoid double-counting amides.
 
 # volcalc 2.0.0
