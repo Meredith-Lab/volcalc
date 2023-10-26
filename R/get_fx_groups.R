@@ -81,6 +81,7 @@ get_fx_groups <- function(compound_sdf) {
   
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   carbon_dbl_bonds_pattern <- "C=C" #non-aromatic carbon double bonds
+  CCCO_pattern <- "C(C=C[AR1])(=O)[AR1]" #C=C-C=O in a non-aromatic ring
   ether_pattern <- "[OD2]([#6])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
@@ -117,7 +118,7 @@ get_fx_groups <- function(compound_sdf) {
     rings_aromatic = as.integer(rings$AROMATIC),
     rings_total = as.integer(rings$RINGS),
     carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
-    CCCO_aliphatic_ring = NA_integer_, # C=C-C=O in a non-aromatic ring
+    CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
     hydroxyl_total = groups$ROH, #this is total, need just aliphatic for SIMPOL.1, corrected below
     aldehydes = groups$RCHO,
     ketones = groups$RCOR,
