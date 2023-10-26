@@ -80,6 +80,7 @@ get_fx_groups <- function(compound_sdf) {
   }
   
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
+  carbon_dbl_bonds_pattern <- "C=C" #non-aromatic carbon double bonds
   ether_pattern <- "[OD2]([#6])[#6]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
@@ -115,7 +116,7 @@ get_fx_groups <- function(compound_sdf) {
     carbons_asa = NA_integer_, #carbon number on the acid-side of amide
     rings_aromatic = as.integer(rings$AROMATIC),
     rings_total = as.integer(rings$RINGS),
-    carbon_dbl_bonds = as.integer(carbon_dbl_count$n), #TODO: this should be only non-aromatic double bonds
+    carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
     CCCO_aliphatic_ring = NA_integer_, # C=C-C=O in a non-aromatic ring
     hydroxyl_total = groups$ROH, #this is total, need just aliphatic for SIMPOL.1, corrected below
     aldehydes = groups$RCHO,
@@ -185,9 +186,6 @@ get_fx_groups <- function(compound_sdf) {
       # rings_aliphatic = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
       rings_aliphatic = rings_total - rings_aromatic,
       hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
-      #TODO Check what this correction for carbon_dbl_bonds is doing.  Should be gettig just non-aromatic double-bonds, but I don't think that's what's going on here.
-      carbon_dbl_bonds = ifelse(carbon_dbl_bonds != 0 & rings_aromatic != 0, carbon_dbl_bonds - (rings_aromatic * 3), carbon_dbl_bonds), 
-      carbon_dbl_bonds = ifelse(carbon_dbl_bonds < 0, 0, carbon_dbl_bonds),
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid)
     )
   tibble::as_tibble(fx_groups_df)
