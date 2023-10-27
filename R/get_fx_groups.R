@@ -94,8 +94,8 @@ get_fx_groups <- function(compound_sdf) {
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
   peroxide_pattern <- "[OX2D2][OX2D2]" 
-  hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #TODO this captures peroxyacids too
-  carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]"
+  hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #this captures peroxyacids too
+  carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]" 
   # nitroester_pattern <- "[OX2][N+]([O-])=O" #TODO: so confused about this one
   # nitrophenol_pattern <- "([OX2H][cr6]).([cr6$([NX3](=O)=O),$([NX3+](=O)[O-])])" #TODO Defined as # of hydroxyl on an aromatic ring when there's also a nitro on that ring.  I.e. nitro groups get counted, but count of aromatic hydroxyls goes into nitrophenol instead. Still not working
   # nitrophenol_pattern <- "[*$(c1ccccc1)]([OH1])~[NX3](-,=[OX1])-,=[OX1]"
@@ -109,7 +109,7 @@ get_fx_groups <- function(compound_sdf) {
   
   #TODO make these column names as specific as possible.  E.g. instead of "hydroxyl_groups" it should be "alkyl_hydroxyls" (what we want to capture) or "total_hydroxyls" (what is currently captured).  Instead of "phenol" it should be "aromatic_hydroxyls".
   fx_groups_df <- 
-    data.frame(
+    dplyr::tibble(
       formula = ChemmineR::propOB(compound_sdf)$formula,
       #TODO should name be moved to `calc_vol`? `formula` also?
       name = ChemmineR::propOB(compound_sdf)$title,
@@ -148,9 +148,11 @@ get_fx_groups <- function(compound_sdf) {
       peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
-      nitrophenol = NA_integer_,
+      #correction--hydroperoxide pattern also picks up peroxyacids
+      hydroperoxide = hydroperoxide - carbonylperoxyacid,
+      nitrophenol = NA_integer_, #TODO: still confused about this one
       # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
-      nitroester = NA_integer_, #TODO: so confused about this one
+      nitroester = NA_integer_, #TODO: still very confused about this one
       # nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
       
       phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
@@ -168,6 +170,17 @@ get_fx_groups <- function(compound_sdf) {
       iodines = atoms[["I"]] %||% 0L,
       fluorines = atoms[["F"]] %||% 0L
     ) %>% 
+    #various other corrections
+    dplyr::mutate(
+      phosphoric_acid = ifelse(
+        phosphoric_acid != 0 & phosphoric_ester != 0,
+        phosphoric_acid - phosphoric_ester,
+        phosphoric_acid
+      ),
+      #TODO:
+      #according to SIMPOL.1 paper, nitrophenol shouldn't cound aromatic hydroxyls.
+      # hydroxyl_aromatic = ifelse(nitrophenol != 0, hydroxyl_aromatic - nitrophenol, hydroxyl_aromatic)
+    ) %>% 
     # some of the columns created by ChemmineR are named vectors sometimes,
     # strip names for consistency
     dplyr::mutate(
@@ -177,15 +190,6 @@ get_fx_groups <- function(compound_sdf) {
     #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
   
-  fx_groups_df <- 
-    fx_groups_df %>%
-    # to fix double counting of rings, aromatic rings, hydroxyls, carbon double bonds, and phosphoric acids/esters
-    #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
-    dplyr::mutate(
-      # rings_aliphatic = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
-      # rings_aliphatic = rings_total - rings_aromatic,
-      # hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
-      phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid),
-    )
-  tibble::as_tibble(fx_groups_df)
+  #return
+  fx_groups_df
 }
