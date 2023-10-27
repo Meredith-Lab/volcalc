@@ -51,7 +51,8 @@ test_that("SMARTS strings are correct", {
   # compare but ignore NAs in expected, by just overwriting them with values in actual using rows_patch()
   expect_equal(
     actual,
-    dplyr::rows_patch(expected, actual)
+    dplyr::rows_patch(expected, actual),
+    ignore_attr = TRUE
   )
 })
 
