@@ -168,6 +168,11 @@ get_fx_groups <- function(compound_sdf) {
       iodines = atoms[["I"]] %||% 0L,
       fluorines = atoms[["F"]] %||% 0L
     ) %>% 
+    # some of the columns created by ChemmineR are named vectors sometimes,
+    # strip names for consistency
+    dplyr::mutate(
+      dplyr::across(dplyr::everything(), function(x) stats::setNames(x, NULL))
+    ) %>% 
     
     #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
