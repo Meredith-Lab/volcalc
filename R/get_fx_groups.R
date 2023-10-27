@@ -33,7 +33,7 @@
 #' 
 #' @export
 get_fx_groups <- function(compound_sdf) {
-
+  
   # For now at least, this code only works with SDFset objects that contain single molecules.
   # TODO: make this function work with SDFset objects with multiple molecules?
   if (length(compound_sdf) != 1) {
@@ -52,7 +52,7 @@ get_fx_groups <- function(compound_sdf) {
   } else {
     groups <- tibble::as_tibble(chem_groups) 
   }
-    
+  
   #assign variables to quiet devtools::check()
   rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_total <- carbon_dbl_bonds <- NULL
   
@@ -82,7 +82,7 @@ get_fx_groups <- function(compound_sdf) {
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   carbon_dbl_bonds_pattern <- "C=C" #non-aromatic carbon double bonds
   CCCO_pattern <- "C(C=C[AR1])(=O)[AR1]" #C=C-C=O in a non-aromatic ring
-  ether_pattern <- "[OD2]([C!R1!X1])[C!R1!X1]" #TODO disambiguate ether and esther.
+  ether_pattern <- "[OD2]([C!R1])[C!R1]"
   ether_alicyclic_pattern <- "[OD2]([C!R0])[C!R0]"
   ether_aromatic_pattern <- "[OD2]([cX2])[cX2]"
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
@@ -96,8 +96,10 @@ get_fx_groups <- function(compound_sdf) {
   peroxide_pattern <- "[OX2D2][OX2D2]" 
   hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #TODO this captures peroxyacids too
   carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]"
-  nitroester_pattern <- "[OX2][N+]([O-])=O"
-  nitrophenol_pattern <- "([OX2H][cr6]).([cr6$([NX3](=O)=O),$([NX3+](=O)[O-])])" #TODO Defined as # of hydroxyl on an aromatic ring when there's also a nitro on that ring.  I.e. nitro groups get counted, but count of aromatic hydroxyls goes into nitrophenol instead. Still not working
+  # nitroester_pattern <- "[OX2][N+]([O-])=O" #TODO: so confused about this one
+  # nitrophenol_pattern <- "([OX2H][cr6]).([cr6$([NX3](=O)=O),$([NX3+](=O)[O-])])" #TODO Defined as # of hydroxyl on an aromatic ring when there's also a nitro on that ring.  I.e. nitro groups get counted, but count of aromatic hydroxyls goes into nitrophenol instead. Still not working
+  # nitrophenol_pattern <- "[*$(c1ccccc1)]([OH1])~[NX3](-,=[OX1])-,=[OX1]"
+  # nitrophenol_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8].[OX2H][cX3]:[c]" #a nitro somewhere and a phenol somewhere, not necessarily both on a ring though.
   phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
   phosphoric_ester_pattern <- "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
   sulfate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
@@ -106,78 +108,67 @@ get_fx_groups <- function(compound_sdf) {
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
   
   #TODO make these column names as specific as possible.  E.g. instead of "hydroxyl_groups" it should be "alkyl_hydroxyls" (what we want to capture) or "total_hydroxyls" (what is currently captured).  Instead of "phenol" it should be "aromatic_hydroxyls".
-  fx_groups_df <- data.frame(
-    formula = ChemmineR::propOB(compound_sdf)$formula,
-    #TODO should name be moved to `calc_vol`? `formula` also?
-    name = ChemmineR::propOB(compound_sdf)$title,
-    exact_mass = ChemmineR::exactMassOB(compound_sdf),
-    molecular_weight = ChemmineR::propOB(compound_sdf)$MW, #TODO need to replace with NA if empty?
-    #TODO these columns should all be integer
-    carbons = ifelse("C" %in% colnames(atoms),
-                     atoms$C, 0L
-    ),
-    carbons_asa = NA_integer_, #carbon number on the acid-side of amide
-    rings_aromatic = as.integer(rings$AROMATIC),
-    rings_total = as.integer(rings$RINGS),
-    carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
-    CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
-    hydroxyl_total = groups$ROH, #this is total, need just aliphatic for SIMPOL.1, corrected below
-    aldehydes = groups$RCHO,
-    ketones = groups$RCOR,
-    carbox_acids = groups$RCOOH,
-    ester = groups$RCOOR,
-    ether = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern),
-    ether_alicyclic = ChemmineR::smartsSearchOB(compound_sdf, ether_alicyclic_pattern),
-    ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
-    nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
-    nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
-    hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
-    amine_primary = groups$RNH2,
-    amine_secondary = groups$R2NH,
-    amine_tertiary = groups$R3N,
-    amine_aromatic = ChemmineR::smartsSearchOB(compound_sdf, amine_aromatic_pattern),
-    amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
-    amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
-    amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
-    carbonylperoxynitrate = NA_integer_,
-    peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
-    hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
-    carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
-    nitrophenol = NA_integer_,
-    # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
-    nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
-  
-    phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
-    phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
-    sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),
-    sulfonate = ChemmineR::smartsSearchOB(compound_sdf, sulfonate_pattern),
-    thiol = ChemmineR::smartsSearchOB(compound_sdf, thiol_pattern),
-    carbothioester = ChemmineR::smartsSearchOB(compound_sdf, carbothioester_pattern),
-    oxygens = ifelse("CMP1.O" %in% colnames(atoms),
-                     as.integer(atoms$CMP1.O), 0
-    ),
-    chlorines = ifelse("CMP1.Cl" %in% colnames(atoms),
-                       as.integer(atoms$CMP1.Cl), 0L
-    ),
-    nitrogens = ifelse("CMP1.N" %in% colnames(atoms),
-                       as.integer(atoms$CMP1.N), 0L
-    ),
-    sulfurs = ifelse("CMP1.S" %in% colnames(atoms),
-                     as.integer(atoms$CMP1.S), 0L
-    ),
-    phosphoruses = ifelse("CMP1.P" %in% colnames(atoms),
-                          as.integer(atoms$CMP1.P), 0L
-    ),
-    bromines = ifelse("CMP1.Br" %in% colnames(atoms),
-                      as.integer(atoms$CMP1.Br), 0L
-    ),
-    iodines = ifelse("CMP1.I" %in% colnames(atoms),
-                     as.integer(atoms$CMP1.I), 0L
-    ),
-    fluorines = ifelse("CMP1.F" %in% colnames(atoms),
-                       as.integer(atoms$CMP1.F), 0L
-    )
-  ) %>% 
+  fx_groups_df <- 
+    data.frame(
+      formula = ChemmineR::propOB(compound_sdf)$formula,
+      #TODO should name be moved to `calc_vol`? `formula` also?
+      name = ChemmineR::propOB(compound_sdf)$title,
+      exact_mass = ChemmineR::exactMassOB(compound_sdf),
+      molecular_weight = ChemmineR::propOB(compound_sdf)$MW
+    ) %>% 
+    dplyr::mutate(
+      carbons = atoms[["C"]] %||% 0L,
+      carbons_asa = NA_integer_, #carbon number on the acid-side of amide
+      rings_aromatic = as.integer(rings$AROMATIC),
+      rings_total = as.integer(rings$RINGS),
+      rings_aliphatic = rings_total - rings_aromatic,
+      carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
+      CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
+      hydroxyl_total = groups$ROH, 
+      hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
+      hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
+      aldehydes = groups$RCHO,
+      ketones = groups$RCOR,
+      carbox_acids = groups$RCOOH,
+      ester = groups$RCOOR,
+      ether_total = groups$ROR,
+      ether_alkyl = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern) - ester,
+      ether_alicyclic = ChemmineR::smartsSearchOB(compound_sdf, ether_alicyclic_pattern),
+      ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
+      nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
+      nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
+      amine_primary = groups$RNH2,
+      amine_secondary = groups$R2NH,
+      amine_tertiary = groups$R3N,
+      amine_aromatic = ChemmineR::smartsSearchOB(compound_sdf, amine_aromatic_pattern),
+      amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
+      amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
+      amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
+      carbonylperoxynitrate = NA_integer_,
+      peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
+      hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
+      carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
+      nitrophenol = NA_integer_,
+      # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
+      nitroester = NA_integer_, #TODO: so confused about this one
+      # nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
+      
+      phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
+      phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
+      sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),
+      sulfonate = ChemmineR::smartsSearchOB(compound_sdf, sulfonate_pattern),
+      thiol = ChemmineR::smartsSearchOB(compound_sdf, thiol_pattern),
+      carbothioester = ChemmineR::smartsSearchOB(compound_sdf, carbothioester_pattern),
+      oxygens   = atoms[["O"]] %||% 0L,
+      chlorines = atoms[["Cl"]] %||% 0L,
+      nitrogens = atoms[["N"]] %||% 0L,
+      sulfurs   = atoms[["S"]] %||% 0L,
+      phosphoruses = atoms[["P"]] %||% 0L,
+      bromines = atoms[["Br"]] %||% 0L,
+      iodines = atoms[["I"]] %||% 0L,
+      fluorines = atoms[["F"]] %||% 0L
+    ) %>% 
+    
     #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
   
@@ -187,11 +178,9 @@ get_fx_groups <- function(compound_sdf) {
     #TODO clarify this in documentation.  E.g. "rings" doesn't include phenols and other aromatic rings, "peroxides" doesn't include hydroperoxides (eventually)
     dplyr::mutate(
       # rings_aliphatic = ifelse(rings != 0 & rings_aromatic != 0, rings - rings_aromatic, rings),
-      rings_aliphatic = rings_total - rings_aromatic,
-      hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
+      # rings_aliphatic = rings_total - rings_aromatic,
+      # hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
       phosphoric_acid = ifelse(phosphoric_acid != 0 & phosphoric_ester != 0, phosphoric_acid - phosphoric_ester, phosphoric_acid),
-      #TODO probably should change name of `ether` to `ether_alkyl`
-      ether_total = sum(ether, ether_alicyclic, ether_aromatic)
     )
   tibble::as_tibble(fx_groups_df)
 }

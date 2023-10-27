@@ -59,7 +59,7 @@ simpol1 <- function(fx_groups) {
         (-0.935   * .data$ketones) +
         (-3.58	  * .data$carbox_acids) +
         (-1.20	  * .data$ester) +
-        (-0.718   * .data$ether) +
+        (-0.718   * .data$ether_alkyl) +
         (-0.683   * .data$ether_alicyclic) +
         (-1.03	  * .data$ether_aromatic) +
         (-2.23	  * .data$nitrate) +

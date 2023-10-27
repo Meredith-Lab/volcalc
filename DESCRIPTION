@@ -22,6 +22,7 @@ Imports:
     httr2,
     KEGGREST,
     magrittr,
+    rlang,
     stringr,
     tibble,
     tidyr,

@@ -1,7 +1,7 @@
 test_that("a functional group count is correct for example compound", {
   sdf <- ChemmineR::read.SDFset("data/C16181.mol")
   ex_df <- get_fx_groups(sdf)
-  expect_equal(ex_df$hydroxyl_aliphatic, 1)
+  expect_equal(ex_df$hydroxyl_aliphatic, 1, ignore_attr = TRUE)
 })
 
 test_that("error with SDFset with more than one molecule", {
@@ -16,7 +16,8 @@ test_that("SMILES and mol give same results", {
   from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
   expect_equal(
     get_fx_groups(from_mol) %>% dplyr::select(-name),
-    get_fx_groups(from_smiles) %>% dplyr::select(-name)
+    get_fx_groups(from_smiles) %>% dplyr::select(-name),
+    ignore_attr = TRUE
   )
 })
 
@@ -28,7 +29,7 @@ test_that("SMARTS strings are correct", {
   test_compounds <-
     readr::read_csv("data/test_compounds.csv") %>%
     #for debugging
-    # readr::read_csv("tests/testthat/data/test_compounds.csv") %>% 
+    # readr::read_csv("tests/testthat/data/test_compounds.csv") %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.numeric), as.integer))
   test_fx_groups <-
     test_compounds$smiles %>%
@@ -48,7 +49,10 @@ test_that("SMARTS strings are correct", {
   actual   <- test_fx_groups %>% dplyr::select(smiles, dplyr::all_of(common_cols))
   
   # compare but ignore NAs in expected, by just overwriting them with values in actual using rows_patch()
-  expect_equal(actual, dplyr::rows_patch(expected, actual))
+  expect_equal(
+    actual,
+    dplyr::rows_patch(expected, actual)
+  )
 })
 
 

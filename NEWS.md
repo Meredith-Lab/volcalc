@@ -2,12 +2,24 @@
 
 * It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
 * Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
-* Changes to the output of `get_fx_groups()`: `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
-* Change to how non-aromatic carbon double bonds are counted.  Now using SMARTS pattern "C=C"
-* `get_fx_groups()` now returns `hydroxyl_total` and `hydroxyl_aliphatic` instead of `hydroxyl_groups`
-* `get_fx_groups()` now returns `rings_total` and `rings_aliphatic` instead of `rings`
-* `get_fx_groups()` counts additional groups: aromatic amines; primary, secondary, and tertiary amides; hydroperoxides; carbonylperoxyacids; nitroesters; alicyclic ethers; and aromatic ethers
 * A coefficient for amides has been removed from the "Meredith" method of `simpol1()` to avoid double-counting amides.
+
+## Changes to `get_fx_groups()`
+
+* `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
+* change to how non-aromatic carbon double bonds are counted.  Now using SMARTS pattern "C=C"
+* now returns `hydroxyl_total` and `hydroxyl_aliphatic` instead of `hydroxyl_groups`
+* now returns `rings_total` and `rings_aliphatic` instead of `rings`
+* counts additional groups: 
+  - aromatic amines
+  - primary, secondary, and tertiary amides
+  - hydroperoxides
+  - carbonylperoxyacids
+  - nitroesters
+  - alicyclic ethers
+  - and aromatic ethers
+* changed `ether` to `ether_alkyl` and added `ether_total` (matching any ROR)
+
 
 # volcalc 2.0.0
 
