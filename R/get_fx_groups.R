@@ -84,7 +84,7 @@ get_fx_groups <- function(compound_sdf) {
   CCCO_pattern <- "C(C=C[AR1])(=O)[AR1]" #C=C-C=O in a non-aromatic ring
   ether_pattern <- "[OD2]([C!R1])[C!R1]"
   ether_alicyclic_pattern <- "[OD2]([C!R0])[C!R0]"
-  ether_aromatic_pattern <- "[OD2]([cX2])[cX2]"
+  ether_aromatic_pattern <- "O(c)[C,c]" #only one of the carbons has to be aromatic
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
