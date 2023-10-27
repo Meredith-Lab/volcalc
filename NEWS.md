@@ -15,9 +15,7 @@
   - primary, secondary, and tertiary amides
   - hydroperoxides
   - carbonylperoxyacids
-  - nitroesters
-  - alicyclic ethers
-  - and aromatic ethers
+  - alkyl, alicyclic, and aromatic ethers (in addition to total ethers)
 * changed `ether` to `ether_alkyl` and added `ether_total` (matching any ROR)
 
 
