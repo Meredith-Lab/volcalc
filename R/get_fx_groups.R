@@ -121,7 +121,7 @@ get_fx_groups <- function(compound_sdf) {
       carbons_asa = NA_integer_, #carbon number on the acid-side of amide
       rings_aromatic = as.integer(rings$AROMATIC),
       rings_total = as.integer(rings$RINGS),
-      rings_aliphatic = rings_total - rings_aromatic,
+      rings_aliphatic = .data$rings_total - .data$rings_aromatic,
       carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
       CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
       hydroxyl_total = groups$ROH, 
@@ -132,7 +132,7 @@ get_fx_groups <- function(compound_sdf) {
       carbox_acids = groups$RCOOH,
       ester = groups$RCOOR,
       ether_total = groups$ROR,
-      ether_alkyl = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern) - ester,
+      ether_alkyl = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern) - .data$ester,
       ether_alicyclic = ChemmineR::smartsSearchOB(compound_sdf, ether_alicyclic_pattern),
       ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
       nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
@@ -149,7 +149,7 @@ get_fx_groups <- function(compound_sdf) {
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
       #correction--hydroperoxide pattern also picks up peroxyacids
-      hydroperoxide = hydroperoxide - carbonylperoxyacid,
+      hydroperoxide = .data$hydroperoxide - .data$carbonylperoxyacid,
       nitrophenol = NA_integer_, #TODO: still confused about this one
       # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
       nitroester = NA_integer_, #TODO: still very confused about this one
