@@ -8,13 +8,7 @@
 #'   groups used in SIMPOL.1:
 #' 
 #' - carbon number on the acid-side of amide
-#' - C=C-C=O in a non-aromatic ring
-#' - alicyclic ether
-#' - aromatic ether
-#' - aromatic amine
 #' - carbonylperoxynitrate
-#' - hydroperoxide
-#' - carbonylperoxyacid
 #' - nitrophenol
 #' - nitroesther
 #' 
@@ -144,7 +138,7 @@ get_fx_groups <- function(compound_sdf) {
       amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
       amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
       amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
-      carbonylperoxynitrate = NA_integer_,
+      carbonylperoxynitrate = NA_integer_, #TODO
       peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),

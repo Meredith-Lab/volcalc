@@ -24,13 +24,7 @@ This function currently does \strong{not} capture the following functional
 groups used in SIMPOL.1:
 \itemize{
 \item carbon number on the acid-side of amide
-\item C=C-C=O in a non-aromatic ring
-\item alicyclic ether
-\item aromatic ether
-\item aromatic amine
 \item carbonylperoxynitrate
-\item hydroperoxide
-\item carbonylperoxyacid
 \item nitrophenol
 \item nitroesther
 }
