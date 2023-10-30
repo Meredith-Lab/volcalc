@@ -24,7 +24,6 @@ This function currently does \strong{not} capture the following functional
 groups used in SIMPOL.1:
 \itemize{
 \item carbon number on the acid-side of amide
-\item carbonylperoxynitrate
 \item nitrophenol
 \item nitroesther
 }

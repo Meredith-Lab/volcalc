@@ -8,7 +8,6 @@
 #'   groups used in SIMPOL.1:
 #' 
 #' - carbon number on the acid-side of amide
-#' - carbonylperoxynitrate
 #' - nitrophenol
 #' - nitroesther
 #' 
@@ -87,7 +86,8 @@ get_fx_groups <- function(compound_sdf) {
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
-  peroxide_pattern <- "[OX2D2][OX2D2]" 
+  carbonylperoxynitrate_pattern <- "*C(=O)OO[N+1](=O)[O-1]"
+  peroxide_pattern <- "[OX2D2][OX2D2]"  #this captures carbonylperoxynitrates too
   hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #this captures peroxyacids too
   carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]" 
   # nitroester_pattern <- "[OX2][N+]([O-])=O" #TODO: so confused about this one
@@ -101,7 +101,6 @@ get_fx_groups <- function(compound_sdf) {
   thiol_pattern <- "[#16X2H]"
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
   
-  #TODO make these column names as specific as possible.  E.g. instead of "hydroxyl_groups" it should be "alkyl_hydroxyls" (what we want to capture) or "total_hydroxyls" (what is currently captured).  Instead of "phenol" it should be "aromatic_hydroxyls".
   fx_groups_df <- 
     dplyr::tibble(
       formula = ChemmineR::propOB(compound_sdf)$formula,
@@ -138,12 +137,10 @@ get_fx_groups <- function(compound_sdf) {
       amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
       amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
       amide_tertiary = ChemmineR::smartsSearchOB(compound_sdf, amide_tertiary_pattern),
-      carbonylperoxynitrate = NA_integer_, #TODO
+      carbonylperoxynitrate = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxynitrate_pattern),
       peroxide = ChemmineR::smartsSearchOB(compound_sdf, peroxide_pattern),
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
-      #correction--hydroperoxide pattern also picks up peroxyacids
-      hydroperoxide = .data$hydroperoxide - .data$carbonylperoxyacid,
       nitrophenol = NA_integer_, #TODO: still confused about this one
       # nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
       nitroester = NA_integer_, #TODO: still very confused about this one
@@ -164,15 +161,19 @@ get_fx_groups <- function(compound_sdf) {
       iodines = atoms[["I"]] %||% 0L,
       fluorines = atoms[["F"]] %||% 0L
     ) %>% 
-    #various other corrections
+    
+    # Corrections
     dplyr::mutate(
-      phosphoric_acid = ifelse(
-        phosphoric_acid != 0 & phosphoric_ester != 0,
-        phosphoric_acid - phosphoric_ester,
-        phosphoric_acid
-      ),
+      #hydroperoxide pattern also picks up peroxyacids
+      hydroperoxide = .data$hydroperoxide - .data$carbonylperoxyacid,
+      #peroxide, nitrate, and ester patterns also pick up carbonylperoxynitrate group
+      ester = .data$ester - .data$carbonylperoxynitrate,
+      nitrate = .data$nitrate - .data$carbonylperoxynitrate,
+      peroxide = .data$peroxide - .data$carbonylperoxynitrate,
+      #phosphoric ester also matches phosphoric acid
+      phosphoric_acid = .data$phosphoric_acid - .data$phosphoric_ester
       #TODO:
-      #according to SIMPOL.1 paper, nitrophenol shouldn't cound aromatic hydroxyls.
+      #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls.
       # hydroxyl_aromatic = ifelse(nitrophenol != 0, hydroxyl_aromatic - nitrophenol, hydroxyl_aromatic)
     ) %>% 
     # some of the columns created by ChemmineR are named vectors sometimes,

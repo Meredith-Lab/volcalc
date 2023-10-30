@@ -45,3 +45,4 @@ O=C(O)[C@@H](N)Cc1cc(O)c(O)cc1,https://en.wikipedia.org/wiki/L-DOPA,,0,1,,,0,,,1
 C1=CC=C(C(=C1)[N+](=O)[O-])O,https://pubchem.ncbi.nlm.nih.gov/compound/2-Nitrophenol#section=InChI,example for nitrophenol.  Paper says to ignore hydroxyls when nitro present on ring,0,1,,,0,,,,,,,,,1,0,,,,,,,,,,,,,1,
 Oc1ccc(cc1[N+]([O-])=O)[N+]([O-])=O,https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:42017,"2,4-dinitrophenol",,1,,,0,,,,,,,,,2,0,,,,,,,,,,,,,1,
 Cc1c(cc(cc1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-],https://en.wikipedia.org/wiki/TNT,"not a nitrophenol, not a nitro ester, just aromatic ring and nitro groups",0,1,0,,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CCC(=O)OO[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/Peroxypropionyl-nitrate,example from paper for carbonylperoxynitrate,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0

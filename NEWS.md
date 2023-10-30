@@ -21,8 +21,9 @@
   - primary, secondary, and tertiary amides
   - hydroperoxides
   - carbonylperoxyacids
+  - carbonylperoxynitrates
   - alkyl, alicyclic, and aromatic ethers (in addition to total ethers)
-* changed `ether` to `ether_alkyl` and added `ether_total` (matching any ROR)
+* changed `ether` to `ether_alkyl` and added `ether_total` (matching any R-O-R)
 
 # volcalc 2.0.0
 
