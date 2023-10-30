@@ -1,4 +1,3 @@
-utils::globalVariables(".data")
 #' SIMPOL.1 method for calculating estimated volatility
 #' 
 #' Implements the SIMPOL.1 group contribution method for predicting liquid vapor
