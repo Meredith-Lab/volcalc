@@ -54,7 +54,7 @@ pathway from KEGG.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mol_kegg</span><span class="op">(</span><span class="va">compound_ids</span>, <span class="va">pathway_ids</span>, <span class="va">dir</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mol_kegg</span><span class="op">(</span><span class="va">compound_ids</span>, <span class="va">pathway_ids</span>, <span class="va">dir</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,13 +65,19 @@ prepended with a "C".</p></dd>
 
 
 <dt>pathway_ids</dt>
-<dd><p>character vector of KEGG pathway IDs---5 digits prepended
-with "map".</p></dd>
+<dd><p>character vector of KEGG pathway or pathway module IDs---5
+digits prepended with "map" or "M", respectively.</p></dd>
 
 
 <dt>dir</dt>
 <dd><p>path to a folder to save .mol files in. Folder will be created if
 it does not already exist</p></dd>
+
+
+<dt>force</dt>
+<dd><p>logical; by default (<code>FALSE</code>), .mol files will not be downloaded
+if they are found in <code>dir</code>.  Set this to <code>TRUE</code> to download and overwrite
+existing files.</p></dd>
 
 </dl></div>
     <div class="section level2">

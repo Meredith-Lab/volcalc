@@ -49,7 +49,12 @@
 <ul><li>It is now possible to supply input to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> as a vector of SMILES strings with <code>from = "smiles"</code>
 </li>
 <li>Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the <code>environment</code> parameter of `calc_vol()</li>
-<li>Chagnes to the output of <code><a href="../reference/get_fx_groups.html">get_fx_groups()</a></code>: <code>mass</code> column renamed to <code>molecular_weight</code> and addition of an <code>exact_mass</code> column</li>
+<li>Changes to the output of <code><a href="../reference/get_fx_groups.html">get_fx_groups()</a></code>: <code>mass</code> column renamed to <code>molecular_weight</code> and addition of an <code>exact_mass</code> column</li>
+<li>The <code>pathway_ids</code> argument of <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> now also accepts pathway <em>module</em> IDs (e.g. “M00082”)</li>
+<li>
+<code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> got a significant speed improvement (<a href="https://github.com/Meredith-Lab/volcalc/issues/84" class="external-link">#84</a>)</li>
+<li>
+<code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> will skip downloading a .mol file if it is already present by default (override with <code>force=TRUE</code>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0" id="volcalc-200">volcalc 2.0.0<a class="anchor" aria-label="anchor" href="#volcalc-200"></a></h2>
