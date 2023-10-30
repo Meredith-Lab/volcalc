@@ -4,17 +4,21 @@
 \alias{get_mol_kegg}
 \title{Download compound .mol files from KEGG}
 \usage{
-get_mol_kegg(compound_ids, pathway_ids, dir)
+get_mol_kegg(compound_ids, pathway_ids, dir, force = FALSE)
 }
 \arguments{
 \item{compound_ids}{character vector of KEGG compound IDs---5 digits
 prepended with a "C".}
 
-\item{pathway_ids}{character vector of KEGG pathway IDs---5 digits prepended
-with "map".}
+\item{pathway_ids}{character vector of KEGG pathway or pathway module IDs---5
+digits prepended with "map" or "M", respectively.}
 
 \item{dir}{path to a folder to save .mol files in. Folder will be created if
 it does not already exist}
+
+\item{force}{logical; by default (\code{FALSE}), .mol files will not be downloaded
+if they are found in \code{dir}.  Set this to \code{TRUE} to download and overwrite
+existing files.}
 }
 \value{
 a tibble with the columns \code{compound_ids}, \code{pathway_ids} (if used),

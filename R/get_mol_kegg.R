@@ -6,10 +6,13 @@ utils::globalVariables(".data")
 #'
 #' @param compound_ids character vector of KEGG compound IDs---5 digits
 #'   prepended with a "C".
-#' @param pathway_ids character vector of KEGG pathway IDs---5 digits prepended
-#'   with "map".
+#' @param pathway_ids character vector of KEGG pathway or pathway module IDs---5
+#'   digits prepended with "map" or "M", respectively.
 #' @param dir path to a folder to save .mol files in. Folder will be created if
 #'   it does not already exist
+#' @param force logical; by default (`FALSE`), .mol files will not be downloaded
+#'   if they are found in `dir`.  Set this to `TRUE` to download and overwrite
+#'   existing files.
 #'
 #' @returns a tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files)
@@ -20,9 +23,7 @@ utils::globalVariables(".data")
 #' get_mol_kegg(compound_ids = c("C16181", "C06074"), dir = tempdir())
 #' get_mol_kegg(pathway_ids = "map00253", dir = tempdir())
 #' }
-get_mol_kegg <- function(compound_ids, pathway_ids, dir){
-  
-  #TODO: implement redownload=FALSE arg?
+get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
   
   if(missing(dir)) stop("`dir` is required")
   if ((missing(compound_ids) & missing(pathway_ids)) |
@@ -42,7 +43,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
   }
   # if pathways are provided
   if (!missing(pathway_ids)) {
-    if (!all(stringr::str_detect(pathway_ids, "^[m][a][p][:digit:]{5}$"))) {
+    if (!all(stringr::str_detect(pathway_ids, "^(map|M)\\d{5}$"))) {
       stop("Some pathway_ids are not in the correct KEGG format")
     }
     fs::dir_create(dir, pathway_ids)
@@ -52,42 +53,39 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir){
       tibble::enframe(compound_ids_list, name = "pathway_id", value = "compound_id") %>% 
       tidyr::unnest(tidyselect::everything()) %>% 
       dplyr::mutate(mol_path = fs::path(dir, .data$pathway_id, .data$compound_id, ext = "mol"))
+  }
+  
+  if(isFALSE(force)) {
+    to_dl <- out_tbl$compound_id[!fs::file_exists(out_tbl$mol_path)]
+    out_paths <- out_tbl$mol_path[!fs::file_exists(out_tbl$mol_path)]
+  } else {
+    to_dl <- out_tbl$compound_id
+    out_paths <- out_tbl$mol_path
+  }
+  
+  if (length(to_dl) == 0) {
+    #if nothing to download, return early
+    return(out_tbl)
+  } else {
     
-  }
-  
-  # Download mols
-  .get_mol_kegg <- function(compound_id) {
-    #TODO I think the KEGG API can handle up to 10 requests at once separated by
-    #"+".  Unfortunately all the mol files come out in a single textfile and
-    #would need parsing to separate.  Could speed things up by reducing API
-    #calls, but would require additional code.
-    mol <- KEGGREST::keggGet(compound_id, option = "mol")
+    # Download mols
+    mols <- dl_mol_kegg(to_dl)
     
-    # Adds title to mol file because it is used later on by get_fx_groups()
-    names <- KEGGREST::keggGet(compound_id)[[1]]$NAME
-    # Only use the first name and remove separator
-    title <- stringr::str_remove(names[1], ";")
-    # add title line to mol file
-    mol_clean <- paste0(title, "\n\n\n", gsub(">.*", "", mol))
-    mol_clean
+    # write mol files
+    .write_mol <- function(mol_clean, file_path) {
+      utils::write.table(
+        mol_clean,
+        file = file_path,
+        row.names = FALSE,
+        col.names = FALSE,
+        quote = FALSE
+      )
+    }
+    
+    mapply(.write_mol, mol_clean = mols, file_path = out_paths)
+    
+    return(out_tbl)
   }
-  mols <- lapply(out_tbl$compound_id, .get_mol_kegg)
-  
-  # write mol files
-  .write_mol <- function(mol_clean, file_path) {
-    utils::write.table(
-      mol_clean,
-      file = file_path,
-      row.names = FALSE,
-      col.names = FALSE,
-      quote = FALSE
-    )
-  }
-
-  mapply(.write_mol, mol_clean = mols, file_path = out_tbl$mol_path)
-  
-  #return
-  out_tbl
 }
 
 
@@ -112,5 +110,47 @@ keggGetCompounds <- function(pathway){
     stringr::str_split_1("\n") %>%  
     stringr::str_extract("(?<=cpd:).*")
   out[!is.na(out)]
+  
+}
 
+dl_mol_kegg <- function(compound_ids) {
+  #balances compound_ids into groups of less than 10 to meet API guidelines
+  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+  
+  #maps over list, but returns it to a single character vector to simplify wrangling code
+  raw <- 
+    purrr::map(compound_id_list, function(x) KEGGREST::keggGet(x, option = "mol")) %>% 
+    purrr::list_c() %>% 
+    glue::glue_collapse()
+  #split into multiples
+  mols <- stringr::str_split(raw, "(?<=\\${4})", n = length(compound_ids)) %>%
+    unlist() %>% 
+    stringr::str_trim(side = "left")
+  
+  # Adds title to mol file because it is used later on by get_fx_groups()
+  titles <- purrr::map(compound_id_list, function(x) { #for every group of <10 IDs
+    KEGGREST::keggGet(x) %>% 
+      purrr::map_chr(function(names) { #for every ID
+        purrr::pluck(names, "NAME", 1) %>% #get first element of NAME
+          stringr::str_remove(";")
+      })
+  }) %>% unlist()
+  purrr::map2(mols, titles, function(mol, title) {
+    paste0(title, "\n\n\n", gsub(">.*", "", mol))
+  })
+  
+}
+
+
+
+split_to_list <- function(x, max_len = 10) {
+  
+  if(length(x) > max_len) {
+    n_groups <- ceiling(length(x) / max_len)
+    split(x, f = cut(seq_along(x), breaks = n_groups)) %>%
+      purrr::set_names(NULL)
+  } else {
+    list(x)
+  }
+  
 }
