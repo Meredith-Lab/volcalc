@@ -19,17 +19,18 @@ Imports:
     ChemmineR,
     dplyr,
     fs,
+    glue,
     httr2,
     KEGGREST,
     magrittr,
     rlang,
+    purrr,
     stringr,
     tibble,
     tidyr,
     tidyselect
 Suggests: 
     processx,
-    purrr,
     testthat (>= 3.0.0),
     withr
 biocViews: 

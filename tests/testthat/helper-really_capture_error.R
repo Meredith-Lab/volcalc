@@ -21,3 +21,8 @@ really_capture_error <- function(expr) {
   }
 }
 
+
+# sdf <- ChemmineR::read.SDFset("tests/testthat/data/C16181_malformed_header.mol")
+# ChemmineR::propOB(sdf)
+# really_capture_error(ChemmineR::propOB(sdf))
+

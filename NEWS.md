@@ -4,6 +4,12 @@
 * Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
 * A coefficient for amides has been removed from the "Meredith" method of `simpol1()` to avoid double-counting amides.
 
+## Changes to `get_mol_kegg()`
+
+* The `pathway_ids` argument of `get_mol_kegg()` now also accepts pathway *module* IDs (e.g. "M00082")
+* `get_mol_kegg()` got a significant speed improvement (#84)
+* `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`)
+
 ## Changes to `get_fx_groups()`
 
 * `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
@@ -17,7 +23,6 @@
   - carbonylperoxyacids
   - alkyl, alicyclic, and aromatic ethers (in addition to total ethers)
 * changed `ether` to `ether_alkyl` and added `ether_total` (matching any ROR)
-
 
 # volcalc 2.0.0
 

@@ -1,6 +1,7 @@
 test_that("get_mol_kegg returns tibble", {
   skip_if_offline()
   skip_on_cran()
+  
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
   expect_s3_class(out, "tbl_df")
@@ -10,6 +11,7 @@ test_that("get_mol_kegg returns tibble", {
 test_that("get_mol_kegg writes files", {
   skip_if_offline()
   skip_on_cran()
+  
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
   expect_true(fs::file_exists(fs::path(out$mol_path)))
@@ -18,6 +20,7 @@ test_that("get_mol_kegg writes files", {
 test_that("get_mol_kegg errors unless one of compound_id or pathway_id", {
   skip_if_offline()
   skip_on_cran()
+  
   dir <- withr::local_tempdir()
   expect_error(get_mol_kegg(dir = dir),
                "One of `compound_id` or `pathway_id` are required")
@@ -30,6 +33,7 @@ test_that("get_mol_kegg errors unless one of compound_id or pathway_id", {
 test_that("get_mol_kegg checks ID format", {
   skip_if_offline()
   skip_on_cran()
+  
   dir <- withr::local_tempdir()
   expect_error(
     get_mol_kegg(compound_ids = "hello", dir = dir),
@@ -52,6 +56,7 @@ test_that("get_mol_kegg checks ID format", {
 test_that("get_mol_kegg dl correct compound", {
   skip_if_offline()
   skip_on_cran()
+  
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
   expect_equal(readLines(out$mol_path) %>% head(1), "Malonyl-CoA")
@@ -60,6 +65,7 @@ test_that("get_mol_kegg dl correct compound", {
 test_that("get_mol_kegg works with pathways", {
   skip_if_offline()
   skip_on_cran()
+    
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(pathway_ids = c("map00253", "map00232"), dir = dir)
   expect_equal(nrow(out), 43)
@@ -70,6 +76,7 @@ test_that(".mol files are correctly formed", {
   skip_if_offline()
   skip_on_cran()
   skip_on_os("windows") # really_capture_error() errors on windows
+  
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C00083", dir = dir)
   sdf <- ChemmineR::read.SDFset(out$mol_path)
@@ -82,6 +89,7 @@ test_that(".mol files are correctly formed", {
 
 test_that("file downloads with correct counts block", {
   skip_on_cran()
+  skip_if_offline()
   
   dir <- withr::local_tempdir()
   out <- get_mol_kegg(compound_ids = "C16181", dir = dir)
@@ -90,5 +98,15 @@ test_that("file downloads with correct counts block", {
     ex_file_contents[4],
     "12 12  0  0  1  0  0  0  0  0999 V2000"
   )
+})
+
+test_that("works with pathway modules", {
+  skip_on_cran()
+  skip_if_offline()
+  
+  dir <- withr::local_tempdir()
+  out <- get_mol_kegg(pathway_ids = "M00082", dir = dir)
+  expect_equal(nrow(out), 5)
+  expect_true(all(file.exists(out$mol_path)))
 })
 
