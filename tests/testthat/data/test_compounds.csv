@@ -5,10 +5,11 @@ OOC(c1ccccc1)(C)C,https://en.wikipedia.org/wiki/Cumene_hydroperoxide,,0,1,0,0,0,
 CC(C)(C1=CC=CC=C1)OOC(C)(C)C2=CC=CC=C2,https://en.wikipedia.org/wiki/Dicumyl_peroxide,,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 CC(C)(C)OOC(=O)c1ccccc1,https://en.wikipedia.org/wiki/Tert-Butyl_peroxybenzoate,,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
 c1ccc(cc1)C(=O)OOC(=O)c2ccccc2,https://en.wikipedia.org/wiki/Benzoyl_peroxide,,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
-COC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/17206,"this is the example given in the paper, but it is not truly a nitroester",,,0,,0,,,0,,0,0,0,0,1,0,,,,0,0,0,0,0,0,0,0,0,,1
-C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-],https://en.wikipedia.org/wiki/Nitroglycerin,,,,0,,0,,,0,,0,0,0,3,0,0,,,,0,0,0,0,0,0,0,0,0,,3
-[O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O[N+]([O-])=O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_dinitrate,,,,0,,0,,,0,,0,2,0,2,0,0,,,,0,0,0,0,0,0,0,0,0,,2
-[O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_mononitrate,,,,0,,1,,,0,,0,2,0,1,0,0,,,,0,0,0,0,0,0,0,0,0,,1
+COC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/17206,example from paper for nitroester,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+CCOC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/69379,,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-],https://en.wikipedia.org/wiki/Nitroglycerin,not a nitroester,,,0,,0,,,0,,0,0,0,3,0,0,,,,0,0,0,0,0,0,0,0,0,0,0
+[O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O[N+]([O-])=O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_dinitrate,not a nitroester technically,,,0,,0,,,0,,0,2,0,2,0,0,,,,0,0,0,0,0,0,0,0,0,0,0
+[O-][N+](=O)O[C@H]1[C@H]2OC[C@H](O)[C@H]2OC1,https://en.wikipedia.org/wiki/Isosorbide_mononitrate,nopt a nitroester technically,,,0,,1,,,0,,0,2,0,1,0,0,,,,0,0,0,0,0,0,0,0,0,0,0
 CCOCC,https://en.wikipedia.org/wiki/Diethyl_ether,,,,0,,0,,,0,,1,0,0,0,0,0,,,,0,0,0,0,0,0,0,0,0,,0
 COCCOC,https://en.wikipedia.org/wiki/Dimethoxyethane,,,,0,,0,,,0,,2,0,0,0,0,0,,,,0,0,0,0,0,0,0,0,0,,0
 O1CCOCC1,"https://en.wikipedia.org/wiki/1,4-Dioxane",,,,0,,0,,,0,,0,2,0,0,0,0,,,,0,0,0,0,0,0,0,0,0,,0
@@ -36,7 +37,6 @@ OC1CCC1,https://en.wikipedia.org/wiki/Cyclobutanol,,,,0,,1,,,0,,0,0,0,0,0,0,,,,0
 CC1CC(C(C1)O)C,https://pubchem.ncbi.nlm.nih.gov/compound/2_4-Dimethylcyclopentanol,,,,0,,1,,,0,,0,0,0,0,0,0,,,,0,0,0,0,0,0,0,0,0,,0
 CNC(C1=CC(=C(C=C1)O)O)O,https://pubchem.ncbi.nlm.nih.gov/compound/4-_Hydroxy_methylamino_methyl_benzene-1_2-diol,,,,0,,1,,,0,,0,0,0,0,0,2,,,,0,0,0,0,0,0,0,0,0,,0
 CC(C)CCO[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/Isoamyl-nitrate,nitrate example,,,0,,0,,,0,,0,0,0,1,0,0,,,,0,0,0,0,0,0,0,0,0,,0
-CCOC(=O)C[N+](=O)[O-],https://pubchem.ncbi.nlm.nih.gov/compound/69379,nitro example,,,0,,0,,,0,,0,0,0,0,1,0,,,,0,0,0,0,0,0,0,0,0,,0
 OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O,https://en.wikipedia.org/wiki/Glucose,,1,,,,5,,,,,,,,,,,,,,,,,,,,,,,,
 Oc1ccccc1,https://en.wikipedia.org/wiki/Phenol,phenol,0,1,0,,0,,,,,,,,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Oc1ccc(cc1)C(c2ccc(O)cc2)(C)C,https://en.wikipedia.org/wiki/Bisphenol_A,BPA,0,2,,,0,,,,,,,,,,2,,,,,,,,,,,,,,

@@ -24,6 +24,7 @@
   - carbonylperoxynitrates
   - alkyl, alicyclic, and aromatic ethers (in addition to total ethers)
   - nitrophenols
+  - nitroesters
 * changed `ether` to `ether_alkyl` and added `ether_total` (matching any R-O-R)
 
 # volcalc 2.0.0

@@ -8,7 +8,6 @@
 #'   groups used in SIMPOL.1:
 #' 
 #' - carbon number on the acid-side of amide
-#' - nitroesther
 #' 
 #' Contributions of SMARTS strings to capture these groups are welcome.
 #'
@@ -89,8 +88,7 @@ get_fx_groups <- function(compound_sdf) {
   peroxide_pattern <- "[OX2D2][OX2D2]"  #this captures carbonylperoxynitrates too
   hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #this captures peroxyacids too
   carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]" 
-  # nitroester_pattern <- "[OX2][N+]([O-])=O" #TODO: so confused about this one
-  
+  nitroester_pattern <- "C(=O)(OC)C~[NX3](-,=[OX1])-,=[OX1]" 
   # This captures OH groups on a ring that also has a nitro group (para, ortho, or meta).  Need to correct aromatic hydroxyl count later.
   nitrophenol_pattern <- "[OX2H][$(c1ccccc1[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1cccc(c1)[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1ccc(cc1)[$([NX3](=O)=O),$([NX3+](=O)[O-])])]"
   phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
@@ -141,8 +139,8 @@ get_fx_groups <- function(compound_sdf) {
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
       nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
-      nitroester = NA_integer_, #TODO: still very confused about this one
-      # nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
+      # nitroester = NA_integer_, #TODO: still very confused about this one
+      nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
       
       phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
       phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
@@ -171,7 +169,9 @@ get_fx_groups <- function(compound_sdf) {
       #phosphoric ester also matches phosphoric acid
       phosphoric_acid = .data$phosphoric_acid - .data$phosphoric_ester,
       #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls.
-      hydroxyl_aromatic = hydroxyl_aromatic - nitrophenol
+      hydroxyl_aromatic = hydroxyl_aromatic - nitrophenol,
+      #according to SIMPOL.1 paper, nitroester shouldn't count esters
+      ester = ester - nitroester
     ) %>% 
     # some of the columns created by ChemmineR are named vectors sometimes,
     # strip names for consistency
