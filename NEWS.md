@@ -16,7 +16,9 @@
 * change to how non-aromatic carbon double bonds are counted.  Now using SMARTS pattern "C=C"
 * now returns `hydroxyl_total` and `hydroxyl_aliphatic` instead of `hydroxyl_groups`
 * now returns `rings_total` and `rings_aliphatic` instead of `rings`
-* counts additional groups: 
+* counts additional groups used by `simpol1()`: 
+  - C=C-C=O in a non-aromatic ring
+  - non-aromatic carbon double bonds
   - aromatic amines
   - primary, secondary, and tertiary amides
   - hydroperoxides
