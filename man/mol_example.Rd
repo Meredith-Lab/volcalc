@@ -14,6 +14,16 @@ files will be listed instead.}
 \code{volcalc} comes bundled with some example .mol files in its \code{inst/extdata}
 directory.  This function provides easy access to them.
 }
+\details{
+File names are the KEGG identifiers.  Compound names are as follows:
+\itemize{
+\item C00031: D-Glucose
+\item C08491: (-)-Jasmonic acid
+\item C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol
+\item C16286: Geosmin
+\item C16521: Isoprene
+}
+}
 \examples{
 #list all examples
 mol_example()
