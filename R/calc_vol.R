@@ -65,15 +65,16 @@ calc_vol <-
     )
     
     if(from == "mol_path") {
-      #TODO: validate mol files??
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
     }
     
     if(from == "smiles") {
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
+    
     #TODO use ChemmineR::validSDF() to check for any invalid inputs
     # Warn and return NA for any that aren't valid??
+    # Unfortunately, validSDF() doesn't really do a very thorough validation and will let things pass that create errors and warnings in propOB(), for example
     fx_groups_df_list <-
       lapply(compound_sdf_list, get_fx_groups)
     names(fx_groups_df_list) <- input
