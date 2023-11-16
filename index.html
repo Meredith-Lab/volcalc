@@ -78,39 +78,29 @@
 </h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The goal of <code>volcalc</code> is to automate calculating estimates of volatility for chemical compounds.</p>
+<p>The <code>volcalc</code> package allows you to automate calculating estimates of volatility for chemical compounds.</p>
 <blockquote>
 <p>[!WARNING] <code>volcalc</code> is a work in progress—use at your own risk!</p>
 </blockquote>
-<p>It is still in a stage of development likely to introduce many breaking changes. For a bit of a road map of where development is headed, see our <a href="https://cct-datascience.github.io/volcalc-isc-proposal/" class="external-link">proposal</a> for the R Consortium grant.</p>
-<p>Volatility can be estimated for most chemical compounds using a .mol file. The <a href="https://www.genome.jp/kegg/" class="external-link">KEGG</a> database provides .mol files for most compounds and they can be downloaded using just the <a href="https://www.genome.jp/kegg/compound/" class="external-link">KEGG unique identifier</a> for the compound of interest. Alternatively, volatility can be estimated for multiple compounds that are in a <a href="https://www.genome.jp/kegg/pathway.html" class="external-link">KEGG pathway</a>.</p>
-<p>Volatility estimation is done using a modified version of the SIMPOL.1 method (Pankow &amp; Asher 2008).</p>
+<p>For a bit of a road map of where development is headed, see our <a href="https://cct-datascience.github.io/volcalc-isc-proposal/" class="external-link">proposal</a> for the R Consortium grant.</p>
+<p><code>volcalc</code> is designed to support “group contribution” methods for estimating volatility that rely on molecular properties such as molecular weight, numbers of certain atoms, and counts of certain functional groups. Currently, the only methods implemented are SIMPOL.1 (Pankow &amp; Asher 2008) and a modified version used in Meredith et al. (in review).</p>
+<p><code>volcalc</code> works with either .mol files or <a href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system" class="external-link">SMILES</a> strings as input, and supports downloading .mol files directly from <a href="https://www.kegg.jp/" class="external-link">KEGG</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="section level3">
-<h3 id="using-without-installing">Using without installing<a class="anchor" aria-label="anchor" href="#using-without-installing"></a>
-</h3>
-<p>You can use the <code>volcalc</code> package by using RStudio on a server <a href="https://mybinder.org/v2/gh/Meredith-Lab/binder_volcalc/master?urlpath=rstudio" class="external-link">here</a>. This instance can be slow to launch.</p>
-<p>The instance was generated using <a href="https://mybinder.org/" class="external-link">Binder</a>, which is an excellent free, open source tool to create custom computing environments.</p>
-<p>To see an example of how to use <code>volcalc</code>, run the script <code>example_volcalc_usage.R</code> which is included in the server’s file system.</p>
-</div>
-<div class="section level3">
-<h3 id="installing-locally">Installing locally<a class="anchor" aria-label="anchor" href="#installing-locally"></a>
-</h3>
 <p>You can install the development version of <code>volcalc</code> from GitHub with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc"</span><span class="op">)</span></span></code></pre></div>
 <p>Or from r-universe with</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'https://cct-datascience.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">'volcalc'</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the ‘legacy’ version used in our in-prep publication with</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"volcalc"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://cct-datascience.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the ‘legacy’ version used in our in-review publication with</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc@v1.0.2"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation of <code>volcalc</code> requires the system libraries <a href="https://openbabel.org/wiki/Main_Page" class="external-link">OpenBabel</a> and Eigen3 (requirements of the <code>ChemmineOB</code> package, which <code>volcalc</code> depends on). <code>pak</code> will take care of the installation of these libraries for you on some systems, but you may need to install them manually.</p>
@@ -122,18 +112,12 @@
 <p>For windows, <code>OpenBabel</code> is included in the <code>ChemmineOB</code> binary and does not need to be installed separately.</p>
 <p>For other installation options see the <a href="https://openbabel.org/docs/dev/Installation/install.html" class="external-link">OpenBabel documentation</a> and <code>ChemmineOB</code> <a href="https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL" class="external-link">install guide</a></p>
 </div>
-<div class="section level3">
-<h3 id="loading-package">Loading package<a class="anchor" aria-label="anchor" href="#loading-package"></a>
-</h3>
-<p>Use the package with:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://meredith-lab.github.io/volcalc/">volcalc</a></span><span class="op">)</span></span></code></pre></div>
-</div>
-</div>
 <div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
 <p>This is a basic example which shows you how to get an estimated relative volatility index (<code>rvi</code>) for two example compounds <em>beta-2,3,4,5,6-Pentachlorocyclohexanol</em>, and <em>Succinate</em>. The KEGG compound identifiers for the compounds, as found on <a href="https://www.genome.jp/dbget-bin/www_bget?C16181" class="external-link">the compound’s KEGG page</a>, are C16181, and C00042.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://meredith-lab.github.io/volcalc/">volcalc</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># download a .mol file from KEGG</span></span>
@@ -141,7 +125,7 @@
 <span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">files</span><span class="op">$</span><span class="va">mol_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
 <span><span class="co">#&gt;   mol_path                                          formula name    rvi category</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    </span></span>
 <span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high</span></span>
 <span></span>
@@ -149,96 +133,10 @@
 <span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O"</span>,  <span class="st">"C(CC(=O)O)C(=O)O"</span><span class="op">)</span>, from <span class="op">=</span> <span class="st">"smiles"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
 <span><span class="co">#&gt;   smiles                        formula  name    rvi category</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O &lt;NA&gt;   6.98 high    </span></span>
 <span><span class="co">#&gt; 2 C(CC(=O)O)C(=O)O              C4H6O4   &lt;NA&gt;   2.57 high</span></span></code></pre></div>
 <p>This returns a dataframe with columns specifying general info about the compound, and the compound’s calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with <code>return_fx_groups = TRUE</code>, and the intermediate calculation steps with <code>return_calc_steps = TRUE</code>.</p>
-<!--
-## Dataframe columns
-&#10;### Basic compound information
-&#10;-   pathway: KEGG pathway identifier
--   compound: KEGG compound identifier
--   formula: compound chemical formula
--   name: compound name
--   molecular_weight: molecular weight
-&#10;### Counted functional groups and atoms
-&#10;-   carbons
--   ketones
--   aldehydes
--   hydroxyl_groups
--   carbox_acids
--   peroxide
--   hydroperoxide
--   nitrate
--   nitro
--   carbon_dbl_bonds
--   rings
--   rings_aromatic
--   hydroxyl_aromatic
--   nitrophenol
--   nitroester
--   ester
--   ether_alicyclic
--   ether_aromatic
--   amine_primary
--   amine_secondary
--   amine_tertiary
--   amine_aromatic
--   amines
--   amides
--   phosphoric_acid
--   phosphoric_ester
--   sulfate
--   sulfonate
--   thiol
--   carbothioester
--   oxygens
--   chlorines
--   nitrogens
--   sulfurs
--   phosphoruses
--   bromines
--   iodines
--   fluorines
-&#10;### Volatility calculation steps
-&#10;-   log_alpha: intermediate step
--   log_Sum: intermediate step
--   volatility: estimated volatility
--   category: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
-&#10;### Functional group details
-&#10;| Functional group   | In manual? | Count method        | Coefficient | Coef source      |
-|---------------|---------------|---------------|---------------|---------------|
-| Carbons            | Y          | ChemmineR atomcount | -0.438      | ?                |
-| Ketones            | Y          | ChemmineR groups    | -0.935      | Pankow & Asher   |
-| Aldehydes          | Y          | ChemmineR groups    | -1.35       | Pankow & Asher   |
-| Hydroxyl groups    | Y          | ChemmineR groups    | -2.23       | Pankow & Asher   |
-| Carboxylic acids   | Y          | ChemmineR groups    | -3.58       | Pankow & Asher   |
-| Peroxide           | Y          | SMARTS              | -0.368      | Pankow & Asher   |
-| Hydroperoxide      | Y          | NA                  | -2.48       | Pankow & Asher   |
-| Nitrate            | Y          | SMARTS              | -2.23       | Pankow & Asher   |
-| Nitro              | Y          | SMARTS              | -2.15       | Pankow & Asher   |
-| Carbon double bond | Y          | ChemmineR conMA     | -0.105      | Pankow & Asher   |
-| Non-aromatic rings | Y          | ChemmineR rings     | --0.0104    | Pankow & Asher   |
-| Aromatic rings     | Y          | ChemmineR rings     | -0.675      | Pankow & Asher   |
-| Aromatic hydroxyl  | Y          | SMARTS              | -2.14       | Pankow & Asher   |
-| Nitrophenol        | Y          | NA                  | 0.0432      | Pankow & Asher   |
-| Nitroester         | Y          | NA                  | -2.67       | Pankow & Asher   |
-| Ester              | Y          | ChemmineR groups    | -1.20       | Pankow & Asher   |
-| Ether (acyclic)    | Y          | NA                  | -0.683      | Pankow & Asher   |
-| Ether (aromatic)   | Y          | NA                  | -1.03       | Pankow & Asher   |
-| Amine primary      | Y          | ChemmineR groups    | -1.03       | Pankow & Asher   |
-| Amine secondary    | Y          | ChemmineR groups    | -0.849      | Pankow & Asher   |
-| Amine tertiary     | Y          | ChemmineR groups    | -0.608      | Pankow & Asher   |
-| Amine aromatic     | Y          | ChemmineR rings     | -1.61       | Pankow & Asher   |
-| Amine              | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Amide              | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Phosphoric acid    | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Phosphoric ester   | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Sulfate            | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Sulfonate          | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
-| Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
-&#10;-->
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
@@ -255,7 +153,7 @@
 </h2>
 <p>If you use this package in your published work, please cite it using the reference below:</p>
 <blockquote>
-<p>Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J., Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for estimating metabolite volatility. In review.</p>
+<p>Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J., Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for estimating metabolite volatility. Frontiers in Microbiology. In review.</p>
 </blockquote>
 <div class="section level3">
 <h3 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
