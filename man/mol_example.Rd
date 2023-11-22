@@ -4,11 +4,7 @@
 \alias{mol_example}
 \title{Get path to example .mol file}
 \usage{
-mol_example(path = NULL)
-}
-\arguments{
-\item{path}{Name of file.  If \code{NULL} (default), the options for example .mol
-files will be listed instead.}
+mol_example()
 }
 \description{
 \code{volcalc} comes bundled with some example .mol files in its \code{inst/extdata}
@@ -25,9 +21,9 @@ File names are the KEGG identifiers.  Compound names are as follows:
 }
 }
 \examples{
-#list all examples
+#return paths to all example .mol files
 mol_example()
 
-#return path to specific example file
-mol_example("C16181.mol")
+#examine the contents of a file
+readLines(mol_example()[1])
 }
