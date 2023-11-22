@@ -33,14 +33,14 @@
 #'
 #' @export
 #' @examples
-#' mol_path <- mol_example("C16181.mol")
-#' calc_vol(mol_path)
+#' mol_paths <- mol_example()
+#' calc_vol(mol_paths)
 #' 
 #' # Return functional group counts from get_fx_groups()
-#' calc_vol(mol_path,  return_fx_groups = TRUE)
+#' calc_vol(mol_paths,  return_fx_groups = TRUE)
 #' 
 #' # Return intermediate calculations
-#' calc_vol(mol_path, return_calc_steps = TRUE)
+#' calc_vol(mol_paths, return_calc_steps = TRUE)
 #' 
 calc_vol <-
   function(input, 
