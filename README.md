@@ -14,48 +14,34 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
 [![volcalc status
 badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datascience.r-universe.dev/volcalc)
+
 <!-- badges: end -->
 
 ## Overview
 
-The goal of `volcalc` is to automate calculating estimates of volatility
-for chemical compounds.
+The `volcalc` package allows you to automate calculating estimates of
+volatility for chemical compounds.
 
 > [!WARNING]
 > `volcalc` is a work in progress---use at your own risk!
 
-It is still in a stage of development likely to introduce many breaking
-changes. For a bit of a road map of where development is headed, see our
+For a bit of a road map of where development is headed, see our
 [proposal](https://cct-datascience.github.io/volcalc-isc-proposal/) for
 the R Consortium grant.
 
-Volatility can be estimated for most chemical compounds using a .mol
-file. The [KEGG](https://www.genome.jp/kegg/) database provides .mol
-files for most compounds and they can be downloaded using just the [KEGG
-unique identifier](https://www.genome.jp/kegg/compound/) for the
-compound of interest. Alternatively, volatility can be estimated for
-multiple compounds that are in a [KEGG
-pathway](https://www.genome.jp/kegg/pathway.html).
+`volcalc` is designed to support “group contribution” methods for
+estimating volatility that rely on molecular properties such as
+molecular weight, numbers of certain atoms, and counts of certain
+functional groups. Currently, the only methods implemented are SIMPOL.1
+(Pankow & Asher 2008) and a modified version used in Meredith et al. (in
+review).
 
-Volatility estimation is done using a modified version of the SIMPOL.1
-method (Pankow & Asher 2008).
+`volcalc` works with either .mol files or
+[SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
+strings as input, and supports downloading .mol files directly from
+[KEGG](https://www.kegg.jp/).
 
 ## Installation
-
-### Using without installing
-
-You can use the `volcalc` package by using RStudio on a server
-[here](https://mybinder.org/v2/gh/Meredith-Lab/binder_volcalc/master?urlpath=rstudio).
-This instance can be slow to launch.
-
-The instance was generated using [Binder](https://mybinder.org/), which
-is an excellent free, open source tool to create custom computing
-environments.
-
-To see an example of how to use `volcalc`, run the script
-`example_volcalc_usage.R` which is included in the server’s file system.
-
-### Installing locally
 
 You can install the development version of `volcalc` from GitHub with
 
@@ -67,11 +53,10 @@ pak::pkg_install("Meredith-Lab/volcalc")
 Or from r-universe with
 
 ``` r
-options(repos = c('https://cct-datascience.r-universe.dev', 'https://cloud.r-project.org'))
-pak::pkg_install('volcalc')
+install.packages("volcalc", repos = c("https://cct-datascience.r-universe.dev", getOption("repos")))
 ```
 
-You can install the ‘legacy’ version used in our in-prep publication
+You can install the ‘legacy’ version used in our in-review publication
 with
 
 ``` r
@@ -106,15 +91,7 @@ documentation](https://openbabel.org/docs/dev/Installation/install.html)
 and `ChemmineOB` [install
 guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 
-### Loading package
-
-Use the package with:
-
-``` r
-library(volcalc)
-```
-
-## Usage
+## Basic Usage
 
 This is a basic example which shows you how to get an estimated relative
 volatility index (`rvi`) for two example compounds
@@ -124,13 +101,17 @@ page](https://www.genome.jp/dbget-bin/www_bget?C16181), are C16181, and
 C00042.
 
 ``` r
+library(volcalc)
+```
+
+``` r
 out_path <- tempdir()
 # download a .mol file from KEGG
 files <- get_mol_kegg(c("C16181", "C00042"), dir = out_path)
 calc_vol(files$mol_path)
 #> # A tibble: 2 × 5
 #>   mol_path                                          formula name    rvi category
-#>   <chr>                                             <chr>   <chr> <dbl> <chr>   
+#>   <chr>                                             <chr>   <chr> <dbl> <fct>   
 #> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    
 #> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high
 
@@ -138,7 +119,7 @@ calc_vol(files$mol_path)
 calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
 #> # A tibble: 2 × 5
 #>   smiles                        formula  name    rvi category
-#>   <chr>                         <chr>    <chr> <dbl> <chr>   
+#>   <chr>                         <chr>    <chr> <dbl> <fct>   
 #> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>   6.98 high    
 #> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>   2.57 high
 ```
@@ -148,93 +129,6 @@ compound, and the compound’s calculated volatility and corresponding
 volatility category. The functional group counts underlying the
 volatility can be additionally returned with `return_fx_groups = TRUE`,
 and the intermediate calculation steps with `return_calc_steps = TRUE`.
-
-<!--
-## Dataframe columns
-&#10;### Basic compound information
-&#10;-   pathway: KEGG pathway identifier
--   compound: KEGG compound identifier
--   formula: compound chemical formula
--   name: compound name
--   molecular_weight: molecular weight
-&#10;### Counted functional groups and atoms
-&#10;-   carbons
--   ketones
--   aldehydes
--   hydroxyl_groups
--   carbox_acids
--   peroxide
--   hydroperoxide
--   nitrate
--   nitro
--   carbon_dbl_bonds
--   rings
--   rings_aromatic
--   hydroxyl_aromatic
--   nitrophenol
--   nitroester
--   ester
--   ether_alicyclic
--   ether_aromatic
--   amine_primary
--   amine_secondary
--   amine_tertiary
--   amine_aromatic
--   amines
--   amides
--   phosphoric_acid
--   phosphoric_ester
--   sulfate
--   sulfonate
--   thiol
--   carbothioester
--   oxygens
--   chlorines
--   nitrogens
--   sulfurs
--   phosphoruses
--   bromines
--   iodines
--   fluorines
-&#10;### Volatility calculation steps
-&#10;-   log_alpha: intermediate step
--   log_Sum: intermediate step
--   volatility: estimated volatility
--   category: volatility category, where values less than 0 are "none", values between 0 and 2 are "moderate", and values above 2 are "high"
-&#10;### Functional group details
-&#10;| Functional group   | In manual? | Count method        | Coefficient | Coef source      |
-|---------------|---------------|---------------|---------------|---------------|
-| Carbons            | Y          | ChemmineR atomcount | -0.438      | ?                |
-| Ketones            | Y          | ChemmineR groups    | -0.935      | Pankow & Asher   |
-| Aldehydes          | Y          | ChemmineR groups    | -1.35       | Pankow & Asher   |
-| Hydroxyl groups    | Y          | ChemmineR groups    | -2.23       | Pankow & Asher   |
-| Carboxylic acids   | Y          | ChemmineR groups    | -3.58       | Pankow & Asher   |
-| Peroxide           | Y          | SMARTS              | -0.368      | Pankow & Asher   |
-| Hydroperoxide      | Y          | NA                  | -2.48       | Pankow & Asher   |
-| Nitrate            | Y          | SMARTS              | -2.23       | Pankow & Asher   |
-| Nitro              | Y          | SMARTS              | -2.15       | Pankow & Asher   |
-| Carbon double bond | Y          | ChemmineR conMA     | -0.105      | Pankow & Asher   |
-| Non-aromatic rings | Y          | ChemmineR rings     | --0.0104    | Pankow & Asher   |
-| Aromatic rings     | Y          | ChemmineR rings     | -0.675      | Pankow & Asher   |
-| Aromatic hydroxyl  | Y          | SMARTS              | -2.14       | Pankow & Asher   |
-| Nitrophenol        | Y          | NA                  | 0.0432      | Pankow & Asher   |
-| Nitroester         | Y          | NA                  | -2.67       | Pankow & Asher   |
-| Ester              | Y          | ChemmineR groups    | -1.20       | Pankow & Asher   |
-| Ether (acyclic)    | Y          | NA                  | -0.683      | Pankow & Asher   |
-| Ether (aromatic)   | Y          | NA                  | -1.03       | Pankow & Asher   |
-| Amine primary      | Y          | ChemmineR groups    | -1.03       | Pankow & Asher   |
-| Amine secondary    | Y          | ChemmineR groups    | -0.849      | Pankow & Asher   |
-| Amine tertiary     | Y          | ChemmineR groups    | -0.608      | Pankow & Asher   |
-| Amine aromatic     | Y          | ChemmineR rings     | -1.61       | Pankow & Asher   |
-| Amine              | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Amide              | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Phosphoric acid    | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Phosphoric ester   | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Sulfate            | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Sulfonate          | N          | SMARTS              | -2.23       | Same as nitrate  |
-| Thiol              | N          | SMARTS              | -2.23       | Same as hydroxyl |
-| Carbothioester     | N          | SMARTS              | -1.20       | Same as ester    |
-&#10;-->
 
 ## Code of Conduct
 
@@ -258,7 +152,8 @@ reference below:
 
 > Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J.,
 > Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for
-> estimating metabolite volatility. In review.
+> estimating metabolite volatility. Frontiers in Microbiology. In
+> review.
 
 ### References
 

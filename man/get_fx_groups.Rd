@@ -31,7 +31,7 @@ groups used in SIMPOL.1:
 Contributions of SMARTS strings to capture these groups are welcome.
 }
 \examples{
-mol_path <- mol_example("C16181.mol")
+mol_path <- mol_example()[1]
 sdf <- ChemmineR::read.SDFset(mol_path)
 fx_groups <- get_fx_groups(sdf)
 
