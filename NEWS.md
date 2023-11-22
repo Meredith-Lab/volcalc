@@ -2,7 +2,12 @@
 
 * It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
 * Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
-* Chagnes to the output of `get_fx_groups()`: `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
+* Changes to the output of `get_fx_groups()`: `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
+* The `pathway_ids` argument of `get_mol_kegg()` now also accepts pathway *module* IDs (e.g. "M00082")
+* `get_mol_kegg()` got a significant speed improvement (#84)
+* `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`)
+* New example .mol files were added.  See `?mol_example()`
+* `mol_example()` no longer takes any arguments and just returns file paths to all example .mol files
 
 # volcalc 2.0.0
 

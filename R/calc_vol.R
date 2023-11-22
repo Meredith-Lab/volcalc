@@ -33,14 +33,14 @@
 #'
 #' @export
 #' @examples
-#' mol_path <- mol_example("C16181.mol")
-#' calc_vol(mol_path)
+#' mol_paths <- mol_example()
+#' calc_vol(mol_paths)
 #' 
 #' # Return functional group counts from get_fx_groups()
-#' calc_vol(mol_path,  return_fx_groups = TRUE)
+#' calc_vol(mol_paths,  return_fx_groups = TRUE)
 #' 
 #' # Return intermediate calculations
-#' calc_vol(mol_path, return_calc_steps = TRUE)
+#' calc_vol(mol_paths, return_calc_steps = TRUE)
 #' 
 calc_vol <-
   function(input, 
@@ -72,7 +72,8 @@ calc_vol <-
     if(from == "smiles") {
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
-    
+    #TODO use ChemmineR::validSDF() to check for any invalid inputs
+    # Warn and return NA for any that aren't valid??
     fx_groups_df_list <-
       lapply(compound_sdf_list, get_fx_groups)
     names(fx_groups_df_list) <- input
