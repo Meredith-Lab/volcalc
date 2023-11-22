@@ -6,6 +6,8 @@
 * The `pathway_ids` argument of `get_mol_kegg()` now also accepts pathway *module* IDs (e.g. "M00082")
 * `get_mol_kegg()` got a significant speed improvement (#84)
 * `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`)
+* New example .mol files were added.  See `?mol_example()`
+* `mol_example()` no longer takes any arguments and just returns file paths to all example .mol files
 
 # volcalc 2.0.0
 
