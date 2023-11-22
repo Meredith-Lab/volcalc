@@ -9,6 +9,8 @@
 * `get_mol_kegg()` got a significant speed improvement (#84)
 * `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`)
 * `simpol1()` now takes into account amide functional groups.
+* New example .mol files were added.  See `?mol_example()`
+* `mol_example()` no longer takes any arguments and just returns file paths to all example .mol files
 
 # volcalc 2.0.0
 

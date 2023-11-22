@@ -27,7 +27,7 @@
 #'   counts.
 #' @seealso [calc_vol()]
 #' @examples
-#' mol_path <- mol_example("C16181.mol")
+#' mol_path <- mol_example()[1]
 #' sdf <- ChemmineR::read.SDFset(mol_path)
 #' fx_groups <- get_fx_groups(sdf)
 #' 
