@@ -31,14 +31,16 @@ dl_path <- tempdir()
 
 ### Single compound usage
 
-Let's download .mol files for jasmonic acid (C08491) and methyl jasmonate (C11512) from KEGG
+You can search KEGG for compunds at <https://www.genome.jp/kegg/compound/> to find their KEGG IDs starting with a "C".
+
+Let's download .mol files for two compounds, jasmonic acid and methyl jasmonate, with KEGG IDs C08491 and C11512, respectively, using the `volcalc` function `get_mol_kegg()`. 
 
 ```{r}
 mols <- get_mol_kegg(compound_ids = c("C08491", "C11512"), dir = dl_path)
 mols
 ```
 
-The data frame returned by `get_mol_kegg()` contains the paths the files were downloaded to in `mol_path`, making for convenient passage on to `calc_vol()`.
+The data frame returned by `get_mol_kegg()` contains the paths the files were downloaded to in `mol_path`, making for convenient passage on to the `volcalc` function `calc_vol()`.
 
 ```{r}
 rvi <- calc_vol(mols$mol_path)
@@ -56,23 +58,23 @@ left_join(mols, rvi, by = join_by(mol_path)) %>%
 ### Pathway usage
 <!-- TODO: change this example to a pathway module or smaller pathway -->
 
-We can download single or multiple compounds with `compound_ids`, but we can also download entire KEGG pathways with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway (map00592) that the above two compounds are part of.
+We can download single or multiple compounds with `compound_ids`, but we can also download all compounds associated with a KEGG pathway with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway (map00592) that the above two compounds are part of.
 
 ```{r}
-lino_acid <- get_mol_kegg(pathway_ids = "map00592", dir = dl_path)
-head(lino_acid)
-dim(lino_acid)
+alam_pathway <- get_mol_kegg(pathway_ids = "map00592", dir = dl_path)
+head(alam_pathway)
+dim(alam_pathway)
 ```
 
 Notice that this returns pathway IDs and compound IDs.  We can do the same as above and pass the `mol_path` column to `calc_vol()` and then join the resulting data frame and do some basic data wrangling to find the top 10 most volatile compounds in that pathway.
 
 ```{r}
-rvi_path <- calc_vol(lino_acid$mol_path)
+rvi_path <- calc_vol(alam_pathway$mol_path)
 ```
 
 
 ```{r}
-left_join(lino_acid, rvi_path, by = join_by(mol_path)) %>% 
+left_join(alam_pathway, rvi_path, by = join_by(mol_path)) %>% 
   select(-mol_path) %>% 
   #arrange from most to least volatile
   arrange(desc(rvi)) %>% 

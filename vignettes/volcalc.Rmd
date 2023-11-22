@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(volcalc)
 ```
 
-The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to a .mol file or a SMILES string.  There are a few example .mol files included in the `volcalc` installation.  The paths to these can be found with `mol_example()`
+The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to a .mol file or a SMILES string.  There are a few example .mol files included in the `volcalc` installation.  The paths to these can be found with `mol_example()`; see function documentation for more detail.
 
 ### Basic usage with .mol files
 
@@ -36,7 +36,7 @@ calc_vol(mol_paths)
 
 ### Specify environment
 
-Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility.
+Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility. Environment options and their category cutoffs are in the `calc_vol()` documentation.
 
 ```{r}
 calc_vol(mol_paths, environment = "soil")
@@ -58,7 +58,7 @@ calc_vol(mol_paths, return_calc_steps = TRUE)
 
 ### Use with SMILES
 
-Finally, all of this can be done using SMILES strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
+Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
 
 ```{r}
 ## This will error even though the SMILES is correct
