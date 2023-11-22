@@ -23,18 +23,15 @@ The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to 
 ### Basic usage with .mol files
 
 ```{r}
-#list possible mol files
-mol_example()
-
-#get path to specific file
-mol_path <- mol_example("C16181.mol")
-mol_path
+#using built-in example .mol files
+mol_paths <- mol_example()
+mol_paths
 ```
 
 The default output of `calc_vol()` includes a relative volatility index, `rvi` which is equivalent to $\textrm{log}_{10}C^\ast$.  It also includes a RVI category for clean air.
 
 ```{r}
-calc_vol(mol_path)
+calc_vol(mol_paths)
 ```
 
 ### Specify environment
@@ -42,7 +39,7 @@ calc_vol(mol_path)
 Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility.
 
 ```{r}
-calc_vol(mol_path, environment = "soil")
+calc_vol(mol_paths, environment = "soil")
 ```
 
 ### Return intermediate steps
@@ -50,13 +47,13 @@ calc_vol(mol_path, environment = "soil")
 `calc_vol()` uses a modified version of the SIMPOL.1 method by default which is a group contribution method.  You can have `calc_vol()` return the counts of functional groups and other molecular properties (which is useful for validation) with `return_fx_groups = TRUE`.  See `?get_fx_groups()` for more information about these additional columns.
 
 ```{r}
-calc_vol(mol_path, return_fx_groups = TRUE)
+calc_vol(mol_paths, return_fx_groups = TRUE)
 ```
 
 The SIMPOL.1 method calculates $\textrm{log}_{10} P_{\textrm{L},i}^\circ(T)$, which is used by `calc_vol()` to calculate RVI. To see the intermediate calculations, use `return_calc_steps = TRUE`.
 
 ```{r}
-calc_vol(mol_path, return_calc_steps = TRUE)
+calc_vol(mol_paths, return_calc_steps = TRUE)
 ```
 
 ### Use with SMILES
