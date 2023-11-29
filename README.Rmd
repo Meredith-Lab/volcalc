@@ -52,7 +52,7 @@ Or from r-universe with
 install.packages("volcalc", repos = c("https://cct-datascience.r-universe.dev", getOption("repos")))
 ```
 
-You can install the 'legacy' version used in our in-review publication with
+You can install the 'legacy' version used in Meredith et al. (2023) with
 
 ``` r
 pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
