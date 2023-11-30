@@ -17,8 +17,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Calculate Volatility of Chemical Compounds">
 <meta property="og:description" content="Use this package to calculate estimated relative volatility
@@ -109,7 +109,7 @@
 <p>Or from r-universe with</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"volcalc"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://cct-datascience.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the ‘legacy’ version used in our in-review publication with</p>
+<p>You can install the ‘legacy’ version used in Meredith et al. (2023) with</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc@v1.0.2"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation of <code>volcalc</code> requires the system libraries <a href="https://openbabel.org/wiki/Main_Page" class="external-link">OpenBabel</a> and Eigen3 (requirements of the <code>ChemmineOB</code> package, which <code>volcalc</code> depends on). <code>pak</code> will take care of the installation of these libraries for you on some systems, but you may need to install them manually.</p>
@@ -161,9 +161,25 @@
 <h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
 </h2>
 <p>If you use this package in your published work, please cite it using the reference below:</p>
-<blockquote>
-<p>Meredith, L.K., Riemer, K., Geffre, P., Honeker, L., Krechmer, J., Graves, K., Tfaily, M., and Ledford, S.K. Automating methods for estimating metabolite volatility. Frontiers in Microbiology. In review.</p>
-</blockquote>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"volcalc"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; To cite volcalc in publications please use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Riemer K, Scott E (2023). _volcalc: Calculate Volatility of Chemical</span></span>
+<span><span class="co">#&gt;   Compounds_. doi:10.5281/zenodo.8015155</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.8015155&gt;, R package version 2.0.0.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Please also cite the related manuscript:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L,</span></span>
+<span><span class="co">#&gt;   LeBauer D, Tfaily M, Krechmer J (2023). "Automating methods for</span></span>
+<span><span class="co">#&gt;   estimating metabolite volatility." _Frontiers in Microbiology_.</span></span>
+<span><span class="co">#&gt;   doi:10.3389/fmicb.2023.1267234</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.3389/fmicb.2023.1267234&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; To see these entries in BibTeX format, use 'print(&lt;citation&gt;,</span></span>
+<span><span class="co">#&gt; bibtex=TRUE)', 'toBibtex(.)', or set</span></span>
+<span><span class="co">#&gt; 'options(citation.bibtex.max=999)'.</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
@@ -214,6 +230,7 @@
 <ul class="list-unstyled">
 <li><a href="https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/425022983" class="external-link"><img src="https://zenodo.org/badge/425022983.svg" alt="latest-DOI"></a></li>
+<li><a href="https://doi.org/10.3389/fmicb.2023.1267234" class="external-link"><img src="https://img.shields.io/badge/DOI-10.3389/fmicb.2023.1267234-32a859.svg" alt="manuscript-DOI"></a></li>
 <li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
 <li><a href="https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master" class="external-link"><img src="https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://cct-datascience.r-universe.dev/volcalc" class="external-link"><img src="https://cct-datascience.r-universe.dev/badges/volcalc" alt="volcalc status badge"></a></li>
