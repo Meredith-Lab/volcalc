@@ -4,12 +4,10 @@
 #' for specified compounds. Users will not typically interact with this function
 #' directly, but rather by using [calc_vol()].
 #' 
-#' @note This function currently does **not** capture the following functional
-#'   groups used in SIMPOL.1:
-#' 
-#' - carbon number on the acid-side of amide
-#' 
-#' Contributions of SMARTS strings to capture these groups are welcome.
+#' @note This function currently does **not** capture the carbon number on the
+#'   acid-side of amide, one of the functional groups used in SIMPOL.1.
+#'   Contributions of SMARTS strings or other methods to capture this
+#'   "functional group" are welcome.
 #'
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
@@ -139,9 +137,9 @@ get_fx_groups <- function(compound_sdf) {
       hydroperoxide = ChemmineR::smartsSearchOB(compound_sdf, hydroperoxide_pattern),
       carbonylperoxyacid = ChemmineR::smartsSearchOB(compound_sdf, carbonylperoxyacid_pattern),
       nitrophenol = ChemmineR::smartsSearchOB(compound_sdf, nitrophenol_pattern),
-      # nitroester = NA_integer_, #TODO: still very confused about this one
       nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
       
+      # Additional groups from Meredith et al. 2023
       phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
       phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
       sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),

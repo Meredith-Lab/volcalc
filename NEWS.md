@@ -1,24 +1,34 @@
 # volcalc (development version)
 
-* It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`
-* Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()
-* A coefficient for amides has been removed from the "Meredith" method of `simpol1()` to avoid double-counting amides.
+* The manuscript associated with `volcalc` is now published in Frontiers in Microbiology 🎉. DOI: 10.3389/fmicb.2023.1267234
 
-## Changes to `get_mol_kegg()`
+## Miscelanous changes
 
-* The `pathway_ids` argument of `get_mol_kegg()` now also accepts pathway *module* IDs (e.g. "M00082")
-* `get_mol_kegg()` got a significant speed improvement (#84)
-* `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`)
 * New example .mol files were added.  See `?mol_example()`
 * `mol_example()` no longer takes any arguments and just returns file paths to all example .mol files
 
+## Changes to `calc_vol()` and `simpol1()`
+
+* It is now possible to supply input to `calc_vol()` as a vector of SMILES strings with `from = "smiles"`.
+* Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the `environment` parameter of `calc_vol()`.
+* A coefficient for amides has been removed from the "Meredith" method of `simpol1()` to avoid double-counting amides.
+* The default for the `method` argument to `calc_vol()` has now been renamed to `"meredith"`.  `"simpol1"` now uses the original SIMPOL.1 method without additional coefficients added in Meredith et al. (2023).
+* `simpol1()` gains an argument `meredith` that controls whether just the functional groups in the original SIMPOL.1 method (Pankow & Asher, 2008) is used or if additional coefficients used in Meredith et al. (2023) are also included.
+* `simpol1()` now takes into account amide functional groups.
+
+## Changes to `get_mol_kegg()`
+
+* The `pathway_ids` argument of `get_mol_kegg()` now also accepts pathway *module* IDs (e.g. "M00082").
+* `get_mol_kegg()` got a significant speed improvement (#84).
+* `get_mol_kegg()` will skip downloading a .mol file if it is already present by default (override with `force=TRUE`).
+
 ## Changes to `get_fx_groups()`
 
-* `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column
+* `mass` column renamed to `molecular_weight` and addition of an `exact_mass` column.
 * change to how non-aromatic carbon double bonds are counted.  Now using SMARTS pattern "C=C"
 * now returns `hydroxyl_total` and `hydroxyl_aliphatic` instead of `hydroxyl_groups`
 * now returns `rings_total` and `rings_aliphatic` instead of `rings`
-* counts additional groups used by `simpol1()`: 
+* Now captures all functional groups in the SIMPOL.1 method except "number of carbons on the acid side of an amide". This version adds these previously missing groups used by `simpol1()`: 
   - C=C-C=O in a non-aromatic ring
   - non-aromatic carbon double bonds
   - aromatic amines

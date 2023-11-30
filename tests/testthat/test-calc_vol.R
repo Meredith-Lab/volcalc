@@ -32,3 +32,12 @@ test_that("smiles and .mol give same results", {
 test_that("errors with invalid SMILES", {
   expect_error(calc_vol("hello", from = "smiles"))
 })
+  
+test_that("meredith and original method give different results", {
+  #thiol and sulfonate groups, respectively
+  paths <- c("data/C00409.mol", "data/C03349.mol")
+  meredith <- calc_vol(paths, method = "meredith")
+  simpol   <- calc_vol(paths, method = "simpol1")
+  expect_true(all(meredith$rvi < simpol$rvi))
+})
+

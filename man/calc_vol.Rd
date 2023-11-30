@@ -7,7 +7,7 @@
 calc_vol(
   input,
   from = c("mol_path", "smiles"),
-  method = c("simpol1"),
+  method = c("meredith", "simpol1"),
   environment = c("clean", "polluted", "soil"),
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
@@ -19,8 +19,8 @@ calc_vol(
 \item{from}{the form of \code{input}. Either \code{"mol_path"} or \code{"smiles"} (default
 is \code{"mol_path"}).}
 
-\item{method}{the method for calculating estimated volatility. Currently only
-the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for more details.}
+\item{method}{the method for calculating estimated volatility. See
+\code{\link[=simpol1]{simpol1()}} for more details.}
 
 \item{environment}{the environment for calculating relative volatility
 categories. RVI thresholds for low, moderate, and high volatility are as
