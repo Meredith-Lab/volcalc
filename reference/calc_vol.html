@@ -66,7 +66,7 @@ using group contribution methods.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calc_vol</span><span class="op">(</span></span>
 <span>  <span class="va">input</span>,</span>
 <span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mol_path"</span>, <span class="st">"smiles"</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"simpol1"</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meredith"</span>, <span class="st">"simpol1"</span><span class="op">)</span>,</span>
 <span>  environment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clean"</span>, <span class="st">"polluted"</span>, <span class="st">"soil"</span><span class="op">)</span>,</span>
 <span>  return_fx_groups <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  return_calc_steps <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -85,8 +85,8 @@ is <code>"mol_path"</code>).</p></dd>
 
 
 <dt>method</dt>
-<dd><p>the method for calculating estimated volatility. Currently only
-the SIMPOL.1 method is implemented---see <code><a href="simpol1.html">simpol1()</a></code> for more details.</p></dd>
+<dd><p>the method for calculating estimated volatility. See
+<code><a href="simpol1.html">simpol1()</a></code> for more details.</p></dd>
 
 
 <dt>environment</dt>
@@ -135,40 +135,40 @@ and \(\textrm{log}_{10}(M/RT)\), <code>log_alpha</code>, are also returned.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path                                          formula name    rvi category</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work/_temp/Library/volcalc/extdata/… C6H12O6 D-Gl… -<span style="color: #BB0000;">2.84</span> non-vol…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/work/_temp/Library/volcalc/extdata/… C12H18… (-)-…  1.84 moderate</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/work/_temp/Library/volcalc/extdata/… C6H7Cl… beta…  6.98 high    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/work/_temp/Library/volcalc/extdata/… C12H22O Geos…  4.16 high    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/work/_temp/Library/volcalc/extdata/… C5H8    Isop…  8.84 high    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work/_temp/Library/volcalc/extdata/… C6H12O6 D-Gl… -<span style="color: #BB0000;">20.3</span> non-vol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/work/_temp/Library/volcalc/extdata/… C12H18… (-)-… -<span style="color: #BB0000;">20.3</span> non-vol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/work/_temp/Library/volcalc/extdata/… C6H7Cl… beta… -<span style="color: #BB0000;">20.2</span> non-vol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/work/_temp/Library/volcalc/extdata/… C12H22O Geos… -<span style="color: #BB0000;">20.3</span> non-vol…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/work/_temp/Library/volcalc/extdata/… C5H8    Isop… -<span style="color: #BB0000;">20.8</span> non-vol…</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return functional group counts from get_fx_groups()</span></span></span>
 <span class="r-in"><span><span class="fu">calc_vol</span><span class="op">(</span><span class="va">mol_paths</span>,  return_fx_groups <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 48</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 51</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path           formula name    rvi category exact_mass carbons carbons_asa</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work… C6H12O6 D-Gl… -<span style="color: #BB0000;">2.84</span> non-vol…      180.        6           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/work… C12H18… (-)-…  1.84 moderate      210.       12           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/work… C6H7Cl… beta…  6.98 high          270.        6           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/work… C12H22O Geos…  4.16 high          182.       12           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/work… C5H8    Isop…  8.84 high           68.1       5           0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more variables: rings_aromatic &lt;dbl&gt;, rings &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/work… C6H12O6 D-Gl… -<span style="color: #BB0000;">20.3</span> non-vol…      180.        6           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/work… C12H18… (-)-… -<span style="color: #BB0000;">20.3</span> non-vol…      210.       12           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/work… C6H7Cl… beta… -<span style="color: #BB0000;">20.2</span> non-vol…      270.        6           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/work… C12H22O Geos… -<span style="color: #BB0000;">20.3</span> non-vol…      182.       12           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/work… C5H8    Isop… -<span style="color: #BB0000;">20.8</span> non-vol…       68.1       5           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 43 more variables: rings_aromatic &lt;dbl&gt;, rings &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   carbon_dbl_bonds &lt;dbl&gt;, CCCO_aliphatic_ring &lt;int&gt;, hydroxyl_groups &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   aldehydes &lt;int&gt;, ketones &lt;int&gt;, carbox_acids &lt;int&gt;, ester &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ether &lt;int&gt;, ether_alicyclic &lt;int&gt;, ether_aromatic &lt;int&gt;, nitrate &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   nitro &lt;int&gt;, hydroxyl_aromatic &lt;int&gt;, amine_primary &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amine_secondary &lt;int&gt;, amine_tertiary &lt;int&gt;, amine_aromatic &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amides &lt;int&gt;, carbonylperoxynitrate &lt;int&gt;, peroxide &lt;int&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amide_total &lt;int&gt;, amide_primary &lt;int&gt;, amide_secondary &lt;int&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return intermediate calculations</span></span></span>
 <span class="r-in"><span><span class="fu">calc_vol</span><span class="op">(</span><span class="va">mol_paths</span>, return_calc_steps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 8</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mol_path       formula name    rvi category molecular_weight log_alpha log10_P</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/… C6H12O6 D-Gl… -<span style="color: #BB0000;">2.84</span> non-vol…            180.       9.87  -<span style="color: #BB0000;">12.7</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/… C12H18… (-)-…  1.84 moderate            210.       9.94   -<span style="color: #BB0000;">8.10</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/… C6H7Cl… beta…  6.98 high                272.      10.1    -<span style="color: #BB0000;">3.08</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/… C12H22O Geos…  4.16 high                182.       9.88   -<span style="color: #BB0000;">5.72</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/… C5H8    Isop…  8.84 high                 68.1      9.45   -<span style="color: #BB0000;">0.61</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> /home/runner/… C6H12O6 D-Gl… -<span style="color: #BB0000;">20.3</span> non-vol…            180.       9.87   -<span style="color: #BB0000;">30.2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> /home/runner/… C12H18… (-)-… -<span style="color: #BB0000;">20.3</span> non-vol…            210.       9.94   -<span style="color: #BB0000;">30.2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> /home/runner/… C6H7Cl… beta… -<span style="color: #BB0000;">20.2</span> non-vol…            272.      10.1    -<span style="color: #BB0000;">30.2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> /home/runner/… C12H22O Geos… -<span style="color: #BB0000;">20.3</span> non-vol…            182.       9.88   -<span style="color: #BB0000;">30.2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> /home/runner/… C5H8    Isop… -<span style="color: #BB0000;">20.8</span> non-vol…             68.1      9.45   -<span style="color: #BB0000;">30.2</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

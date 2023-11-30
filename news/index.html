@@ -55,8 +55,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="volcalc-development-version">volcalc (development version)<a class="anchor" aria-label="anchor" href="#volcalc-development-version"></a></h2>
-<ul><li>It is now possible to supply input to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> as a vector of SMILES strings with <code>from = "smiles"</code>
-</li>
+<ul><li>
+<code><a href="../reference/simpol1.html">simpol1()</a></code> gains an argument <code>meredith</code> that controls whether just the functional groups in the original SIMPOL.1 method (Pankow &amp; Asher, 2008) is used or if additional coefficients used in Meredith et al. (2023) are also included.</li>
+<li>The default for the <code>method</code> argument to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> has now been renamed to <code>"meredith"</code>. <code>"simpol1"</code> now uses the original SIMPOL.1 method without additional coefficients added in Meredith et al. (2023).</li>
+<li>It is now possible to supply input to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> as a vector of SMILES strings with <code>from = "smiles"</code>.</li>
 <li>Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the <code>environment</code> parameter of <code><a href="../reference/calc_vol.html">calc_vol()</a></code>.</li>
 <li>Changes to the output of <code><a href="../reference/get_fx_groups.html">get_fx_groups()</a></code>: <code>mass</code> column renamed to <code>molecular_weight</code> and addition of an <code>exact_mass</code> column.</li>
 <li>The <code>pathway_ids</code> argument of <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> now also accepts pathway <em>module</em> IDs (e.g. “M00082”).</li>
@@ -64,6 +66,8 @@
 <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> got a significant speed improvement (<a href="https://github.com/Meredith-Lab/volcalc/issues/84" class="external-link">#84</a>).</li>
 <li>
 <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> will skip downloading a .mol file if it is already present by default (override with <code>force=TRUE</code>).</li>
+<li>
+<code><a href="../reference/simpol1.html">simpol1()</a></code> now takes into account amide functional groups.</li>
 <li>New example .mol files were added. See <code>?mol_example()</code>.</li>
 <li>
 <code><a href="../reference/mol_example.html">mol_example()</a></code> no longer takes any arguments and just returns file paths to all example .mol files.</li>
