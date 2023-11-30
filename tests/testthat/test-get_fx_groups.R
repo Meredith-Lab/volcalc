@@ -1,5 +1,5 @@
 test_that("a functional group count is correct for example compound", {
-  sdf <- ChemmineR::read.SDFset("data/C16181.mol")
+  sdf <- ChemmineR::read.SDFset(test_path("data/C16181.mol"))
   ex_df <- get_fx_groups(sdf)
   expect_equal(ex_df$hydroxyl_aliphatic, 1, ignore_attr = TRUE)
 })
@@ -12,7 +12,7 @@ test_that("error with SDFset with more than one molecule", {
 })
 
 test_that("SMILES and mol give same results", {
-  from_mol <- ChemmineR::read.SDFset("data/C16181.mol")
+  from_mol <- ChemmineR::read.SDFset(test_path("data/C16181.mol"))
   from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
   expect_equal(
     get_fx_groups(from_mol) %>% dplyr::select(-name),
@@ -27,10 +27,8 @@ test_that("SMARTS strings are correct", {
   # that file with counts of functional groups using the same column names as
   # output by get_fx_groups() to add more tests.
   test_compounds <-
-    read.csv("data/test_compounds.csv") %>%
+    read.csv(test_path("data/test_compounds.csv")) %>%
     dplyr::as_tibble() %>% 
-    #for debugging
-    # readr::read_csv("tests/testthat/data/test_compounds.csv") %>%
     dplyr::mutate(dplyr::across(dplyr::where(is.numeric), as.integer)) %>% 
     dplyr::slice_head(n = -3) #TODO: this removes nitrophenol examples--still confused about this one
   test_fx_groups <-
