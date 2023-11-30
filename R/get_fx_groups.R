@@ -43,7 +43,7 @@ get_fx_groups <- function(compound_sdf) {
   }
   
   #assign variables to quiet devtools::check()
-  rowname <- n <- phosphoric_acid <- phosphoric_ester <- rings_aromatic <- hydroxyl_aromatic <- hydroxyl_total <- carbon_dbl_bonds <- NULL
+  rowname <- n <- NULL
   
   #convert counts to integer
   groups <- groups %>% dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
@@ -114,7 +114,6 @@ get_fx_groups <- function(compound_sdf) {
       CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
       hydroxyl_total = groups$ROH, 
       hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
-      hydroxyl_aliphatic = hydroxyl_total - hydroxyl_aromatic,
       aldehydes = groups$RCHO,
       ketones = groups$RCOR,
       carbox_acids = groups$RCOOH,
@@ -166,10 +165,13 @@ get_fx_groups <- function(compound_sdf) {
       peroxide = .data$peroxide - .data$carbonylperoxynitrate,
       #phosphoric ester also matches phosphoric acid
       phosphoric_acid = .data$phosphoric_acid - .data$phosphoric_ester,
+      
+      hydroxyl_aliphatic = .data$hydroxyl_total - .data$hydroxyl_aromatic, #TODO: should this happen before or after hydroyxl_aromatic is corrected? Or in the initial mutate?
+      
       #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls.
-      hydroxyl_aromatic = hydroxyl_aromatic - nitrophenol,
+      hydroxyl_aromatic = .data$hydroxyl_aromatic - .data$nitrophenol,
       #according to SIMPOL.1 paper, nitroester shouldn't count esters
-      ester = ester - nitroester
+      ester = .data$ester - .data$nitroester
     ) %>% 
     # some of the columns created by ChemmineR are named vectors sometimes,
     # strip names for consistency
