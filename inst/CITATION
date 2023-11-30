@@ -14,15 +14,17 @@ c(
     title = "Automating methods for estimating metabolite volatility",
     author = c(
       person("LK", "Meredith"),
+      person("SK", "Ledford"),
       person("Kristina", "Riemer"),
       person("P", "Geffre"),
-      person("L", "Honeker"),
-      person("J", "Krechmer"),
       person("K", "Graves"),
+      person("L", "Honeker"),
+      person("D", "LeBauer"),
       person("M", "Tfaily"),
-      person("SK", "Ledford")
+      person("J", "Krechmer")
     ),
-    year = "in review",
+    year = "2023",
+    doi = "10.3389/fmicb.2023.1267234",
     journal = "Frontiers in Microbiology",
     header = "Please also cite the related manuscript:"
   )

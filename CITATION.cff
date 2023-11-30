@@ -28,22 +28,25 @@ preferred-citation:
   authors:
   - family-names: Meredith
     given-names: LK
+  - family-names: Ledford
+    given-names: SK
   - family-names: Riemer
     given-names: Kristina
   - family-names: Geffre
     given-names: P
-  - family-names: Honeker
-    given-names: L
-  - family-names: Krechmer
-    given-names: J
   - family-names: Graves
     given-names: K
+  - family-names: Honeker
+    given-names: L
+  - family-names: LeBauer
+    given-names: David
   - family-names: Tfaily
     given-names: M
-  - family-names: Ledford
-    given-names: SK
-  year: in review
+  - family-names: Krechmer
+    given-names: J
+  year: 2023
   journal: Frontiers in Microbiology
+  doi: 10.3389/fmicb.2023.1267234
 date-released: '2023-06-06'
 contact:
 - family-names: Riemer
