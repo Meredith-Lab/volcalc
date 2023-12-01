@@ -4,18 +4,18 @@ utils::globalVariables(".data")
 #' Downloads mol files corresponding to individual compounds or compounds in a
 #' pathway from KEGG.
 #'
-#' @param compound_ids character vector of KEGG compound IDs---5 digits
+#' @param compound_ids Character vector of KEGG compound IDs—5 digits
 #'   prepended with a "C".
-#' @param pathway_ids character vector of KEGG pathway or pathway module IDs---5
+#' @param pathway_ids Character vector of KEGG pathway or pathway module IDs—5
 #'   digits prepended with "map" or "M", respectively.
-#' @param dir path to a folder to save .mol files in. Folder will be created if
-#'   it does not already exist
-#' @param force logical; by default (`FALSE`), .mol files will not be downloaded
-#'   if they are found in `dir`.  Set this to `TRUE` to download and overwrite
+#' @param dir Path to a folder to save .mol files in. Folder will be created if
+#'   it does not already exist.
+#' @param force Logical; by default (`FALSE`), .mol files will not be downloaded
+#'   if they are found in `dir`. Set this to `TRUE` to download and overwrite
 #'   existing files.
 #'
-#' @returns a tibble with the columns `compound_ids`, `pathway_ids` (if used),
-#'   and `mol_paths` (paths to downloaded .mol files)
+#' @returns A tibble with the columns `compound_ids`, `pathway_ids` (if used),
+#'   and `mol_paths` (paths to downloaded .mol files).
 #' @export
 #'
 #' @examples

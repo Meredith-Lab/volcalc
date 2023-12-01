@@ -7,21 +7,20 @@
 simpol1(fx_groups, meredith = TRUE)
 }
 \arguments{
-\item{fx_groups}{a data.frame or tibble with counts of functional groups
-produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
+\item{fx_groups}{A data.frame or tibble with counts of functional groups
+produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names).}
 
-\item{meredith}{logical; \code{FALSE}: use the original SIMPOL.1 method. \code{TRUE}:
+\item{meredith}{Logical; \code{FALSE}: use the original SIMPOL.1 method. \code{TRUE}:
 use the modified version in Meredith et al. (2023).}
 }
 \value{
-the \code{fx_groups} tibble with the additional \code{log10_P} column
+The \code{fx_groups} tibble with the additional \code{log10_P} column.
 }
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 pressure of organic compounds as described in Pankow & Asher (2008) and a
 modified version described in Meredith et al. (2023).  Users will not usually
-use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}} which uses this
-as the default (currently only) method.
+use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}}.
 }
 \details{
 The output includes a column for \code{log10_P} where
@@ -53,15 +52,15 @@ fx_groups <- get_fx_groups(sdf)
 simpol1(fx_groups)
 }
 \references{
-Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
-contribution method for predicting vapor pressures and enthalpies of
-vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
-\url{https://doi.org/10.5194/acp-8-2773-2008}
-
 Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
 Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
 volatility. Frontiers in Microbiology.
 \url{https://doi.org/10.3389/fmicb.2023.1267234}.
+
+Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
+contribution method for predicting vapor pressures and enthalpies of
+vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
+\url{https://doi.org/10.5194/acp-8-2773-2008}
 }
 \seealso{
 \code{\link[=calc_vol]{calc_vol()}}

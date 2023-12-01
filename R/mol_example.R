@@ -1,4 +1,4 @@
-#' Get path to example .mol file
+#' Example .mol files
 #' 
 #' `volcalc` comes bundled with some example .mol files in its `inst/extdata`
 #' directory.  This function provides easy access to them.
@@ -9,7 +9,7 @@
 #' - C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol
 #' - C16286: Geosmin
 #' - C16521: Isoprene
-#'
+#' @return File paths to installed example .mol files.
 #' @export
 #'
 #' @examples

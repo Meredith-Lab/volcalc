@@ -3,8 +3,7 @@
 #' Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 #' pressure of organic compounds as described in Pankow & Asher (2008) and a
 #' modified version described in Meredith et al. (2023).  Users will not usually
-#' use this function directly, but rather through [calc_vol()] which uses this
-#' as the default (currently only) method.
+#' use this function directly, but rather through [calc_vol()].
 #' 
 #' @details The output includes a column for `log10_P` where
 #' \eqn{\textrm{log}_{10} P_{\textrm{L},i}^\circ(T) = \sum_k\nu_{k,i}b_k(T)}, or
@@ -26,23 +25,23 @@
 #' calculations of logP at different temperatures.  This implementation
 #' currently only calculates values at 20ºC.
 #' 
-#' @param fx_groups a data.frame or tibble with counts of functional groups
-#'   produced by [get_fx_groups()] (or manually, with the same column names)
-#' @param meredith logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
+#' @param fx_groups A data.frame or tibble with counts of functional groups
+#'   produced by [get_fx_groups()] (or manually, with the same column names).
+#' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
 #'
-#' @return the `fx_groups` tibble with the additional `log10_P` column 
+#' @return The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
-#'   Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
-#'   contribution method for predicting vapor pressures and enthalpies of
-#'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
-#'   <https://doi.org/10.5194/acp-8-2773-2008>
-#'   
 #'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
 #'   Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
 #'   volatility. Frontiers in Microbiology.
 #'   <https://doi.org/10.3389/fmicb.2023.1267234>.
+#'   
+#'   Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
+#'   contribution method for predicting vapor pressures and enthalpies of
+#'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
+#'   <https://doi.org/10.5194/acp-8-2773-2008>
 #'   
 #' @seealso [calc_vol()]
 #' @export
