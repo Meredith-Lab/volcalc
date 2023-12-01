@@ -96,7 +96,7 @@
 <p>[!WARNING] <code>volcalc</code> is a work in progress—use at your own risk!</p>
 </blockquote>
 <p>For a bit of a road map of where development is headed, see our <a href="https://cct-datascience.github.io/volcalc-isc-proposal/" class="external-link">proposal</a> for the R Consortium grant.</p>
-<p><code>volcalc</code> is designed to support “group contribution” methods for estimating volatility that rely on molecular properties such as molecular weight, numbers of certain atoms, and counts of certain functional groups. Currently, the only methods implemented are SIMPOL.1 (Pankow &amp; Asher 2008) and a modified version used in Meredith et al. (in review).</p>
+<p><code>volcalc</code> is designed to support “group contribution” methods for estimating volatility that rely on molecular properties such as molecular weight, numbers of certain atoms, and counts of certain functional groups. Currently, the only methods implemented are SIMPOL.1 (Pankow &amp; Asher 2008) and a modified version used in Meredith et al. (2023).</p>
 <p><code>volcalc</code> works with either .mol files or <a href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system" class="external-link">SMILES</a> strings as input, and supports downloading .mol files directly from <a href="https://www.kegg.jp/" class="external-link">KEGG</a>.</p>
 </div>
 <div class="section level2">
@@ -112,7 +112,7 @@
 <p>You can install the ‘legacy’ version used in Meredith et al. (2023) with</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc@v1.0.2"</span><span class="op">)</span></span></code></pre></div>
-<p>Installation of <code>volcalc</code> requires the system libraries <a href="https://openbabel.org/wiki/Main_Page" class="external-link">OpenBabel</a> and Eigen3 (requirements of the <code>ChemmineOB</code> package, which <code>volcalc</code> depends on). <code>pak</code> will take care of the installation of these libraries for you on some systems, but you may need to install them manually.</p>
+<p>Installation of <code>volcalc</code> requires the system libraries <a href="https://openbabel.org/wiki/Main_Page" class="external-link">OpenBabel</a> and Eigen3 (requirements of the <code>ChemmineOB</code> package, which <code>volcalc</code> depends on). <code>pak</code> will take care of the installation of these libraries for you on some systems, but you may need to install them manually on some operating systems.</p>
 <p>For macOS, they can be installed via homebrew by running the following shell command:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install open-babel</span></code></pre></div>
 <p>For Ubuntu Linux:</p>
@@ -145,17 +145,17 @@
 <span><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O &lt;NA&gt;   6.98 high    </span></span>
 <span><span class="co">#&gt; 2 C(CC(=O)O)C(=O)O              C4H6O4   &lt;NA&gt;   2.57 high</span></span></code></pre></div>
-<p>This returns a dataframe with columns specifying general info about the compound, and the compound’s calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with <code>return_fx_groups = TRUE</code>, and the intermediate calculation steps with <code>return_calc_steps = TRUE</code>.</p>
+<p>This returns a tibble with columns specifying general info about the compound, and the compound’s calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with <code>return_fx_groups = TRUE</code>, and the intermediate calculation steps with <code>return_calc_steps = TRUE</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the volcalc project is released with a <a href="https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the <code>volcalc</code> project is released with a <a href="https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 <div class="section level2">
 <h2 id="how-to-contribute">How to contribute<a class="anchor" aria-label="anchor" href="#how-to-contribute"></a>
 </h2>
-<p>We appreciate many kinds of feedback and contributions to this R package. If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an <a href="https://github.com/Meredith-Lab/volcalc/issues/new" class="external-link">issue</a> in this GitHub repo.</p>
+<p>We appreciate many kinds of feedback and contributions to this R package. If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an <a href="https://github.com/Meredith-Lab/volcalc/issues/new" class="external-link">issue</a> on GitHub.</p>
 </div>
 <div class="section level2">
 <h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>

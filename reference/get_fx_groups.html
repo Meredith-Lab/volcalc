@@ -80,7 +80,7 @@ directly, but rather by using <code><a href="calc_vol.html">calc_vol()</a></code
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a tibble with columns of basic compound info and functional group
+<p>A tibble with columns of basic compound info and functional group
 counts.</p>
     </div>
     <div class="section level2">
@@ -107,7 +107,18 @@ groups used in SIMPOL.1:</p><ul><li><p>carbon number on the acid-side of amide</
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mol_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="mol_example.html">mol_example</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sdf</span> <span class="op">&lt;-</span> <span class="fu">ChemmineR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ChemmineR/man/read.SDFset.html" class="external-link">read.SDFset</a></span><span class="op">(</span><span class="va">mol_path</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fx_groups</span> <span class="op">&lt;-</span> <span class="fu">get_fx_groups</span><span class="op">(</span><span class="va">sdf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_fx_groups</span><span class="op">(</span><span class="va">sdf</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 49</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   formula name    exact_mass molecular_weight carbons carbons_asa rings_aromatic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> C6H12O6 D-Gluc…       180.             180.       6          <span style="color: #BB0000;">NA</span>              0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 42 more variables: rings &lt;int&gt;, carbon_dbl_bonds &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CCCO_aliphatic_ring &lt;int&gt;, hydroxyl_groups &lt;int&gt;, aldehydes &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ketones &lt;int&gt;, carbox_acids &lt;int&gt;, ester &lt;int&gt;, ether &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ether_alicyclic &lt;int&gt;, ether_aromatic &lt;int&gt;, nitrate &lt;int&gt;, nitro &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hydroxyl_aromatic &lt;int&gt;, amine_primary &lt;int&gt;, amine_secondary &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amine_tertiary &lt;int&gt;, amine_aromatic &lt;int&gt;, amide_total &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amide_primary &lt;int&gt;, amide_secondary &lt;int&gt;, amide_tertiary &lt;int&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

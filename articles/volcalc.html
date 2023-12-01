@@ -94,9 +94,8 @@
 <p>The primary function in <code>volcalc</code> is
 <code><a href="../reference/calc_vol.html">calc_vol()</a></code>. It accepts either a path to a .mol file or a
 SMILES string. There are a few example .mol files included in the
-<code>volcalc</code> installation. The paths to these can be found with
-<code><a href="../reference/mol_example.html">mol_example()</a></code>; see function documentation for more
-detail.</p>
+<code>volcalc</code> installation and their file paths are returned by
+<code><a href="../reference/mol_example.html">mol_example()</a></code>.</p>
 <div class="section level3">
 <h3 id="basic-usage-with--mol-files">Basic usage with .mol files<a class="anchor" aria-label="anchor" href="#basic-usage-with--mol-files"></a>
 </h3>
@@ -110,8 +109,8 @@ detail.</p>
 <span><span class="co">#&gt; [4] "/home/runner/work/_temp/Library/volcalc/extdata/C16286.mol"</span></span>
 <span><span class="co">#&gt; [5] "/home/runner/work/_temp/Library/volcalc/extdata/C16521.mol"</span></span></code></pre></div>
 <p>The default output of <code><a href="../reference/calc_vol.html">calc_vol()</a></code> includes a relative
-volatility index, <code>rvi</code> which is equivalent to <span class="math inline">\(\textrm{log}_{10}C^\ast\)</span>. It also includes
-a RVI category for clean air.</p>
+volatility index, <code>rvi</code> which is equivalent to <span class="math inline">\(\textrm{log}_{10}C^\ast\)</span> (Meredith et al.,
+2023). It also includes a RVI category for clean air.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">mol_paths</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
@@ -129,7 +128,8 @@ a RVI category for clean air.</p>
 <p>Specifying <code>environment</code> only alters the RVI category by
 using different RVI cutoffs for non-volatile, low, moderate, and high
 volatility. Environment options and their category cutoffs are in the
-<code><a href="../reference/calc_vol.html">calc_vol()</a></code> documentation.</p>
+<code><a href="../reference/calc_vol.html">calc_vol()</a></code> documentation and are discussed in more detail
+in Meredith et al. (2023) and Donahue et al. (2006).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">mol_paths</span>, environment <span class="op">=</span> <span class="st">"soil"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
@@ -169,8 +169,12 @@ for more information about these additional columns.</p>
 <span><span class="co">#&gt; <span style="color: #949494;">#   amide_total &lt;int&gt;, amide_primary &lt;int&gt;, amide_secondary &lt;int&gt;, …</span></span></span></code></pre></div>
 <p>The SIMPOL.1 method calculates <span class="math inline">\(\textrm{log}_{10}
 P_{\textrm{L},i}^\circ(T)\)</span>, which is used by
-<code><a href="../reference/calc_vol.html">calc_vol()</a></code> to calculate RVI. To see the intermediate
-calculations, use <code>return_calc_steps = TRUE</code>.</p>
+<code><a href="../reference/calc_vol.html">calc_vol()</a></code> to calculate RVI as <span class="math inline">\(\textrm{log}_{10}(PM/RT)\)</span> where <span class="math inline">\(P\)</span> is the estimated vapor pressure for the
+compound, <span class="math inline">\(M\)</span> is molecular weight of
+the compound, <span class="math inline">\(R\)</span> is the universal
+gas constant, and <span class="math inline">\(T\)</span> is temperature
+(293.14K or 20ºC). To see these intermediate calculations, use
+<code>return_calc_steps = TRUE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">mol_paths</span>, return_calc_steps <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 8</span></span></span>
@@ -181,6 +185,7 @@ calculations, use <code>return_calc_steps = TRUE</code>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> /home/runner/… C6H7Cl… beta…  6.98 high                272.      10.1    -<span style="color: #BB0000;">3.08</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> /home/runner/… C12H22O Geos…  4.16 high                182.       9.88   -<span style="color: #BB0000;">5.72</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> /home/runner/… C5H8    Isop…  8.84 high                 68.1      9.45   -<span style="color: #BB0000;">0.61</span></span></span></code></pre></div>
+<p><code>log_alpha</code> = <span class="math inline">\(\textrm{log}_{10}(M/RT)\)</span></p>
 </div>
 <div class="section level3">
 <h3 id="use-with-smiles">Use with SMILES<a class="anchor" aria-label="anchor" href="#use-with-smiles"></a>
@@ -199,6 +204,16 @@ character in R and must be “escaped” as <code>\\</code>.</p>
 <span><span class="co">#&gt;   smiles                                 formula  name    rvi category</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">"</span>CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O<span style="color: #949494;">"</span> C12H18O3 <span style="color: #BB0000;">NA</span>     1.84 moderate</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h3>
+<p>Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006.
+Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile
+Organics. Environ. Sci. Technol. 40, 2635–2643. <a href="https://doi.org/10.1021/es052297c" class="external-link uri">https://doi.org/10.1021/es052297c</a></p>
+<p>Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L,
+LeBauer D, Tfaily M, Krechmer J, 2023. Automating methods for estimating
+metabolite volatility. Frontiers in Microbiology. <a href="https://doi.org/10.3389/fmicb.2023.1267234" class="external-link uri">https://doi.org/10.3389/fmicb.2023.1267234</a>.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
