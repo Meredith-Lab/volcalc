@@ -111,18 +111,18 @@ out_path <- tempdir()
 files <- get_mol_kegg(c("C16181", "C00042"), dir = out_path)
 calc_vol(files$mol_path)
 #> # A tibble: 2 × 5
-#>   mol_path                                         formula name     rvi category
-#>   <chr>                                            <chr>   <chr>  <dbl> <fct>   
-#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/… C6H7Cl… beta… -0.147 low     
-#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/… C4H6O4  Succ… -0.510 low
+#>   mol_path                                          formula name    rvi category
+#>   <chr>                                             <chr>   <chr> <dbl> <fct>   
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    
+#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high
 
 #alternatively, supply a SMILES representation
 calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
 #> # A tibble: 2 × 5
-#>   smiles                        formula  name     rvi category
-#>   <chr>                         <chr>    <chr>  <dbl> <fct>   
-#> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>  -0.147 low     
-#> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>  -0.510 low
+#>   smiles                        formula  name    rvi category
+#>   <chr>                         <chr>    <chr> <dbl> <fct>   
+#> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>   6.98 high    
+#> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>   2.57 high
 ```
 
 This returns a tibble with columns specifying general info about the
