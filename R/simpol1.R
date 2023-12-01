@@ -108,6 +108,8 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
   }
   
   betas %>% 
+    dplyr::rowwise() %>% 
     dplyr::mutate(log10_P = sum(dplyr::c_across(dplyr::starts_with("b_")))) %>% 
+    dplyr::ungroup() %>% 
     dplyr::select(-dplyr::starts_with("b_"))
 }

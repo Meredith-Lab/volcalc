@@ -35,9 +35,10 @@ test_that("errors with invalid SMILES", {
   
 test_that("meredith and original method give different results", {
   #thiol and sulfonate groups, respectively
-  paths <- c("data/C00409.mol", "data/C03349.mol")
-  meredith <- calc_vol(paths, method = "meredith")
-  simpol   <- calc_vol(paths, method = "simpol1")
+  # paths <- c(test_path("data/C00409.mol"), test_path("data/C03349.mol"))
+  smiles <- c("Methanethiol" = "SC", "Methyl methanesulfonate" = "COS(=O)(=O)C")
+  meredith <- calc_vol(smiles, from = "smiles", method = "meredith")
+  simpol   <- calc_vol(smiles, from = "smiles", method = "simpol1")
   expect_true(all(meredith$rvi < simpol$rvi))
 })
 
