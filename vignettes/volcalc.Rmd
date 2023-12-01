@@ -28,7 +28,7 @@ mol_paths <- mol_example()
 mol_paths
 ```
 
-The default output of `calc_vol()` includes a relative volatility index, `rvi` which is equivalent to $\textrm{log}_{10}C^\ast$.  It also includes a RVI category for clean air.
+The default output of `calc_vol()` includes a relative volatility index, `rvi` which is equivalent to $\textrm{log}_{10}C^\ast$ (Meredith et al., 2023).  It also includes a RVI category for clean air.
 
 ```{r}
 calc_vol(mol_paths)
@@ -36,7 +36,7 @@ calc_vol(mol_paths)
 
 ### Specify environment
 
-Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility. Environment options and their category cutoffs are in the `calc_vol()` documentation.
+Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility. Environment options and their category cutoffs are in the `calc_vol()` documentation and are discussed in more detail in Meredith et al. (2023) and Donahue et al. (2006).
 
 ```{r}
 calc_vol(mol_paths, environment = "soil")
@@ -68,3 +68,8 @@ Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Si
 calc_vol("CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
 ```
 
+### References
+
+Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006. Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile Organics. Environ. Sci. Technol. 40, 2635–2643. <https://doi.org/10.1021/es052297c>
+
+Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D, Tfaily M, Krechmer J, 2023. Automating methods for estimating metabolite volatility. Frontiers in Microbiology. <https://doi.org/10.3389/fmicb.2023.1267234>.

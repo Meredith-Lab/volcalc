@@ -11,7 +11,8 @@
 #' @param environment the environment for calculating relative volatility
 #'   categories. RVI thresholds for low, moderate, and high volatility are as
 #'   follows: `"clean"` (clean atmosphere, default) -2, 0, 2; `"polluted"`
-#'   (polluted atmosphere) 0, 2, 4; `"soil"` 4, 6, 8.
+#'   (polluted atmosphere) 0, 2, 4; `"soil"` 4, 6, 8. For more information about
+#'   these thresholds see Meredith et al. (2023) and Donahue et al. (2006).
 #' @param return_fx_groups When `TRUE`, includes functional group counts in
 #'   final dataframe.
 #' @param return_calc_steps When `TRUE`, includes intermediate volatility
@@ -25,6 +26,15 @@
 #'   `return_calc_steps = TRUE`, the log of estimated vapor pressure, `log10_P`,
 #'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha`, are also returned.
 #' 
+#' @references 
+#'   Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006. Coupled
+#'   Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
+#'   Environ. Sci. Technol. 40, 2635–2643. <https://doi.org/10.1021/es052297c>
+#'
+#'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
+#'   Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
+#'   volatility. Frontiers in Microbiology.
+#'   <https://doi.org/10.3389/fmicb.2023.1267234>.
 #'
 #' @return a tibble with relative volatility index (`rvi`) and volatility
 #'   category (`category`).

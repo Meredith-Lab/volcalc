@@ -34,15 +34,15 @@
 #' @return the `fx_groups` tibble with the additional `log10_P` column 
 #'
 #' @references 
-#'   Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
-#'   contribution method for predicting vapor pressures and enthalpies of
-#'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
-#'   <https://doi.org/10.5194/acp-8-2773-2008>
-#'   
 #'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
 #'   Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
 #'   volatility. Frontiers in Microbiology.
 #'   <https://doi.org/10.3389/fmicb.2023.1267234>.
+#'   
+#'   Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
+#'   contribution method for predicting vapor pressures and enthalpies of
+#'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
+#'   <https://doi.org/10.5194/acp-8-2773-2008>
 #'   
 #' @seealso [calc_vol()]
 #' @export

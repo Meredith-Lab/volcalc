@@ -34,8 +34,8 @@ the R Consortium grant.
 estimating volatility that rely on molecular properties such as
 molecular weight, numbers of certain atoms, and counts of certain
 functional groups. Currently, the only methods implemented are SIMPOL.1
-(Pankow & Asher 2008) and a modified version used in Meredith et al. (in
-review).
+(Pankow & Asher 2008) and a modified version used in Meredith et
+al. (2023).
 
 `volcalc` works with either .mol files or
 [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)

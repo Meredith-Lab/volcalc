@@ -25,7 +25,8 @@ is \code{"mol_path"}).}
 \item{environment}{the environment for calculating relative volatility
 categories. RVI thresholds for low, moderate, and high volatility are as
 follows: \code{"clean"} (clean atmosphere, default) -2, 0, 2; \code{"polluted"}
-(polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8.}
+(polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8. For more information about
+these thresholds see Meredith et al. (2023) and Donahue et al. (2006).}
 
 \item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
 final dataframe.}
@@ -60,6 +61,16 @@ calc_vol(mol_paths,  return_fx_groups = TRUE)
 # Return intermediate calculations
 calc_vol(mol_paths, return_calc_steps = TRUE)
 
+}
+\references{
+Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006. Coupled
+Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
+Environ. Sci. Technol. 40, 2635–2643. \url{https://doi.org/10.1021/es052297c}
+
+Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
+Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
+volatility. Frontiers in Microbiology.
+\url{https://doi.org/10.3389/fmicb.2023.1267234}.
 }
 \seealso{
 \code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}
