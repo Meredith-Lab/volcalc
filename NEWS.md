@@ -13,6 +13,7 @@
 * `mol_example()` no longer takes any arguments and just returns file paths to all example .mol files.
 * The manuscript associated with `volcalc` is now published in Frontiers in Microbiology 🎉. DOI: 10.3389/fmicb.2023.1267234
 
+
 # volcalc 2.0.0
 
 This version includes big (breaking) changes in how the package works!  Please
