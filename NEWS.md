@@ -41,6 +41,7 @@
   - nitroesters
 * changed `ether` to `ether_alkyl` and added `ether_total` (matching any R-O-R)
 
+
 # volcalc 2.0.0
 
 This version includes big (breaking) changes in how the package works!  Please

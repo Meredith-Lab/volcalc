@@ -12,13 +12,13 @@
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
 #'
-#' @return a tibble with columns of basic compound info and functional group
+#' @return A tibble with columns of basic compound info and functional group
 #'   counts.
 #' @seealso [calc_vol()]
 #' @examples
 #' mol_path <- mol_example()[1]
 #' sdf <- ChemmineR::read.SDFset(mol_path)
-#' fx_groups <- get_fx_groups(sdf)
+#' get_fx_groups(sdf)
 #' 
 #' @export
 get_fx_groups <- function(compound_sdf) {

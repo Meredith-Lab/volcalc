@@ -15,9 +15,20 @@ vignette: >
 ```r
 library(volcalc)
 library(dplyr) #for left_join()
+#> 
+#> Attaching package: 'dplyr'
+#> The following object is masked from 'package:testthat':
+#> 
+#>     matches
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
-The `volcalc` package also has the ability to download .mol files directly from KEGG given either compound IDs or pathway IDs.
+The `volcalc` package can be used to download .mol files directly from KEGG given either compound IDs or pathway IDs.
 
 First, choose a directory to download files to.  For this vignette, we will use a temporary directory, but you should choose somewhere in your project.
 
@@ -30,7 +41,7 @@ dl_path <- tempdir()
 
 You can search KEGG for compunds at <https://www.genome.jp/kegg/compound/> to find their KEGG IDs starting with a "C".
 
-Let's download .mol files for two compounds, jasmonic acid and methyl jasmonate, with KEGG IDs C08491 and C11512, respectively, using the `volcalc` function `get_mol_kegg()`. 
+Let's download .mol files for two compounds, jasmonic acid and methyl jasmonate, with KEGG IDs [C08491](https://www.kegg.jp/entry/C08491) and [C11512](https://www.kegg.jp/entry/C11512), respectively, using the `volcalc` function `get_mol_kegg()`. 
 
 
 ```r
@@ -39,8 +50,8 @@ mols
 #> # A tibble: 2 × 2
 #>   compound_id mol_path                                                              
 #>   <chr>       <fs::path>                                                            
-#> 1 C08491      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/C08491.mol
-#> 2 C11512      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/C11512.mol
+#> 1 C08491      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/C08491.mol
+#> 2 C11512      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/C11512.mol
 ```
 
 The data frame returned by `get_mol_kegg()` contains the paths the files were downloaded to in `mol_path`, making for convenient passage on to the `volcalc` function `calc_vol()`.
@@ -50,10 +61,10 @@ The data frame returned by `get_mol_kegg()` contains the paths the files were do
 rvi <- calc_vol(mols$mol_path)
 rvi
 #> # A tibble: 2 × 5
-#>   mol_path                                                               formula  name      rvi category
-#>   <chr>                                                                  <chr>    <chr>   <dbl> <fct>   
-#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/C08491.mol C12H18O3 (-)-Ja…  1.84 moderate
-#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/C11512.mol C13H20O3 Methyl…  3.10 high
+#>   mol_path                                                               formula  name           rvi category
+#>   <chr>                                                                  <chr>    <chr>        <dbl> <fct>   
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/C08491.mol C12H18O3 (-)-Jasmoni…  1.84 moderate
+#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/C11512.mol C13H20O3 Methyl jasm…  3.10 high
 ```
 
 `calc_vol()` also returns the file paths, so these two data frames can be easily joined.
@@ -73,7 +84,7 @@ left_join(mols, rvi, by = join_by(mol_path)) %>%
 ### Pathway usage
 <!-- TODO: change this example to a pathway module or smaller pathway -->
 
-We can download single or multiple compounds with `compound_ids`, but we can also download all compounds associated with a KEGG pathway with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway (map00592) that the above two compounds are part of.
+We can download single or multiple compounds with `compound_ids`, but we can also download all compounds associated with a KEGG pathway with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway ([map00592](https://www.kegg.jp/entry/map00592)) that the above two compounds are part of.
 
 
 ```r
@@ -82,12 +93,12 @@ head(alam_pathway)
 #> # A tibble: 6 × 3
 #>   pathway_id compound_id mol_path                                                                       
 #>   <chr>      <chr>       <fs::path>                                                                     
-#> 1 map00592   C00157      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C00157.mol
-#> 2 map00592   C01226      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C01226.mol
-#> 3 map00592   C04672      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C04672.mol
-#> 4 map00592   C04780      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C04780.mol
-#> 5 map00592   C04785      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C04785.mol
-#> 6 map00592   C06427      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpIdIFDx/map00592/C06427.mol
+#> 1 map00592   C00157      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C00157.mol
+#> 2 map00592   C01226      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C01226.mol
+#> 3 map00592   C04672      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C04672.mol
+#> 4 map00592   C04780      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C04780.mol
+#> 5 map00592   C04785      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C04785.mol
+#> 6 map00592   C06427      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/Rtmpf0lzoh/map00592/C06427.mol
 dim(alam_pathway)
 #> [1] 44  3
 ```
