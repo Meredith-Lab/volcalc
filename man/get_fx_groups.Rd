@@ -11,7 +11,7 @@ get_fx_groups(compound_sdf)
 \code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}} or \code{\link[ChemmineR:smiles2sdf]{ChemmineR::smiles2sdf()}}, for example.}
 }
 \value{
-a tibble with columns of basic compound info and functional group
+A tibble with columns of basic compound info and functional group
 counts.
 }
 \description{
@@ -40,7 +40,7 @@ Contributions of SMARTS strings to capture these groups are welcome.
 \examples{
 mol_path <- mol_example()[1]
 sdf <- ChemmineR::read.SDFset(mol_path)
-fx_groups <- get_fx_groups(sdf)
+get_fx_groups(sdf)
 
 }
 \seealso{

@@ -7,21 +7,20 @@
 simpol1(fx_groups, meredith = TRUE)
 }
 \arguments{
-\item{fx_groups}{a data.frame or tibble with counts of functional groups
-produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names)}
+\item{fx_groups}{A data.frame or tibble with counts of functional groups
+produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the same column names).}
 
-\item{meredith}{logical; \code{FALSE}: use the original SIMPOL.1 method. \code{TRUE}:
+\item{meredith}{Logical; \code{FALSE}: use the original SIMPOL.1 method. \code{TRUE}:
 use the modified version in Meredith et al. (2023).}
 }
 \value{
-the \code{fx_groups} tibble with the additional \code{log10_P} column
+The \code{fx_groups} tibble with the additional \code{log10_P} column.
 }
 \description{
 Implements the SIMPOL.1 group contribution method for predicting liquid vapor
 pressure of organic compounds as described in Pankow & Asher (2008) and a
 modified version described in Meredith et al. (2023).  Users will not usually
-use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}} which uses this
-as the default (currently only) method.
+use this function directly, but rather through \code{\link[=calc_vol]{calc_vol()}}.
 }
 \details{
 The output includes a column for \code{log10_P} where

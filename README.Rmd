@@ -59,7 +59,7 @@ pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
 Installation of `volcalc` requires the system libraries [OpenBabel](https://openbabel.org/wiki/Main_Page) and Eigen3 (requirements of the `ChemmineOB` package, which `volcalc` depends on).
-`pak` will take care of the installation of these libraries for you on some systems, but you may need to install them manually.
+`pak` will take care of the installation of these libraries for you on some systems, but you may need to install them manually on some operating systems.
 
 For macOS, they can be installed via homebrew by running the following shell command:
 
@@ -97,18 +97,18 @@ calc_vol(files$mol_path)
 calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
 ```
 
-This returns a dataframe with columns specifying general info about the compound, and the compound's calculated volatility and corresponding volatility category.
+This returns a tibble with columns specifying general info about the compound, and the compound's calculated volatility and corresponding volatility category.
 The functional group counts underlying the volatility can be additionally returned with `return_fx_groups = TRUE`, and the intermediate calculation steps with `return_calc_steps = TRUE`.
 
 ## Code of Conduct
 
-Please note that the volcalc project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+Please note that the `volcalc` project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 ## How to contribute
 
 We appreciate many kinds of feedback and contributions to this R package.
-If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new) in this GitHub repo.
+If you find a bug, are interested in an additional feature, or have made improvements to the package that you want to share, feel free to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new) on GitHub.
 
 ## How to cite
 

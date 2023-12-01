@@ -1,23 +1,22 @@
 #' Calculate volatility estimate for a compound
 #'
-#' Relative volatility value and category is estimated for specified compound
+#' Estimate relative volatility index value and category for specified compounds
 #' using group contribution methods.
 #'
-#' @param input a path to a .mol file or a SMILES string.
-#' @param from the form of `input`. Either `"mol_path"` or `"smiles"` (default
-#'   is `"mol_path"`).
-#' @param method the method for calculating estimated volatility. See
+#' @param input A path to a .mol file or a SMILES string.
+#' @param from The form of `input`. Either `"mol_path"` (default) or `"smiles"`.
+#' @param method The method for calculating estimated volatility. See
 #'   [simpol1()] for more details.
-#' @param environment the environment for calculating relative volatility
+#' @param environment The environment for calculating relative volatility
 #'   categories. RVI thresholds for low, moderate, and high volatility are as
 #'   follows: `"clean"` (clean atmosphere, default) -2, 0, 2; `"polluted"`
 #'   (polluted atmosphere) 0, 2, 4; `"soil"` 4, 6, 8. For more information about
 #'   these thresholds see Meredith et al. (2023) and Donahue et al. (2006).
-#' @param return_fx_groups When `TRUE`, includes functional group counts in
-#'   final dataframe.
-#' @param return_calc_steps When `TRUE`, includes intermediate volatility
-#'   calculation steps in final dataframe. See **Details**.
-#' 
+#' @param return_fx_groups When `TRUE`, the returned tibble includes functional
+#'   group counts.
+#' @param return_calc_steps When `TRUE`, the returned tibble includes
+#'   intermediate volatility calculations. See **Details**.
+#'
 #' @details \eqn{\textrm{log}_{10}C^\ast} is used for the calculated relative
 #'   volatility index (`rvi`). \eqn{\textrm{log}_{10}C^\ast =
 #'   \textrm{log}_{10}(PM/RT)} where \eqn{P} is the estimated vapor pressure for
@@ -25,30 +24,29 @@
 #'   universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 #'   `return_calc_steps = TRUE`, the log of estimated vapor pressure, `log10_P`,
 #'   and \eqn{\textrm{log}_{10}(M/RT)}, `log_alpha`, are also returned.
-#' 
-#' @references 
-#'   Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006. Coupled
-#'   Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
-#'   Environ. Sci. Technol. 40, 2635–2643. <https://doi.org/10.1021/es052297c>
 #'
-#'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
-#'   Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
-#'   volatility. Frontiers in Microbiology.
-#'   <https://doi.org/10.3389/fmicb.2023.1267234>.
+#' @references Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006.
+#' Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
+#' Environ. Sci. Technol. 40, 2635–2643. <https://doi.org/10.1021/es052297c>
 #'
-#' @return a tibble with relative volatility index (`rvi`) and volatility
+#' Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
+#' Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
+#' volatility. Frontiers in Microbiology.
+#' <https://doi.org/10.3389/fmicb.2023.1267234>.
+#'
+#' @return A tibble with relative volatility index (`rvi`) and volatility
 #'   category (`category`).
-#'   
+#'
 #' @seealso [get_fx_groups()], [simpol1()]
 #'
 #' @export
 #' @examples
 #' mol_paths <- mol_example()
 #' calc_vol(mol_paths)
-#' 
+#'
 #' # Return functional group counts from get_fx_groups()
 #' calc_vol(mol_paths,  return_fx_groups = TRUE)
-#' 
+#'
 #' # Return intermediate calculations
 #' calc_vol(mol_paths, return_calc_steps = TRUE)
 #' 

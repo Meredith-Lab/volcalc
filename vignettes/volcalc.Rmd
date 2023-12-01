@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(volcalc)
 ```
 
-The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to a .mol file or a SMILES string.  There are a few example .mol files included in the `volcalc` installation.  The paths to these can be found with `mol_example()`; see function documentation for more detail.
+The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to a .mol file or a SMILES string.  There are a few example .mol files included in the `volcalc` installation and their file paths are returned by `mol_example()`.
 
 ### Basic usage with .mol files
 
@@ -50,11 +50,12 @@ calc_vol(mol_paths, environment = "soil")
 calc_vol(mol_paths, return_fx_groups = TRUE)
 ```
 
-The SIMPOL.1 method calculates $\textrm{log}_{10} P_{\textrm{L},i}^\circ(T)$, which is used by `calc_vol()` to calculate RVI. To see the intermediate calculations, use `return_calc_steps = TRUE`.
+The SIMPOL.1 method calculates $\textrm{log}_{10} P_{\textrm{L},i}^\circ(T)$, which is used by `calc_vol()` to calculate RVI as $\textrm{log}_{10}(PM/RT)$ where $P$ is the estimated vapor pressure for the compound, $M$ is molecular weight of the compound, $R$ is the universal gas constant, and $T$ is temperature (293.14K or 20ºC). To see these intermediate calculations, use `return_calc_steps = TRUE`.
 
 ```{r}
 calc_vol(mol_paths, return_calc_steps = TRUE)
 ```
+`log_alpha` = $\textrm{log}_{10}(M/RT)$
 
 ### Use with SMILES
 

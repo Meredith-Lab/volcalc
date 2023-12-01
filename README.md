@@ -67,7 +67,8 @@ Installation of `volcalc` requires the system libraries
 [OpenBabel](https://openbabel.org/wiki/Main_Page) and Eigen3
 (requirements of the `ChemmineOB` package, which `volcalc` depends on).
 `pak` will take care of the installation of these libraries for you on
-some systems, but you may need to install them manually.
+some systems, but you may need to install them manually on some
+operating systems.
 
 For macOS, they can be installed via homebrew by running the following
 shell command:
@@ -110,21 +111,21 @@ out_path <- tempdir()
 files <- get_mol_kegg(c("C16181", "C00042"), dir = out_path)
 calc_vol(files$mol_path)
 #> # A tibble: 2 × 5
-#>   mol_path                                          formula name    rvi category
-#>   <chr>                                             <chr>   <chr> <dbl> <fct>   
-#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    
-#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high
+#>   mol_path                                         formula name     rvi category
+#>   <chr>                                            <chr>   <chr>  <dbl> <fct>   
+#> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/… C6H7Cl… beta… -0.147 low     
+#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/… C4H6O4  Succ… -0.510 low
 
 #alternatively, supply a SMILES representation
 calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
 #> # A tibble: 2 × 5
-#>   smiles                        formula  name    rvi category
-#>   <chr>                         <chr>    <chr> <dbl> <fct>   
-#> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>   6.98 high    
-#> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>   2.57 high
+#>   smiles                        formula  name     rvi category
+#>   <chr>                         <chr>    <chr>  <dbl> <fct>   
+#> 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O <NA>  -0.147 low     
+#> 2 C(CC(=O)O)C(=O)O              C4H6O4   <NA>  -0.510 low
 ```
 
-This returns a dataframe with columns specifying general info about the
+This returns a tibble with columns specifying general info about the
 compound, and the compound’s calculated volatility and corresponding
 volatility category. The functional group counts underlying the
 volatility can be additionally returned with `return_fx_groups = TRUE`,
@@ -132,7 +133,7 @@ and the intermediate calculation steps with `return_calc_steps = TRUE`.
 
 ## Code of Conduct
 
-Please note that the volcalc project is released with a [Contributor
+Please note that the `volcalc` project is released with a [Contributor
 Code of
 Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
@@ -143,7 +144,7 @@ We appreciate many kinds of feedback and contributions to this R
 package. If you find a bug, are interested in an additional feature, or
 have made improvements to the package that you want to share, feel free
 to file an [issue](https://github.com/Meredith-Lab/volcalc/issues/new)
-in this GitHub repo.
+on GitHub.
 
 ## How to cite
 

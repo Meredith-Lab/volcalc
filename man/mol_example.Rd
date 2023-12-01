@@ -2,9 +2,12 @@
 % Please edit documentation in R/mol_example.R
 \name{mol_example}
 \alias{mol_example}
-\title{Get path to example .mol file}
+\title{Example .mol files}
 \usage{
 mol_example()
+}
+\value{
+File paths to installed example .mol files.
 }
 \description{
 \code{volcalc} comes bundled with some example .mol files in its \code{inst/extdata}

@@ -21,7 +21,7 @@ library(volcalc)
 library(dplyr) #for left_join()
 ```
 
-The `volcalc` package also has the ability to download .mol files directly from KEGG given either compound IDs or pathway IDs.
+The `volcalc` package can be used to download .mol files directly from KEGG given either compound IDs or pathway IDs.
 
 First, choose a directory to download files to.  For this vignette, we will use a temporary directory, but you should choose somewhere in your project.
 
@@ -33,7 +33,7 @@ dl_path <- tempdir()
 
 You can search KEGG for compunds at <https://www.genome.jp/kegg/compound/> to find their KEGG IDs starting with a "C".
 
-Let's download .mol files for two compounds, jasmonic acid and methyl jasmonate, with KEGG IDs C08491 and C11512, respectively, using the `volcalc` function `get_mol_kegg()`. 
+Let's download .mol files for two compounds, jasmonic acid and methyl jasmonate, with KEGG IDs [C08491](https://www.kegg.jp/entry/C08491) and [C11512](https://www.kegg.jp/entry/C11512), respectively, using the `volcalc` function `get_mol_kegg()`. 
 
 ```{r}
 mols <- get_mol_kegg(compound_ids = c("C08491", "C11512"), dir = dl_path)
@@ -58,7 +58,7 @@ left_join(mols, rvi, by = join_by(mol_path)) %>%
 ### Pathway usage
 <!-- TODO: change this example to a pathway module or smaller pathway -->
 
-We can download single or multiple compounds with `compound_ids`, but we can also download all compounds associated with a KEGG pathway with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway (map00592) that the above two compounds are part of.
+We can download single or multiple compounds with `compound_ids`, but we can also download all compounds associated with a KEGG pathway with `pathway_ids`.  Let's download the entire alpha-linolenic acid metabolism pathway ([map00592](https://www.kegg.jp/entry/map00592)) that the above two compounds are part of.
 
 ```{r}
 alam_pathway <- get_mol_kegg(pathway_ids = "map00592", dir = dl_path)
