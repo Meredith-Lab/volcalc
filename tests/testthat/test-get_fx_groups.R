@@ -29,8 +29,7 @@ test_that("SMARTS strings are correct", {
   test_compounds <-
     read.csv(test_path("data/test_compounds.csv")) %>%
     dplyr::as_tibble() %>% 
-    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), as.integer)) %>% 
-    dplyr::slice_head(n = -3) #TODO: this removes nitrophenol examples--still confused about this one
+    dplyr::mutate(dplyr::across(dplyr::where(is.numeric), as.integer))
   test_fx_groups <-
     test_compounds$smiles %>%
     purrr::map(ChemmineR::smiles2sdf) %>%
@@ -40,11 +39,16 @@ test_that("SMARTS strings are correct", {
     #remove columns that have only NAs--these don't have SMARTS patterns yet
     dplyr::select(dplyr::where(~!all(is.na(.))))
   
+  
+  # waldo::compare(colnames(test_compounds), colnames(test_fx_groups))
+  
   common_cols <- intersect(
     colnames(test_compounds),
     colnames(test_fx_groups)
   )
 
+  #TODO check that common_cols has all the columns it should
+  
   expected <- test_compounds %>% dplyr::select(smiles, dplyr::all_of(common_cols))
   actual   <- test_fx_groups %>% dplyr::select(smiles, dplyr::all_of(common_cols))
   
