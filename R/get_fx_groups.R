@@ -71,7 +71,7 @@ get_fx_groups <- function(compound_sdf) {
   # *_pattern are SMARTS strings: https://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html
   carbon_dbl_bonds_pattern <- "C=C" #non-aromatic carbon double bonds
   CCCO_pattern <- "C(C=C[AR1])(=O)[AR1]" #C=C-C=O in a non-aromatic ring
-  ether_pattern <- "[OD2]([C!R1])[C!R1]"
+  # ether_alkyl_pattern <- "[OD2]([C!R1])[C!R1]" #currently unused--ether_alkly calculated as total - other ethers
   ether_alicyclic_pattern <- "[OD2]([C!R0])[C!R0]"
   ether_aromatic_pattern <- "O(c)[C,c]" #only one of the carbons has to be aromatic
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
@@ -109,17 +109,19 @@ get_fx_groups <- function(compound_sdf) {
       carbons_asa = NA_integer_, #carbon number on the acid-side of amide
       rings_aromatic = as.integer(rings$AROMATIC),
       rings_total = as.integer(rings$RINGS),
-      rings_aliphatic = .data$rings_total - .data$rings_aromatic,
-      carbon_dbl_bonds = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
+      rings_aliphatic = NA_integer_, #calculated below
+      carbon_dbl_bonds_aliphatic = ChemmineR::smartsSearchOB(compound_sdf, carbon_dbl_bonds_pattern),
       CCCO_aliphatic_ring = ChemmineR::smartsSearchOB(compound_sdf, CCCO_pattern), # C=C-C=O in a non-aromatic ring
       hydroxyl_total = groups$ROH, 
       hydroxyl_aromatic = ChemmineR::smartsSearchOB(compound_sdf, hydroxyl_aromatic_pattern, uniqueMatches = FALSE),
+      hydroxyl_aliphatic = NA_integer_, #calculated below
       aldehydes = groups$RCHO,
       ketones = groups$RCOR,
       carbox_acids = groups$RCOOH,
       ester = groups$RCOOR,
       ether_total = groups$ROR,
-      ether_alkyl = ChemmineR::smartsSearchOB(compound_sdf, ether_pattern) - .data$ester,
+      # ether_alkyl = ChemmineR::smartsSearchOB(compound_sdf, ether_alkyl_pattern),
+      ether_alkyl = NA_integer_,
       ether_alicyclic = ChemmineR::smartsSearchOB(compound_sdf, ether_alicyclic_pattern),
       ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
       nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
@@ -155,8 +157,13 @@ get_fx_groups <- function(compound_sdf) {
       fluorines = atoms[["F"]] %||% 0L
     ) %>% 
     
-    # Corrections
+    # Corrections & Calculations
+    # The order these happen in matters!
     dplyr::mutate(
+      rings_aliphatic = .data$rings_total - .data$rings_aromatic,
+      hydroxyl_aliphatic = .data$hydroxyl_total - .data$hydroxyl_aromatic, 
+      ether_alkyl = .data$ether_total - .data$ether_alicyclic - .data$ether_aromatic,
+      
       #hydroperoxide pattern also picks up peroxyacids
       hydroperoxide = .data$hydroperoxide - .data$carbonylperoxyacid,
       #peroxide, nitrate, and ester patterns also pick up carbonylperoxynitrate group
@@ -165,12 +172,9 @@ get_fx_groups <- function(compound_sdf) {
       peroxide = .data$peroxide - .data$carbonylperoxynitrate,
       #phosphoric ester also matches phosphoric acid
       phosphoric_acid = .data$phosphoric_acid - .data$phosphoric_ester,
-      
-      hydroxyl_aliphatic = .data$hydroxyl_total - .data$hydroxyl_aromatic, #TODO: should this happen before or after hydroyxl_aromatic is corrected? Or in the initial mutate?
-      
-      #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls.
+      #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls that are part of the nitrophenol group separately.
       hydroxyl_aromatic = .data$hydroxyl_aromatic - .data$nitrophenol,
-      #according to SIMPOL.1 paper, nitroester shouldn't count esters
+      #according to SIMPOL.1 paper, nitroester shouldn't count the esters that are part of the nitroester group separately.
       ester = .data$ester - .data$nitroester
     ) %>% 
     # some of the columns created by ChemmineR are named vectors sometimes,
