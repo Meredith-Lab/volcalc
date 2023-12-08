@@ -98,12 +98,12 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
     betas <- betas %>% 
       dplyr::mutate(
         # # Below are additions from Meredith et al.
-        b_32 = (-2.23	  * .data$phosphoric_acid),
-        b_33 = (-2.23	  * .data$phosphoric_ester),
-        b_34 = (-2.23	  * .data$sulfate),
-        b_35 = (-2.23	  * .data$sulfonate),
-        b_36 = (-2.23	  * .data$thiol),
-        b_37 = (-1.20	  * .data$carbothioester)
+        b_32 = (-2.23	  * .data$phosphoric_acids),
+        b_33 = (-2.23	  * .data$phosphoric_esters),
+        b_34 = (-2.23	  * .data$sulfates),
+        b_35 = (-2.23	  * .data$sulfonates),
+        b_36 = (-2.23	  * .data$thiols),
+        b_37 = (-1.20	  * .data$carbothioesters)
       )
   }
   
