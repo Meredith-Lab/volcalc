@@ -58,7 +58,7 @@ OP(=O)(O)O,https://en.wikipedia.org/wiki/Phosphoric_acid,test for phosphoric aci
 O=P(O)(O)OP(=O)(O)O,https://en.wikipedia.org/wiki/Pyrophosphoric_acid,test for multiple phosphoric acid groups,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,2,,,,,
 CCOP(=O)(O)O,https://pubchem.ncbi.nlm.nih.gov/compound/Ethyl-dihydrogen-phosphate,test for phosphoric ester,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,
 CCOP(=O)(O)OCC,https://pubchem.ncbi.nlm.nih.gov/compound/Diethyl-hydrogen-phosphate,test for multiple phosphoric esters--pattern just counts this as 1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,,
-CCCCCCCCCCCCOS(=O)([O-])=O.[Na+],https://en.wikipedia.org/wiki/Sodium_dodecyl_sulfate,test for sulfates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,,
-CCCCCCC(CCCCC)c1ccc(cc1)S(=O)(=O)O,https://www.chemspider.com/Chemical-Structure.15789.html,test for sulfonates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,,
+CCCCCCCCCCCCOS(=O)([O-])=O,https://en.wikipedia.org/wiki/Sodium_dodecyl_sulfate,test for sulfates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,0,,
+CCCCCCC(CCCCC)c1ccc(cc1)S(=O)(=O)O,https://www.chemspider.com/Chemical-Structure.15789.html,test for sulfonates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,1,,
 SC,https://en.wikipedia.org/wiki/Methanethiol,test for thiols,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1,
 O=C(SCCNC(=O)CCNC(=O)[C@H](O)C(C)(C)COP(=O)(O)OP(=O)(O)OC[C@H]3O[C@@H](n2cnc1c(ncnc12)N)[C@H](O)[C@@H]3OP(=O)(O)O)C,https://en.wikipedia.org/wiki/Acetyl-CoA,test for carbothioesters,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
