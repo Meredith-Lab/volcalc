@@ -40,7 +40,7 @@
   - nitrophenols
   - nitroesters
 * changed `ether` to `ether_alkyl` and added `ether_total` (matching any R-O-R)
-
+* slight change to the SMARTS pattern to capture sulfonate groups to also capture conjugate sulfonic acids
 
 # volcalc 2.0.0
 
