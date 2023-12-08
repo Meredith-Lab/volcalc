@@ -77,11 +77,18 @@ get_fx_groups <- function(compound_sdf) {
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
+
+  #TODO need patterns for amines that don't pick up amides
+  amine_primary_pattern <- "[NX3;H2;!$(NC=[!#6]);!$(NC#[!#6])][#6X4]"
+  amine_secondary_pattern <- "[NX3H1!$(NC=[!#6])!$(NC#[!#6])]([#6X4])[#6X4]"
+  amine_tertiary_pattern <- "[NX3H0!$(NC=[!#6])!$(NC#[!#6])]([#6X4])([#6X4])[#6X4]"
   amine_aromatic_pattern <-  "[NX3;!$(NO)]c" 
-  # amide_total_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3;$([H2]),$([H1][#6;!$(C=[O,N,S])]),$([#7]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])])]"
+
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
+  # amide_total_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3;$([H2]),$([H1][#6;!$(C=[O,N,S])]),$([#7]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])])]"
+  
   carbonylperoxynitrate_pattern <- "*C(=O)OO[N+1](=O)[O-1]"
   peroxide_pattern <- "[OX2D2][OX2D2]"  #this captures carbonylperoxynitrates too
   hydroperoxide_pattern <- "[OX2][OX2H,OX1-]" #this captures peroxyacids too
@@ -92,6 +99,8 @@ get_fx_groups <- function(compound_sdf) {
   phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
   phosphoric_ester_pattern <- "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
   sulfate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
+  
+  #TODO: sulfonate pattern is picking up sulfates.  Might need correction?
   sulfonate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([#6])[OX2H0]),$([#16X4+2]([OX1-])([OX1-])([#6])[OX2H0])]"
   thiol_pattern <- "[#16X2H]"
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
@@ -126,9 +135,9 @@ get_fx_groups <- function(compound_sdf) {
       ether_aromatic = ChemmineR::smartsSearchOB(compound_sdf, ether_aromatic_pattern),
       nitrate = ChemmineR::smartsSearchOB(compound_sdf, nitrate_pattern),
       nitro = ChemmineR::smartsSearchOB(compound_sdf, nitro_pattern),
-      amine_primary = groups$RNH2,
-      amine_secondary = groups$R2NH,
-      amine_tertiary = groups$R3N,
+      amine_primary   = ChemmineR::smartsSearchOB(compound_sdf, amine_primary_pattern),
+      amine_secondary = ChemmineR::smartsSearchOB(compound_sdf, amine_secondary_pattern),
+      amine_tertiary  = ChemmineR::smartsSearchOB(compound_sdf, amine_tertiary_pattern),
       amine_aromatic = ChemmineR::smartsSearchOB(compound_sdf, amine_aromatic_pattern),
       amide_primary = ChemmineR::smartsSearchOB(compound_sdf, amide_primary_pattern),
       amide_secondary = ChemmineR::smartsSearchOB(compound_sdf, amide_secondary_pattern),
@@ -141,12 +150,12 @@ get_fx_groups <- function(compound_sdf) {
       nitroester = ChemmineR::smartsSearchOB(compound_sdf, nitroester_pattern),
       
       # Additional groups from Meredith et al. 2023
-      phosphoric_acid = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
-      phosphoric_ester = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
-      sulfate = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),
-      sulfonate = ChemmineR::smartsSearchOB(compound_sdf, sulfonate_pattern),
-      thiol = ChemmineR::smartsSearchOB(compound_sdf, thiol_pattern),
-      carbothioester = ChemmineR::smartsSearchOB(compound_sdf, carbothioester_pattern),
+      phosphoric_acids = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_acid_pattern),
+      phosphoric_esters = ChemmineR::smartsSearchOB(compound_sdf, phosphoric_ester_pattern),
+      sulfates = ChemmineR::smartsSearchOB(compound_sdf, sulfate_pattern),
+      sulfonates = ChemmineR::smartsSearchOB(compound_sdf, sulfonate_pattern),
+      thiols = ChemmineR::smartsSearchOB(compound_sdf, thiol_pattern),
+      carbothioesters = ChemmineR::smartsSearchOB(compound_sdf, carbothioester_pattern),
       oxygens   = atoms[["O"]] %||% 0L,
       chlorines = atoms[["Cl"]] %||% 0L,
       nitrogens = atoms[["N"]] %||% 0L,
@@ -171,7 +180,7 @@ get_fx_groups <- function(compound_sdf) {
       nitrate = .data$nitrate - .data$carbonylperoxynitrate,
       peroxide = .data$peroxide - .data$carbonylperoxynitrate,
       #phosphoric ester also matches phosphoric acid
-      phosphoric_acid = .data$phosphoric_acid - .data$phosphoric_ester,
+      phosphoric_acids = .data$phosphoric_acids - .data$phosphoric_esters,
       #according to SIMPOL.1 paper, nitrophenol shouldn't count aromatic hydroxyls that are part of the nitrophenol group separately.
       hydroxyl_aromatic = .data$hydroxyl_aromatic - .data$nitrophenol,
       #according to SIMPOL.1 paper, nitroester shouldn't count the esters that are part of the nitroester group separately.
