@@ -51,7 +51,7 @@ You can install the 'legacy' version used in Meredith et al. (2023) with
 pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
-Installation of `volcalc` requires the system libraries [OpenBabel](https://openbabel.org/wiki/Main_Page) and Eigen3 (requirements of the `ChemmineOB` package, which `volcalc` depends on).
+Installation of `volcalc` requires the system libraries [OpenBabel](https://open-babel.readthedocs.io/) and Eigen3 (requirements of the `ChemmineOB` package, which `volcalc` depends on).
 `pak` will take care of the installation of these libraries for you on some systems, but you may need to install them manually on some operating systems.
 
 For macOS, they can be installed via homebrew by running the following shell command:
@@ -69,7 +69,7 @@ sudo apt-get install libeigen3-dev
 
 For windows, `OpenBabel` is included in the `ChemmineOB` binary and does not need to be installed separately.
 
-For other installation options see the [OpenBabel documentation](https://openbabel.org/docs/dev/Installation/install.html) and `ChemmineOB` [install guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
+For other installation options see the [OpenBabel documentation](https://open-babel.readthedocs.io/en/latest/Installation/install.html) and `ChemmineOB` [install guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 
 ## Basic Usage
 

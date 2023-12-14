@@ -64,12 +64,11 @@ calc_vol(mol_paths, return_calc_steps = TRUE)
 \references{
 Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006.
 Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
-Environ. Sci. Technol. 40, 2635–2643. \url{https://doi.org/10.1021/es052297c}
+Environ. Sci. Technol. 40, 2635–2643. DOI: 10.1021/es052297c
 
 Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
 Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
-volatility. Frontiers in Microbiology.
-\url{https://doi.org/10.3389/fmicb.2023.1267234}.
+volatility. Frontiers in Microbiology. DOI: 10.3389/fmicb.2023.1267234
 }
 \seealso{
 \code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}
