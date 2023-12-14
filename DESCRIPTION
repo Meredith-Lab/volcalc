@@ -34,6 +34,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     withr
+SystemRequirements: OpenBabel (>= 3.0.0) with headers (http://openbabel.org). Eigen3 with headers.
 biocViews: 
 Config/testthat/edition: 3
 Encoding: UTF-8
