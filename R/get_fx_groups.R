@@ -12,7 +12,7 @@
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
 #'
-#' @return A tibble with columns of basic compound info and functional group
+#' @returns A tibble with columns of basic compound info and functional group
 #'   counts.
 #' @seealso [calc_vol()]
 #' @examples

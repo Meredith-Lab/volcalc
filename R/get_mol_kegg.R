@@ -13,7 +13,7 @@ utils::globalVariables(".data")
 #' @param force Logical; by default (`FALSE`), .mol files will not be downloaded
 #'   if they are found in `dir`. Set this to `TRUE` to download and overwrite
 #'   existing files.
-#'
+#'   
 #' @returns A tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files).
 #' @export

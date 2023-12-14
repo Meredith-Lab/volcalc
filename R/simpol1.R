@@ -30,7 +30,7 @@
 #' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
 #'
-#' @return The `fx_groups` tibble with the additional `log10_P` column.
+#' @returns The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
 #'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,

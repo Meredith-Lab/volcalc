@@ -34,7 +34,7 @@
 #' volatility. Frontiers in Microbiology.
 #' <https://doi.org/10.3389/fmicb.2023.1267234>.
 #'
-#' @return A tibble with relative volatility index (`rvi`) and volatility
+#' @returns A tibble with relative volatility index (`rvi`) and volatility
 #'   category (`category`).
 #'
 #' @seealso [get_fx_groups()], [simpol1()]
