@@ -85,18 +85,10 @@ counts.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>This function currently does <strong>not</strong> capture the following functional
-groups used in SIMPOL.1:</p><ul><li><p>carbon number on the acid-side of amide</p></li>
-<li><p>C=C-C=O in a non-aromatic ring</p></li>
-<li><p>alicyclic ether</p></li>
-<li><p>aromatic ether</p></li>
-<li><p>aromatic amine</p></li>
-<li><p>carbonylperoxynitrate</p></li>
-<li><p>hydroperoxide</p></li>
-<li><p>carbonylperoxyacid</p></li>
-<li><p>nitrophenol</p></li>
-<li><p>nitroesther</p></li>
-</ul><p>Contributions of SMARTS strings to capture these groups are welcome.</p>
+    <p>This function currently does <strong>not</strong> capture the carbon number on the
+acid-side of amide, one of the functional groups used in SIMPOL.1.
+Contributions of SMARTS strings or other methods to capture this
+"functional group" are welcome.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -108,17 +100,17 @@ groups used in SIMPOL.1:</p><ul><li><p>carbon number on the acid-side of amide</
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">mol_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="mol_example.html">mol_example</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sdf</span> <span class="op">&lt;-</span> <span class="fu">ChemmineR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ChemmineR/man/read.SDFset.html" class="external-link">read.SDFset</a></span><span class="op">(</span><span class="va">mol_path</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_fx_groups</span><span class="op">(</span><span class="va">sdf</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 49</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 51</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   formula name    exact_mass molecular_weight carbons carbons_asa rings_aromatic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> C6H12O6 D-Gluc…       180.             180.       6          <span style="color: #BB0000;">NA</span>              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 42 more variables: rings &lt;int&gt;, carbon_dbl_bonds &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   CCCO_aliphatic_ring &lt;int&gt;, hydroxyl_groups &lt;int&gt;, aldehydes &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ketones &lt;int&gt;, carbox_acids &lt;int&gt;, ester &lt;int&gt;, ether &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ether_alicyclic &lt;int&gt;, ether_aromatic &lt;int&gt;, nitrate &lt;int&gt;, nitro &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hydroxyl_aromatic &lt;int&gt;, amine_primary &lt;int&gt;, amine_secondary &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amine_tertiary &lt;int&gt;, amine_aromatic &lt;int&gt;, amide_total &lt;int&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amide_primary &lt;int&gt;, amide_secondary &lt;int&gt;, amide_tertiary &lt;int&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44 more variables: rings_total &lt;int&gt;, rings_aliphatic &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   carbon_dbl_bonds_aliphatic &lt;int&gt;, CCCO_aliphatic_ring &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   hydroxyl_total &lt;int&gt;, hydroxyl_aromatic &lt;int&gt;, hydroxyl_aliphatic &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   aldehydes &lt;int&gt;, ketones &lt;int&gt;, carbox_acids &lt;int&gt;, ester &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ether_total &lt;int&gt;, ether_alkyl &lt;int&gt;, ether_alicyclic &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ether_aromatic &lt;int&gt;, nitrate &lt;int&gt;, nitro &lt;int&gt;, amine_primary &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   amine_secondary &lt;int&gt;, amine_tertiary &lt;int&gt;, amine_aromatic &lt;int&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
