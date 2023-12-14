@@ -9,7 +9,7 @@ test_that("returns correct columns depending on return arguments", {
   with_fx_steps <- calc_vol("data/C16181.mol", return_fx_groups = TRUE, return_calc_steps = TRUE)
   expect_setequal(colnames(just_vol), c("mol_path", "formula", "name", "rvi", "category"))
   # just some examples here
-  expect_contains(colnames(with_fx), c(colnames(just_vol), "carbons", "carbothioester", "fluorines"))
+  expect_contains(colnames(with_fx), c(colnames(just_vol), "carbons", "carbothioesters", "fluorines"))
   expect_contains(colnames(with_fx_steps), c(colnames(with_fx), "molecular_weight", "log_alpha", "log10_P"))
 })
 

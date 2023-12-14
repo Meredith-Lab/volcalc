@@ -23,6 +23,7 @@ Imports:
     httr2,
     KEGGREST,
     magrittr,
+    rlang,
     purrr,
     stringr,
     tibble,

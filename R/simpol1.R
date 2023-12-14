@@ -65,15 +65,15 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
       b_01 = (-0.438   * .data$carbons),
       b_02 = (-0.0338  * .data$carbons_asa),
       b_03 = (-0.675	 * .data$rings_aromatic),
-      b_04 = (-0.0104  * .data$rings),
-      b_05 = (-0.105   * .data$carbon_dbl_bonds),
+      b_04 = (-0.0104  * .data$rings_aliphatic),
+      b_05 = (-0.105   * .data$carbon_dbl_bonds_aliphatic),
       b_06 = (-0.506   * .data$CCCO_aliphatic_ring),
-      b_07 = (-2.23	   * .data$hydroxyl_groups),
+      b_07 = (-2.23	   * .data$hydroxyl_aliphatic),
       b_08 = (-1.35	   * .data$aldehydes),
       b_09 = (-0.935   * .data$ketones),
       b_10 = (-3.58	   * .data$carbox_acids),
       b_11 = (-1.20	   * .data$ester),
-      b_12 = (-0.718   * .data$ether),
+      b_12 = (-0.718   * .data$ether_alkyl),
       b_13 = (-0.683   * .data$ether_alicyclic),
       b_14 = (-1.03	   * .data$ether_aromatic),
       b_15 = (-2.23	   * .data$nitrate),
@@ -98,12 +98,12 @@ simpol1 <- function(fx_groups, meredith = TRUE) {
     betas <- betas %>% 
       dplyr::mutate(
         # # Below are additions from Meredith et al.
-        b_32 = (-2.23	  * .data$phosphoric_acid),
-        b_33 = (-2.23	  * .data$phosphoric_ester),
-        b_34 = (-2.23	  * .data$sulfate),
-        b_35 = (-2.23	  * .data$sulfonate),
-        b_36 = (-2.23	  * .data$thiol),
-        b_37 = (-1.20	  * .data$carbothioester)
+        b_32 = (-2.23	  * .data$phosphoric_acids),
+        b_33 = (-2.23	  * .data$phosphoric_esters),
+        b_34 = (-2.23	  * .data$sulfates),
+        b_35 = (-2.23	  * .data$sulfonates),
+        b_36 = (-2.23	  * .data$thiols),
+        b_37 = (-1.20	  * .data$carbothioesters)
       )
   }
   

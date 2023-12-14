@@ -2,8 +2,9 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom magrittr %>%
 #' @importFrom grDevices rgb
+#' @importFrom magrittr %>%
+#' @importFrom rlang %||%
 ## usethis namespace: end
 NULL
 
