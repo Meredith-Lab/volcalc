@@ -8,7 +8,7 @@ message: 'To cite package "volcalc" in publications, please cite the package and
 type: software
 license: MIT
 title: 'volcalc: Calculate Volatility of Chemical Compounds'
-version: 2.1.0.9000
+version: 2.1.1
 doi: 10.5281/zenodo.8015155
 abstract: Use this package to calculate estimated relative volatility index values
   for organic compounds based on functional group contributions. Calculation uses
