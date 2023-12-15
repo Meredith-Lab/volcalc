@@ -9,8 +9,8 @@ Authors@R: c(
   )
 Description: Use this package to calculate estimated relative volatility
     index values for organic compounds based on functional group
-    contributions.  Calculation uses the SIMPOL method (Prankow and Asher,
-    2008).
+    contributions.  Calculation uses the SIMPOL.1 method (Prankow and Asher,
+    2008) or modified SIMPOL.1 method as in Meredith et al. (2023).
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues

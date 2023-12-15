@@ -9,7 +9,7 @@
 #' - C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol
 #' - C16286: Geosmin
 #' - C16521: Isoprene
-#' @return File paths to installed example .mol files.
+#' @returns File paths to installed example .mol files.
 #' @export
 #'
 #' @examples

@@ -8,9 +8,9 @@
 [![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml)
 [![latest-DOI](https://zenodo.org/badge/425022983.svg)](https://zenodo.org/badge/latestdoi/425022983)
 [![manuscript-DOI](https://img.shields.io/badge/DOI-10.3389/fmicb.2023.1267234-32a859.svg)](https://doi.org/10.3389/fmicb.2023.1267234)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Codecov test
 coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
 [![volcalc status
@@ -23,19 +23,11 @@ badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datas
 The `volcalc` package allows you to automate calculating estimates of
 volatility for chemical compounds.
 
-> [!WARNING]
-> `volcalc` is a work in progress---use at your own risk!
-
-For a bit of a road map of where development is headed, see our
-[proposal](https://cct-datascience.github.io/volcalc-isc-proposal/) for
-the R Consortium grant.
-
-`volcalc` is designed to support “group contribution” methods for
-estimating volatility that rely on molecular properties such as
-molecular weight, numbers of certain atoms, and counts of certain
-functional groups. Currently, the only methods implemented are SIMPOL.1
-(Pankow & Asher 2008) and a modified version used in Meredith et
-al. (2023).
+`volcalc` supports “group contribution” methods for estimating
+volatility that rely on molecular properties such as molecular weight,
+numbers of certain atoms, and counts of certain functional groups.
+Currently, the only methods implemented are SIMPOL.1 (Pankow & Asher
+2008) and a modified version used in Meredith et al. (2023).
 
 `volcalc` works with either .mol files or
 [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
@@ -64,11 +56,11 @@ pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
 Installation of `volcalc` requires the system libraries
-[OpenBabel](https://openbabel.org/wiki/Main_Page) and Eigen3
-(requirements of the `ChemmineOB` package, which `volcalc` depends on).
-`pak` will take care of the installation of these libraries for you on
-some systems, but you may need to install them manually on some
-operating systems.
+[OpenBabel](https://open-babel.readthedocs.io/) and Eigen3 (requirements
+of the `ChemmineOB` package, which `volcalc` depends on). `pak` will
+take care of the installation of these libraries for you on some
+systems, but you may need to install them manually on some operating
+systems.
 
 For macOS, they can be installed via homebrew by running the following
 shell command:
@@ -88,7 +80,7 @@ For windows, `OpenBabel` is included in the `ChemmineOB` binary and does
 not need to be installed separately.
 
 For other installation options see the [OpenBabel
-documentation](https://openbabel.org/docs/dev/Installation/install.html)
+documentation](https://open-babel.readthedocs.io/en/latest/Installation/install.html)
 and `ChemmineOB` [install
 guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 

@@ -15,7 +15,7 @@ zzz <- function() {
 #'
 #' @param atomcount output of ChemmineR::atomcount()
 #'
-#' @return a tibble
+#' @returns a tibble
 #' @noRd
 #' 
 atomcount2tibble <- function(atomcount) {

@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * The manuscript associated with `volcalc` is now published in Frontiers in Microbiology 🎉. DOI: 10.3389/fmicb.2023.1267234
+* There are now two vignettes available which can be viewed with `browseVignettes("volcalc")` or on the package website
 
 ## Miscelanous changes
 

@@ -30,18 +30,17 @@
 #' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
 #'
-#' @return The `fx_groups` tibble with the additional `log10_P` column.
+#' @returns The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
 #'   Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
 #'   Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
-#'   volatility. Frontiers in Microbiology.
-#'   <https://doi.org/10.3389/fmicb.2023.1267234>.
+#'   volatility. Frontiers in Microbiology. \doi{10.3389/fmicb.2023.1267234}
 #'   
 #'   Pankow, J.F., Asher, W.E. 2008. SIMPOL.1: a simple group
 #'   contribution method for predicting vapor pressures and enthalpies of
 #'   vaporization of multifunctional organic compounds. Atmos. Chem. Phys.
-#'   <https://doi.org/10.5194/acp-8-2773-2008>
+#'   \doi{10.5194/acp-8-2773-2008}
 #'   
 #' @seealso [calc_vol()]
 #' @export
