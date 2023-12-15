@@ -8,11 +8,11 @@ message: 'To cite package "volcalc" in publications use:'
 type: software
 license: MIT
 title: 'volcalc: Calculate Volatility of Chemical Compounds'
-version: 2.0.0
-abstract: Use this package to calculate estimated volatility values for individual
-  compounds of interest or for all compounds in a pathway. Calculation uses the SIMPOL
-  method (Prankow and Asher, 2008), and is only currently applicable to compounds
-  and pathways in KEGG.
+version: 2.1.0
+abstract: Use this package to calculate estimated relative volatility
+    index values for organic compounds based on functional group
+    contributions.  Calculation uses the SIMPOL.1 method (Prankow and Asher,
+    2008) or modified SIMPOL.1 method as in Meredith et al. (2023).
 authors:
 - family-names: Riemer
   given-names: Kristina
