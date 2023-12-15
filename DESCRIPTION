@@ -5,7 +5,11 @@ Authors@R: c(
     person("Kristina", "Riemer", , "kristinariemer@arizona.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-3802-3331")),
     person("Eric R.", "Scott", role = "aut",
-           comment = c(ORCID = "0000-0002-7430-7879"))
+           comment = c(ORCID = "0000-0002-7430-7879")),
+    person("Laura K.", "Meredith", role = "aut",
+           comment = c(ORCID = "0000-0003-4244-4366")),
+    person("S. Marshall", "Ledford", role = "ctb"),
+    person("Tamás", "Stirling", role = "ctb")
   )
 Description: Use this package to calculate estimated relative volatility
     index values for organic compounds based on functional group

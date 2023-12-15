@@ -1,5 +1,9 @@
 # volcalc (development version)
 
+* Added Dr. Laura Meredith as a package author as the concept for volcalc originated from her.
+* Added package contributors S. Marshall Ledford (our main user and beta tester since day 1!) and Tamás Stirling (for help with SMARTS patterns)
+* Updated citation files accordingly
+
 # volcalc 2.1.0
 
 * The manuscript associated with `volcalc` is now published in Frontiers in Microbiology 🎉. DOI: 10.3389/fmicb.2023.1267234

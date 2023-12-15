@@ -24,6 +24,13 @@ Useful links:
 Authors:
 \itemize{
   \item Eric R. Scott (\href{https://orcid.org/0000-0002-7430-7879}{ORCID})
+  \item Laura K. Meredith (\href{https://orcid.org/0000-0003-4244-4366}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item S. Marshall Ledford [contributor]
+  \item Tamás Stirling [contributor]
 }
 
 }
