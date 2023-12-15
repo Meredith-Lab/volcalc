@@ -1,6 +1,6 @@
 Package: volcalc
 Title: Calculate Volatility of Chemical Compounds
-Version: 2.1.1
+Version: 2.1.1.9000
 Authors@R: c(
     person("Kristina", "Riemer", , "kristinariemer@arizona.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-3802-3331")),
