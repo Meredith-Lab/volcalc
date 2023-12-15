@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">volcalc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,19 +54,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="volcalc-development-version">volcalc (development version)<a class="anchor" aria-label="anchor" href="#volcalc-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.0" id="volcalc-210">volcalc 2.1.0<a class="anchor" aria-label="anchor" href="#volcalc-210"></a></h2>
 <ul><li>The manuscript associated with <code>volcalc</code> is now published in Frontiers in Microbiology 🎉. DOI: 10.3389/fmicb.2023.1267234</li>
 <li>There are now two vignettes available which can be viewed with <code>browseVignettes("volcalc")</code> or on the package website</li>
 </ul><div class="section level3">
-<h3 id="miscelanous-changes-development-version">Miscelanous changes<a class="anchor" aria-label="anchor" href="#miscelanous-changes-development-version"></a></h3>
+<h3 id="miscelanous-changes-2-1-0">Miscelanous changes<a class="anchor" aria-label="anchor" href="#miscelanous-changes-2-1-0"></a></h3>
 <ul><li>New example .mol files were added. See <code>?mol_example()</code>
 </li>
 <li>
 <code><a href="../reference/mol_example.html">mol_example()</a></code> no longer takes any arguments and just returns file paths to all example .mol files</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-calc_vol-and-simpol1-development-version">Changes to <code>calc_vol()</code> and <code>simpol1()</code>
-<a class="anchor" aria-label="anchor" href="#changes-to-calc_vol-and-simpol1-development-version"></a></h3>
+<h3 id="changes-to-calc_vol-and-simpol1-2-1-0">Changes to <code>calc_vol()</code> and <code>simpol1()</code>
+<a class="anchor" aria-label="anchor" href="#changes-to-calc_vol-and-simpol1-2-1-0"></a></h3>
 <ul><li>It is now possible to supply input to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> as a vector of SMILES strings with <code>from = "smiles"</code>.</li>
 <li>Users can now choose from RVI thresholds for non-volatile, low, moderate, and high volatility for clean atmosphere, polluted atmosphere, or soil using the <code>environment</code> parameter of <code><a href="../reference/calc_vol.html">calc_vol()</a></code>.</li>
 <li>A coefficient for amides has been removed from the “Meredith” method of <code><a href="../reference/simpol1.html">simpol1()</a></code> to avoid double-counting amides.</li>
@@ -77,8 +77,8 @@
 <code><a href="../reference/simpol1.html">simpol1()</a></code> now takes into account amide functional groups.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-get_mol_kegg-development-version">Changes to <code>get_mol_kegg()</code>
-<a class="anchor" aria-label="anchor" href="#changes-to-get_mol_kegg-development-version"></a></h3>
+<h3 id="changes-to-get_mol_kegg-2-1-0">Changes to <code>get_mol_kegg()</code>
+<a class="anchor" aria-label="anchor" href="#changes-to-get_mol_kegg-2-1-0"></a></h3>
 <ul><li>The <code>pathway_ids</code> argument of <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> now also accepts pathway <em>module</em> IDs (e.g. “M00082”).</li>
 <li>
 <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> got a significant speed improvement (<a href="https://github.com/Meredith-Lab/volcalc/issues/84" class="external-link">#84</a>).</li>
@@ -86,8 +86,8 @@
 <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> will skip downloading a .mol file if it is already present by default (override with <code>force=TRUE</code>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-get_fx_groups-development-version">Changes to <code>get_fx_groups()</code>
-<a class="anchor" aria-label="anchor" href="#changes-to-get_fx_groups-development-version"></a></h3>
+<h3 id="changes-to-get_fx_groups-2-1-0">Changes to <code>get_fx_groups()</code>
+<a class="anchor" aria-label="anchor" href="#changes-to-get_fx_groups-2-1-0"></a></h3>
 <ul><li>
 <code>mass</code> column renamed to <code>molecular_weight</code> and addition of an <code>exact_mass</code> column.</li>
 <li>change to how non-aromatic carbon double bonds are counted. Now using SMARTS pattern “C=C”</li>
