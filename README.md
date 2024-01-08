@@ -26,8 +26,8 @@ volatility for chemical compounds.
 `volcalc` supports “group contribution” methods for estimating
 volatility that rely on molecular properties such as molecular weight,
 numbers of certain atoms, and counts of certain functional groups.
-Currently, the only methods implemented are SIMPOL.1 (Pankow & Asher
-2008) and a modified version used in Meredith et al. (2023).
+Currently, the only methods implemented are SIMPOL.1 ([Pankow & Asher
+2008](https://doi.org/10.5194/acp-8-2773-2008)) and a modified version used in [Meredith et al. (2023)](https://doi.org/10.3389/fmicb.2023.1267234).
 
 `volcalc` works with either .mol files or
 [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
@@ -170,3 +170,6 @@ Pankow, J.F., Asher, W.E., 2008. SIMPOL.1: a simple group contribution
 method for predicting vapor pressures and enthalpies of vaporization of
 multifunctional organic compounds. Atmos. Chem. Phys.
 <https://doi.org/10.5194/acp-8-2773-2008>
+
+Meredith, L.K., Ledford, S.M., Riemer, K., Geffre, P., Graves, K., Honeker, L.K., LeBauer, D., Tfaily, M.M., Krechmer, J., 2023. Automating methods for estimating metabolite volatility. Frontiers in Microbiology 14. <https://doi.org/10.3389/fmicb.2023.1267234>
+
