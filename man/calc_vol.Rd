@@ -7,38 +7,38 @@
 calc_vol(
   input,
   from = c("mol_path", "smiles"),
-  method = c("simpol1"),
+  method = c("meredith", "simpol1"),
   environment = c("clean", "polluted", "soil"),
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
 }
 \arguments{
-\item{input}{a path to a .mol file or a SMILES string.}
+\item{input}{A path to a .mol file or a SMILES string.}
 
-\item{from}{the form of \code{input}. Either \code{"mol_path"} or \code{"smiles"} (default
-is \code{"mol_path"}).}
+\item{from}{The form of \code{input}. Either \code{"mol_path"} (default) or \code{"smiles"}.}
 
-\item{method}{the method for calculating estimated volatility. Currently only
-the SIMPOL.1 method is implemented---see \code{\link[=simpol1]{simpol1()}} for more details.}
+\item{method}{The method for calculating estimated volatility. See
+\code{\link[=simpol1]{simpol1()}} for more details.}
 
-\item{environment}{the environment for calculating relative volatility
+\item{environment}{The environment for calculating relative volatility
 categories. RVI thresholds for low, moderate, and high volatility are as
 follows: \code{"clean"} (clean atmosphere, default) -2, 0, 2; \code{"polluted"}
-(polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8.}
+(polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8. For more information about
+these thresholds see Meredith et al. (2023) and Donahue et al. (2006).}
 
-\item{return_fx_groups}{When \code{TRUE}, includes functional group counts in
-final dataframe.}
+\item{return_fx_groups}{When \code{TRUE}, the returned tibble includes functional
+group counts.}
 
-\item{return_calc_steps}{When \code{TRUE}, includes intermediate volatility
-calculation steps in final dataframe. See \strong{Details}.}
+\item{return_calc_steps}{When \code{TRUE}, the returned tibble includes
+intermediate volatility calculations. See \strong{Details}.}
 }
 \value{
-a tibble with relative volatility index (\code{rvi}) and volatility
+A tibble with relative volatility index (\code{rvi}) and volatility
 category (\code{category}).
 }
 \description{
-Relative volatility value and category is estimated for specified compound
+Estimate relative volatility index value and category for specified compounds
 using group contribution methods.
 }
 \details{
@@ -51,15 +51,24 @@ universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha}, are also returned.
 }
 \examples{
-mol_path <- mol_example("C16181.mol")
-calc_vol(mol_path)
+mol_paths <- mol_example()
+calc_vol(mol_paths)
 
 # Return functional group counts from get_fx_groups()
-calc_vol(mol_path,  return_fx_groups = TRUE)
+calc_vol(mol_paths,  return_fx_groups = TRUE)
 
 # Return intermediate calculations
-calc_vol(mol_path, return_calc_steps = TRUE)
+calc_vol(mol_paths, return_calc_steps = TRUE)
 
+}
+\references{
+Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006.
+Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile Organics.
+Environ. Sci. Technol. 40, 2635–2643. \doi{10.1021/es052297c}
+
+Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,
+Tfaily M, Krechmer J. 2023. Automating methods for estimating metabolite
+volatility. Frontiers in Microbiology. \doi{10.3389/fmicb.2023.1267234}
 }
 \seealso{
 \code{\link[=get_fx_groups]{get_fx_groups()}}, \code{\link[=simpol1]{simpol1()}}

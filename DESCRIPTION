@@ -1,16 +1,20 @@
 Package: volcalc
 Title: Calculate Volatility of Chemical Compounds
-Version: 2.0.0.9000
+Version: 2.1.1.9000
 Authors@R: c(
     person("Kristina", "Riemer", , "kristinariemer@arizona.edu", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0003-3802-3331")),
     person("Eric R.", "Scott", role = "aut",
-           comment = c(ORCID = "0000-0002-7430-7879"))
+           comment = c(ORCID = "0000-0002-7430-7879")),
+    person("Laura K.", "Meredith", role = "aut",
+           comment = c(ORCID = "0000-0003-4244-4366")),
+    person("S. Marshall", "Ledford", role = "ctb"),
+    person("Tamás", "Stirling", role = "ctb")
   )
 Description: Use this package to calculate estimated relative volatility
     index values for organic compounds based on functional group
-    contributions.  Calculation uses the SIMPOL method (Prankow and Asher,
-    2008).
+    contributions.  Calculation uses the SIMPOL.1 method (Prankow and Asher,
+    2008) or modified SIMPOL.1 method as in Meredith et al. (2023).
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
@@ -23,13 +27,16 @@ Imports:
     httr2,
     KEGGREST,
     magrittr,
+    rlang,
     purrr,
     stringr,
     tibble,
     tidyr,
     tidyselect
 Suggests: 
+    knitr,
     processx,
+    rmarkdown,
     testthat (>= 3.0.0),
     withr
 biocViews: 
@@ -37,3 +44,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+VignetteBuilder: knitr

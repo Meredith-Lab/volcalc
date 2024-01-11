@@ -3,14 +3,13 @@ test_that("volatility estimate is correct for example compound for entire workfl
   expect_equal(round(ex_vol_df$rvi, 6), 6.975349)
 })
 
-
 test_that("returns correct columns depending on return arguments", {
   just_vol <- calc_vol("data/C16181.mol")
   with_fx <- calc_vol("data/C16181.mol", return_fx_groups = TRUE)
   with_fx_steps <- calc_vol("data/C16181.mol", return_fx_groups = TRUE, return_calc_steps = TRUE)
   expect_setequal(colnames(just_vol), c("mol_path", "formula", "name", "rvi", "category"))
   # just some examples here
-  expect_contains(colnames(with_fx), c(colnames(just_vol), "carbons", "carbothioester", "fluorines"))
+  expect_contains(colnames(with_fx), c(colnames(just_vol), "carbons", "carbothioesters", "fluorines"))
   expect_contains(colnames(with_fx_steps), c(colnames(with_fx), "molecular_weight", "log_alpha", "log10_P"))
 })
 
@@ -33,3 +32,13 @@ test_that("smiles and .mol give same results", {
 test_that("errors with invalid SMILES", {
   expect_error(calc_vol("hello", from = "smiles"))
 })
+  
+test_that("meredith and original method give different results", {
+  #thiol and sulfonate groups, respectively
+  # paths <- c(test_path("data/C00409.mol"), test_path("data/C03349.mol"))
+  smiles <- c("Methanethiol" = "SC", "Methyl methanesulfonate" = "COS(=O)(=O)C")
+  meredith <- calc_vol(smiles, from = "smiles", method = "meredith")
+  simpol   <- calc_vol(smiles, from = "smiles", method = "simpol1")
+  expect_true(all(meredith$rvi < simpol$rvi))
+})
+

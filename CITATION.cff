@@ -1,52 +1,63 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.4.1
+# CITATION file created with {cffr} R package, v0.5.0
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
 cff-version: 1.2.0
-message: 'To cite package "volcalc" in publications use:'
+message: 'To cite package "volcalc" in publications, please cite the package and the associated publication (Meredith et al. 2023):'
 type: software
 license: MIT
 title: 'volcalc: Calculate Volatility of Chemical Compounds'
-version: 2.0.0
-abstract: Use this package to calculate estimated volatility values for individual
-  compounds of interest or for all compounds in a pathway. Calculation uses the SIMPOL
-  method (Prankow and Asher, 2008), and is only currently applicable to compounds
-  and pathways in KEGG.
+version: 2.1.1
+doi: 10.5281/zenodo.8015155
+abstract: Use this package to calculate estimated relative volatility index values
+  for organic compounds based on functional group contributions. Calculation uses
+  the SIMPOL.1 method (Prankow and Asher, 2008) or modified SIMPOL.1 method as in
+  Meredith et al. (2023).
 authors:
 - family-names: Riemer
   given-names: Kristina
-  email: kristinariemer@email.arizona.edu
+  email: kristinariemer@arizona.edu
   orcid: https://orcid.org/0000-0003-3802-3331
 - family-names: Scott
   given-names: Eric R.
   orcid: https://orcid.org/0000-0002-7430-7879
-doi: 10.5281/zenodo.8015155
-preferred-citation:
-  type: article
+- family-names: Meredith
+  given-names: Laura K.
+  orcid: https://orcid.org/0000-0003-4244-4366
+repository-code: https://github.com/Meredith-Lab/volcalc
+url: https://meredith-lab.github.io/volcalc/
+contact:
+- family-names: Riemer
+  given-names: Kristina
+  email: kristinariemer@arizona.edu
+  orcid: https://orcid.org/0000-0003-3802-3331
+keywords:
+- cheminformatics
+- chemometrics
+- metabolomics
+references:
+- type: article
   title: Automating methods for estimating metabolite volatility
   authors:
   - family-names: Meredith
     given-names: LK
+  - family-names: Ledford
+    given-names: SK
   - family-names: Riemer
     given-names: Kristina
   - family-names: Geffre
     given-names: P
-  - family-names: Honeker
-    given-names: L
-  - family-names: Krechmer
-    given-names: J
   - family-names: Graves
     given-names: K
+  - family-names: Honeker
+    given-names: L
+  - family-names: LeBauer
+    given-names: D
   - family-names: Tfaily
     given-names: M
-  - family-names: Ledford
-    given-names: SK
-  year: in review
+  - family-names: Krechmer
+    given-names: J
+  year: '2023'
+  doi: 10.3389/fmicb.2023.1267234
   journal: Frontiers in Microbiology
-date-released: '2023-06-06'
-contact:
-- family-names: Riemer
-  given-names: Kristina
-  email: kristinariemer@email.arizona.edu
-  orcid: https://orcid.org/0000-0003-3802-3331
