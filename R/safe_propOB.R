@@ -27,6 +27,7 @@
 #' }
 safe_propOB <- function(sdfSet, ob_err_pass = FALSE) {
   # TODO: make sure these temp dirs get cleaned up.  Use on.exit() or withr
+  # TODO: could I just do this with capture.output() instead?  It's possible I never tried this
   res <- callr::r(function(sdfSet) ChemmineR::propOB(sdfSet), args = list(sdfSet), stderr = "/tmp/err", stdout = "/tmp/out")
   
   ob_err <- readLines("/tmp/err")
