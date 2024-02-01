@@ -23,7 +23,8 @@
 #' @export
 get_fx_groups <- function(compound_sdf) {
   
-  # For now at least, this code only works with SDFset objects that contain single molecules.
+  # For now at least, this code only works with SDFset objects that contain
+  # single molecules. 
   # TODO: make this function work with SDFset objects with multiple molecules?
   if (length(compound_sdf) != 1) {
     stop("SDFset objects must contain a single molecule only")
@@ -46,8 +47,11 @@ get_fx_groups <- function(compound_sdf) {
   rowname <- n <- NULL
   
   #convert counts to integer
-  groups <- groups %>% dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
-  rings <- data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
+  groups <-
+    groups %>% 
+    dplyr::mutate(dplyr::across(dplyr::everything(), as.integer))
+  rings <- 
+    data.frame(t(ChemmineR::rings(compound_sdf, type = "count", arom = TRUE, inner = TRUE)))
   atoms <- atomcount2tibble(ChemmineR::atomcount(compound_sdf))
   carbon_bond_data <- data.frame(ChemmineR::conMA(compound_sdf)[[1]]) %>%
     dplyr::select(dplyr::contains("C_")) %>%
@@ -86,7 +90,9 @@ get_fx_groups <- function(compound_sdf) {
 
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
-  amide_tertiary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
+  amide_tertiary_pattern <- 
+    "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]"
+  
   # amide_total_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3;$([H2]),$([H1][#6;!$(C=[O,N,S])]),$([#7]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])])]"
   
   carbonylperoxynitrate_pattern <- "*C(=O)OO[N+1](=O)[O-1]"
@@ -95,12 +101,17 @@ get_fx_groups <- function(compound_sdf) {
   carbonylperoxyacid_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]" 
   nitroester_pattern <- "C(=O)(OC)C~[NX3](-,=[OX1])-,=[OX1]" 
   # This captures OH groups on a ring that also has a nitro group (para, ortho, or meta).  Need to correct aromatic hydroxyl count later.
-  nitrophenol_pattern <- "[OX2H][$(c1ccccc1[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1cccc(c1)[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1ccc(cc1)[$([NX3](=O)=O),$([NX3+](=O)[O-])])]"
-  phosphoric_acid_pattern <- "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
-  phosphoric_ester_pattern <- "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
-  sulfate_pattern <- "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
+  nitrophenol_pattern <- 
+    "[OX2H][$(c1ccccc1[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1cccc(c1)[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1ccc(cc1)[$([NX3](=O)=O),$([NX3+](=O)[O-])])]"
+  phosphoric_acid_pattern <-
+    "[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]"
+  phosphoric_ester_pattern <-
+    "[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]"
+  sulfate_pattern <-
+    "[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]"
   #sulfonate groups; sulfonate ions, and conjugate acid, sulfonic acids
-  sulfonate_pattern <- "[#16X4](=[OX1])(=[OX1])([#6])[*$([O-1]),*$([OH1]),*$([OX2H0])]"
+  sulfonate_pattern <-
+    "[#16X4](=[OX1])(=[OX1])([#6])[*$([O-1]),*$([OH1]),*$([OX2H0])]"
   thiol_pattern <- "[#16X2H]"
   carbothioester_pattern <- "S([#6])[CX3](=O)[#6]"
   
