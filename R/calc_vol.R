@@ -123,7 +123,9 @@ calc_vol <-
     
     #return:
     vol_df %>% 
-      dplyr::select(dplyr::all_of(c({{ from }}, "formula", "name", "rvi", "category", cols_fx, cols_calc)))
+      dplyr::select(dplyr::all_of(c(
+        {{ from }}, "formula", "name", "rvi", "category", cols_fx, cols_calc)
+      ))
     
   }
 
