@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml) [![latest-DOI](https://zenodo.org/badge/425022983.svg)](https://zenodo.org/badge/latestdoi/425022983) [![manuscript-DOI](https://img.shields.io/badge/DOI-10.3389/fmicb.2023.1267234-32a859.svg)](https://doi.org/10.3389/fmicb.2023.1267234) [![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Codecov test coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master) [![volcalc status badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datascience.r-universe.dev/volcalc)
+[![R-CMD-check](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Meredith-Lab/volcalc/actions/workflows/R-CMD-check.yaml) [![latest-DOI](https://zenodo.org/badge/425022983.svg)](https://zenodo.org/badge/latestdoi/425022983) [![manuscript-DOI](https://img.shields.io/badge/DOI-10.3389/fmicb.2023.1267234-32a859.svg)](https://doi.org/10.3389/fmicb.2023.1267234) [![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Codecov test coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master) [![volcalc status badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datascience.r-universe.dev/volcalc) [![CRAN status](https://www.r-pkg.org/badges/version/volcalc)](https://CRAN.R-project.org/package=volcalc)
 
 <!-- badges: end -->
 
@@ -31,6 +31,12 @@ Currently, the only methods implemented are SIMPOL.1 (Pankow & Asher 2008) and a
 `volcalc` works with either .mol files or [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings as input, and supports downloading .mol files directly from [KEGG](https://www.kegg.jp/).
 
 ## Installation
+
+Install from CRAN with
+
+``` r
+install.packages("volcalc")
+```
 
 You can install the development version of `volcalc` from GitHub with
 

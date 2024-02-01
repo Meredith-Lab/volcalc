@@ -15,6 +15,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
 [![volcalc status
 badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datascience.r-universe.dev/volcalc)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/volcalc)](https://CRAN.R-project.org/package=volcalc)
 
 <!-- badges: end -->
 
@@ -35,6 +37,12 @@ strings as input, and supports downloading .mol files directly from
 [KEGG](https://www.kegg.jp/).
 
 ## Installation
+
+Install from CRAN with
+
+``` r
+install.packages("volcalc")
+```
 
 You can install the development version of `volcalc` from GitHub with
 
