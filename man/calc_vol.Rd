@@ -51,6 +51,7 @@ universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha}, are also returned.
 }
 \examples{
+\dontrun{
 mol_paths <- mol_example()
 calc_vol(mol_paths)
 
@@ -59,7 +60,7 @@ calc_vol(mol_paths,  return_fx_groups = TRUE)
 
 # Return intermediate calculations
 calc_vol(mol_paths, return_calc_steps = TRUE)
-
+}
 }
 \references{
 Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006.
