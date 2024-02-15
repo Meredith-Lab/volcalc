@@ -7,7 +7,7 @@ c(
                person("Eric R.", "Scott", comment = c(ORCID = "0000-0002-7430-7879")),
                person("Laura K.", "Meredith", role = "aut", comment = c(ORCID = "0000-0003-4244-4366"))),
     year = "2023",
-    note = "R package version 2.1.1",
+    note = sprintf("R package version %s", meta$Version),
     doi = "10.5281/zenodo.8015155",
     header = "To cite volcalc in publications please use:" 
   ),
