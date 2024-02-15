@@ -58,7 +58,8 @@ test_that("SMARTS strings are correct", {
   expected <- test_compounds %>% dplyr::select(smiles, dplyr::all_of(common_cols))
   actual   <- test_fx_groups %>% dplyr::select(smiles, dplyr::all_of(common_cols))
   
-  # compare but ignore NAs in expected, by just overwriting them with values in actual using rows_patch()
+  # compare but ignore NAs in expected, by just overwriting them with values in
+  # actual using rows_patch()
   expect_equal(
     actual,
     dplyr::rows_patch(expected, actual)

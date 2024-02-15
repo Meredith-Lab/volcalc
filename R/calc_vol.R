@@ -40,6 +40,7 @@
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' mol_paths <- mol_example()
 #' calc_vol(mol_paths)
 #'
@@ -48,7 +49,7 @@
 #'
 #' # Return intermediate calculations
 #' calc_vol(mol_paths, return_calc_steps = TRUE)
-#' 
+#' }
 calc_vol <-
   function(input, 
            from = c("mol_path", "smiles"),
@@ -123,7 +124,9 @@ calc_vol <-
     
     #return:
     vol_df %>% 
-      dplyr::select(dplyr::all_of(c({{ from }}, "formula", "name", "rvi", "category", cols_fx, cols_calc)))
+      dplyr::select(dplyr::all_of(c(
+        {{ from }}, "formula", "name", "rvi", "category", cols_fx, cols_calc)
+      ))
     
   }
 

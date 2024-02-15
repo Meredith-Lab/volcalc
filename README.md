@@ -15,6 +15,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 coverage](https://codecov.io/gh/Meredith-Lab/volcalc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Meredith-Lab/volcalc?branch=master)
 [![volcalc status
 badge](https://cct-datascience.r-universe.dev/badges/volcalc)](https://cct-datascience.r-universe.dev/volcalc)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/volcalc)](https://CRAN.R-project.org/package=volcalc)
 
 <!-- badges: end -->
 
@@ -27,7 +29,9 @@ volatility for chemical compounds.
 volatility that rely on molecular properties such as molecular weight,
 numbers of certain atoms, and counts of certain functional groups.
 Currently, the only methods implemented are SIMPOL.1 ([Pankow & Asher
-2008](https://doi.org/10.5194/acp-8-2773-2008)) and a modified version used in [Meredith et al. (2023)](https://doi.org/10.3389/fmicb.2023.1267234).
+2008](https://doi.org/10.5194/acp-8-2773-2008)) and a modified version
+used in [Meredith et
+al. (2023)](https://doi.org/10.3389/fmicb.2023.1267234).
 
 `volcalc` works with either .mol files or
 [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
@@ -35,6 +39,12 @@ strings as input, and supports downloading .mol files directly from
 [KEGG](https://www.kegg.jp/).
 
 ## Installation
+
+Install from CRAN with
+
+``` r
+install.packages("volcalc")
+```
 
 You can install the development version of `volcalc` from GitHub with
 
@@ -171,5 +181,7 @@ method for predicting vapor pressures and enthalpies of vaporization of
 multifunctional organic compounds. Atmos. Chem. Phys.
 <https://doi.org/10.5194/acp-8-2773-2008>
 
-Meredith, L.K., Ledford, S.M., Riemer, K., Geffre, P., Graves, K., Honeker, L.K., LeBauer, D., Tfaily, M.M., Krechmer, J., 2023. Automating methods for estimating metabolite volatility. Frontiers in Microbiology 14. <https://doi.org/10.3389/fmicb.2023.1267234>
-
+Meredith, L.K., Ledford, S.M., Riemer, K., Geffre, P., Graves, K.,
+Honeker, L.K., LeBauer, D., Tfaily, M.M., Krechmer, J., 2023. Automating
+methods for estimating metabolite volatility. Frontiers in Microbiology
+14. <https://doi.org/10.3389/fmicb.2023.1267234>

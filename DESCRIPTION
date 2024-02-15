@@ -11,10 +11,11 @@ Authors@R: c(
     person("S. Marshall", "Ledford", role = "ctb"),
     person("Tamás", "Stirling", role = "ctb")
   )
-Description: Use this package to calculate estimated relative volatility
-    index values for organic compounds based on functional group
-    contributions.  Calculation uses the SIMPOL.1 method (Prankow and Asher,
-    2008) or modified SIMPOL.1 method as in Meredith et al. (2023).
+Description: Calculate estimated relative volatility index values for
+    organic compounds based on functional group contributions. Calculation
+    uses the SIMPOL.1 method (Prankow and Asher, 2008)
+    <doi:10.5194/acp-8-2773-2008> or modified SIMPOL.1 method as in
+    Meredith et al. (2023) <doi:10.5194/acp-8-2773-2008>.
 License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
@@ -27,8 +28,8 @@ Imports:
     httr2,
     KEGGREST,
     magrittr,
-    rlang,
     purrr,
+    rlang,
     stringr,
     tibble,
     tidyr,
@@ -39,9 +40,10 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     withr
+VignetteBuilder: 
+    knitr
 biocViews: 
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-VignetteBuilder: knitr
