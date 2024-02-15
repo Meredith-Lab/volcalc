@@ -33,7 +33,8 @@ Imports:
     tibble,
     tidyr,
     tidyselect,
-    callr
+    callr,
+    cli
 Suggests: 
     knitr,
     processx,
