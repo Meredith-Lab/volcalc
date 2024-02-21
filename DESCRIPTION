@@ -20,7 +20,6 @@ License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
 Imports: 
-    ChemmineOB,
     ChemmineR,
     dplyr,
     fs,
@@ -35,6 +34,7 @@ Imports:
     tidyr,
     tidyselect
 Suggests: 
+    ChemmineOB,
     knitr,
     processx,
     rmarkdown,
