@@ -1,12 +1,5 @@
 utils::globalVariables(".data")
 
-# This only exists to silence a R CMD check note about ChemmineOB being in
-# Imports but no functions being used in volcalc directly.
-zzz <- function() {
-  ChemmineOB::prop_OB
-}
-
-
 #' Extracts first element of results of atomcount() as a tibble
 #' 
 #' ChemmineR::atomcount() returns a list of table objects, sometimes named,
