@@ -1,5 +1,7 @@
 # volcalc (development version)
 
+* Changed `ChemmineOB` from a hard to soft dependency (moved from Imports to Suggests) to satisfy CRAN checks. Users will be prompted to install `ChemmineOB` the fist time `get_fx_groups()` or `calc_vol()` are run if they don't already have it installed.
+
 # volcalc 2.1.1
 
 * Added Dr. Laura Meredith as a package author as the concept for volcalc originated from her.
