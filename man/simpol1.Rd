@@ -46,10 +46,12 @@ calculations of logP at different temperatures.  This implementation
 currently only calculates values at 20ºC.
 }
 \examples{
-mol_path <- mol_example()[3]
-sdf <- ChemmineR::read.SDFset(mol_path)
-fx_groups <- get_fx_groups(sdf)
-simpol1(fx_groups)
+if (rlang::is_installed("ChemmineOB")) {
+  mol_path <- mol_example()[3]
+  sdf <- ChemmineR::read.SDFset(mol_path)
+  fx_groups <- get_fx_groups(sdf)
+  simpol1(fx_groups)
+}
 }
 \references{
 Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D,

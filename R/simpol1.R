@@ -46,10 +46,12 @@
 #' @export
 #'
 #' @examples
-#' mol_path <- mol_example()[3]
-#' sdf <- ChemmineR::read.SDFset(mol_path)
-#' fx_groups <- get_fx_groups(sdf)
-#' simpol1(fx_groups)
+#' if (rlang::is_installed("ChemmineOB")) {
+#'   mol_path <- mol_example()[3]
+#'   sdf <- ChemmineR::read.SDFset(mol_path)
+#'   fx_groups <- get_fx_groups(sdf)
+#'   simpol1(fx_groups)
+#' }
 simpol1 <- function(fx_groups, meredith = TRUE) {
   betas <- fx_groups %>%
     # assume NAs are 0s for the sake of this calculation
