@@ -25,7 +25,7 @@
 #' @export
 get_fx_groups <- function(compound_sdf) {
   # Check that ChemmineOB is installed
-  rlang::check_installed("ChemmineOB", action = BiocManager::install)
+  rlang::check_installed("ChemmineOB", action = pak::pak)
   
   # For now at least, this code only works with SDFset objects that contain
   # single molecules. 
