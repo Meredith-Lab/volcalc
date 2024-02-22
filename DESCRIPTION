@@ -20,6 +20,7 @@ License: MIT + file LICENSE
 URL: https://meredith-lab.github.io/volcalc/
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
 Imports: 
+    BiocManager,
     ChemmineR,
     dplyr,
     fs,

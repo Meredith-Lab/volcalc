@@ -16,12 +16,16 @@
 #'   counts.
 #' @seealso [calc_vol()]
 #' @examples
-#' mol_path <- mol_example()[1]
-#' sdf <- ChemmineR::read.SDFset(mol_path)
-#' get_fx_groups(sdf)
+#' if (rlang::is_installed("ChemmineOB")) {
+#'   mol_path <- mol_example()[1]
+#'   sdf <- ChemmineR::read.SDFset(mol_path)
+#'   get_fx_groups(sdf)
+#' }
 #' 
 #' @export
 get_fx_groups <- function(compound_sdf) {
+  # Check that ChemmineOB is installed
+  rlang::check_installed("ChemmineOB", action = BiocManager::install)
   
   # For now at least, this code only works with SDFset objects that contain
   # single molecules. 
