@@ -1,0 +1,78 @@
+---
+title: "Introduction to volcalc"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to volcalc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- generated from volcalc-source.Rmd.source.  Please edit that file! -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(volcalc)
+```
+
+The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to a .mol file or a SMILES string.  There are a few example .mol files included in the `volcalc` installation and their file paths are returned by `mol_example()`.
+
+### Basic usage with .mol files
+
+```{r}
+#using built-in example .mol files
+mol_paths <- mol_example()
+mol_paths
+```
+
+The default output of `calc_vol()` includes a relative volatility index, `rvi` which is equivalent to $\textrm{log}_{10}C^\ast$ (Meredith et al., 2023).  It also includes a RVI category for clean air.
+
+```{r}
+calc_vol(mol_paths)
+```
+
+### Specify environment
+
+Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility. Environment options and their category cutoffs are in the `calc_vol()` documentation and are discussed in more detail in Meredith et al. (2023) and Donahue et al. (2006).
+
+```{r}
+calc_vol(mol_paths, environment = "soil")
+```
+
+### Return intermediate steps
+
+`calc_vol()` uses a modified version of the SIMPOL.1 method by default which is a group contribution method.  You can have `calc_vol()` return the counts of functional groups and other molecular properties (which is useful for validation) with `return_fx_groups = TRUE`.  See `?get_fx_groups()` for more information about these additional columns.
+
+```{r}
+calc_vol(mol_paths, return_fx_groups = TRUE)
+```
+
+The SIMPOL.1 method calculates $\textrm{log}_{10} P_{\textrm{L},i}^\circ(T)$, which is used by `calc_vol()` to calculate RVI as $\textrm{log}_{10}(PM/RT)$ where $P$ is the estimated vapor pressure for the compound, $M$ is molecular weight of the compound, $R$ is the universal gas constant, and $T$ is temperature (293.14K or 20ºC). To see these intermediate calculations, use `return_calc_steps = TRUE`.
+
+```{r}
+calc_vol(mol_paths, return_calc_steps = TRUE)
+```
+`log_alpha` = $\textrm{log}_{10}(M/RT)$
+
+### Use with SMILES
+
+Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
+
+```{r}
+## This will error even though the SMILES is correct
+# calc_vol("CC/C=C\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
+
+# To solve this, escape \C as \\C
+calc_vol("CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
+```
+
+### References
+
+Donahue, N.M., Robinson, A.L., Stanier, C.O., Pandis, S.N., 2006. Coupled Partitioning, Dilution, and Chemical Aging of Semivolatile Organics. Environ. Sci. Technol. 40, 2635–2643. DOI: 10.1021/es052297c
+
+Meredith L, Ledford S, Riemer K, Geffre P, Graves K, Honeker L, LeBauer D, Tfaily M, Krechmer J, 2023. Automating methods for estimating metabolite volatility. Frontiers in Microbiology. DOI: 10.3389/fmicb.2023.1267234

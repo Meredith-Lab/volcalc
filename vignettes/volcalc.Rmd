@@ -7,14 +7,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+<!-- generated from volcalc-source.Rmd.source.  Please edit that file! -->
 
-```{r setup}
+
+
+
+```r
 library(volcalc)
 ```
 
@@ -22,38 +20,87 @@ The primary function in `volcalc` is `calc_vol()`.  It accepts either a path to 
 
 ### Basic usage with .mol files
 
-```{r}
+
+```r
 #using built-in example .mol files
 mol_paths <- mol_example()
 mol_paths
+#> [1] "/Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C00031.mol"
+#> [2] "/Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C08491.mol"
+#> [3] "/Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16181.mol"
+#> [4] "/Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16286.mol"
+#> [5] "/Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16521.mol"
 ```
 
 The default output of `calc_vol()` includes a relative volatility index, `rvi` which is equivalent to $\textrm{log}_{10}C^\ast$ (Meredith et al., 2023).  It also includes a RVI category for clean air.
 
-```{r}
+
+```r
 calc_vol(mol_paths)
+#> # A tibble: 5 × 5
+#>   mol_path                                                          formula  name                  rvi category
+#>   <chr>                                                             <chr>    <chr>               <dbl> <fct>   
+#> 1 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C00031.mol C6H12O6  D-Glucose           -2.81 non-vol…
+#> 2 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C08491.mol C12H18O3 (-)-Jasmonic acid    1.84 moderate
+#> 3 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16181.mol C6H7Cl5O beta-2,3,4,5,6-Pen…  6.98 high    
+#> 4 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16286.mol C12H22O  Geosmin              4.16 high    
+#> 5 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16521.mol C5H8     Isoprene             8.84 high
 ```
 
 ### Specify environment
 
 Specifying `environment` only alters the RVI category by using different RVI cutoffs for non-volatile, low, moderate, and high volatility. Environment options and their category cutoffs are in the `calc_vol()` documentation and are discussed in more detail in Meredith et al. (2023) and Donahue et al. (2006).
 
-```{r}
+
+```r
 calc_vol(mol_paths, environment = "soil")
+#> # A tibble: 5 × 5
+#>   mol_path                                                          formula  name                  rvi category
+#>   <chr>                                                             <chr>    <chr>               <dbl> <fct>   
+#> 1 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C00031.mol C6H12O6  D-Glucose           -2.81 non-vol…
+#> 2 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C08491.mol C12H18O3 (-)-Jasmonic acid    1.84 non-vol…
+#> 3 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16181.mol C6H7Cl5O beta-2,3,4,5,6-Pen…  6.98 moderate
+#> 4 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16286.mol C12H22O  Geosmin              4.16 low     
+#> 5 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C16521.mol C5H8     Isoprene             8.84 high
 ```
 
 ### Return intermediate steps
 
 `calc_vol()` uses a modified version of the SIMPOL.1 method by default which is a group contribution method.  You can have `calc_vol()` return the counts of functional groups and other molecular properties (which is useful for validation) with `return_fx_groups = TRUE`.  See `?get_fx_groups()` for more information about these additional columns.
 
-```{r}
+
+```r
 calc_vol(mol_paths, return_fx_groups = TRUE)
+#> # A tibble: 5 × 53
+#>   mol_path               formula name    rvi category exact_mass carbons carbons_asa rings_aromatic rings_total
+#>   <chr>                  <chr>   <chr> <dbl> <fct>         <dbl>   <int>       <int>          <int>       <int>
+#> 1 /Users/ericscott/Docu… C6H12O6 D-Gl… -2.81 non-vol…      180.        6           0              0           1
+#> 2 /Users/ericscott/Docu… C12H18… (-)-…  1.84 moderate      210.       12           0              0           1
+#> 3 /Users/ericscott/Docu… C6H7Cl… beta…  6.98 high          270.        6           0              0           1
+#> 4 /Users/ericscott/Docu… C12H22O Geos…  4.16 high          182.       12           0              0           2
+#> 5 /Users/ericscott/Docu… C5H8    Isop…  8.84 high           68.1       5           0              0           0
+#> # ℹ 43 more variables: rings_aliphatic <int>, carbon_dbl_bonds_aliphatic <int>, CCCO_aliphatic_ring <int>,
+#> #   hydroxyl_total <int>, hydroxyl_aromatic <int>, hydroxyl_aliphatic <int>, aldehydes <int>, ketones <int>,
+#> #   carbox_acids <int>, ester <int>, ether_total <int>, ether_alkyl <int>, ether_alicyclic <int>,
+#> #   ether_aromatic <int>, nitrate <int>, nitro <int>, amine_primary <int>, amine_secondary <int>,
+#> #   amine_tertiary <int>, amine_aromatic <int>, amide_primary <int>, amide_secondary <int>,
+#> #   amide_tertiary <int>, carbonylperoxynitrate <int>, peroxide <int>, hydroperoxide <int>,
+#> #   carbonylperoxyacid <int>, nitrophenol <int>, nitroester <int>, phosphoric_acids <int>, …
 ```
 
 The SIMPOL.1 method calculates $\textrm{log}_{10} P_{\textrm{L},i}^\circ(T)$, which is used by `calc_vol()` to calculate RVI as $\textrm{log}_{10}(PM/RT)$ where $P$ is the estimated vapor pressure for the compound, $M$ is molecular weight of the compound, $R$ is the universal gas constant, and $T$ is temperature (293.14K or 20ºC). To see these intermediate calculations, use `return_calc_steps = TRUE`.
 
-```{r}
+
+```r
 calc_vol(mol_paths, return_calc_steps = TRUE)
+#> # A tibble: 5 × 8
+#>   mol_path                                      formula name    rvi category molecular_weight log_alpha log10_P
+#>   <chr>                                         <chr>   <chr> <dbl> <fct>               <dbl>     <dbl>   <dbl>
+#> 1 /Users/ericscott/Documents/GitHub/volcalc/in… C6H12O6 D-Gl… -2.81 non-vol…            180.       9.87  -12.7 
+#> 2 /Users/ericscott/Documents/GitHub/volcalc/in… C12H18… (-)-…  1.84 moderate            210.       9.94   -8.10
+#> 3 /Users/ericscott/Documents/GitHub/volcalc/in… C6H7Cl… beta…  6.98 high                272.      10.1    -3.08
+#> 4 /Users/ericscott/Documents/GitHub/volcalc/in… C12H22O Geos…  4.16 high                182.       9.88   -5.72
+#> 5 /Users/ericscott/Documents/GitHub/volcalc/in… C5H8    Isop…  8.84 high                 68.1      9.45   -0.61
 ```
 `log_alpha` = $\textrm{log}_{10}(M/RT)$
 
@@ -61,12 +108,17 @@ calc_vol(mol_paths, return_calc_steps = TRUE)
 
 Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
 
-```{r}
+
+```r
 ## This will error even though the SMILES is correct
 # calc_vol("CC/C=C\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
 
 # To solve this, escape \C as \\C
 calc_vol("CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
+#> # A tibble: 1 × 5
+#>   smiles                                 formula  name    rvi category
+#>   <chr>                                  <chr>    <chr> <dbl> <fct>   
+#> 1 "CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O" C12H18O3 <NA>   1.84 moderate
 ```
 
 ### References
