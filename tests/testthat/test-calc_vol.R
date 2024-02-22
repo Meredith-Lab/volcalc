@@ -1,9 +1,11 @@
 test_that("volatility estimate is correct", {
+  skip_if_not_installed("ChemmineOB")
   ex_vol_df <- calc_vol("data/C16181.mol")
   expect_equal(round(ex_vol_df$rvi, 6), 6.975349)
 })
 
 test_that("returns correct columns depending on return arguments", {
+  skip_if_not_installed("ChemmineOB")
   just_vol <- calc_vol("data/C16181.mol")
   with_fx <- calc_vol("data/C16181.mol", return_fx_groups = TRUE)
   with_fx_steps <-
@@ -20,6 +22,7 @@ test_that("returns correct columns depending on return arguments", {
 })
 
 test_that("calc_vol() works with multiple inputs", {
+  skip_if_not_installed("ChemmineOB")
   paths <- c("data/map00361/C00011.mol", "data/map00361/C00042.mol")
   smiles <- c("O=C=O", "C(CC(=O)O)C(=O)O")
   expect_s3_class(calc_vol(paths), "data.frame")
@@ -27,6 +30,7 @@ test_that("calc_vol() works with multiple inputs", {
 })
 
 test_that("smiles and .mol give same results", {
+  skip_if_not_installed("ChemmineOB")
   paths <-
     c("data/C16181.mol",
       "data/map00361/C00011.mol",
@@ -40,10 +44,12 @@ test_that("smiles and .mol give same results", {
 })
 
 test_that("errors with invalid SMILES", {
+  skip_if_not_installed("ChemmineOB")
   expect_error(calc_vol("hello", from = "smiles"))
 })
   
 test_that("meredith and original method give different results", {
+  skip_if_not_installed("ChemmineOB")
   #thiol and sulfonate groups, respectively
   # paths <- c(test_path("data/C00409.mol"), test_path("data/C03349.mol"))
   smiles <-

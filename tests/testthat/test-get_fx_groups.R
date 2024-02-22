@@ -1,10 +1,12 @@
 test_that("a functional group count is correct for example compound", {
+  skip_if_not_installed("ChemmineOB")
   sdf <- ChemmineR::read.SDFset(test_path("data/C16181.mol"))
   ex_df <- get_fx_groups(sdf)
   expect_equal(ex_df$hydroxyl_aliphatic, 1, ignore_attr = TRUE)
 })
 
 test_that("error with SDFset with more than one molecule", {
+  skip_if_not_installed("ChemmineOB")
   data(sdfsample,package = "ChemmineR")
   sdfset <- sdfsample
   expect_error(get_fx_groups(sdfset[1:4]),
@@ -12,6 +14,7 @@ test_that("error with SDFset with more than one molecule", {
 })
 
 test_that("SMILES and mol give same results", {
+  skip_if_not_installed("ChemmineOB")
   from_mol <- ChemmineR::read.SDFset(test_path("data/C16181.mol"))
   from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
   expect_equal(
@@ -22,6 +25,7 @@ test_that("SMILES and mol give same results", {
 })
 
 test_that("SMARTS strings are correct", {
+  skip_if_not_installed("ChemmineOB")
   # correctness tests compare output of get_fx_groups() to a manually edited
   # .csv file at "tests/testthat/data/test_compounds.csv".  Add compounds to
   # that file with counts of functional groups using the same column names as

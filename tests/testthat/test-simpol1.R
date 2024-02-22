@@ -1,4 +1,5 @@
 test_that("isoprene is more volatile than glucose", {
+  skip_if_not_installed("ChemmineOB")
   isoprene <- ChemmineR::read.SDFset(mol_example()[5])
   glucose  <- ChemmineR::read.SDFset(mol_example()[1])
   
