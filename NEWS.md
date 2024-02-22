@@ -1,6 +1,6 @@
 # volcalc (development version)
 
-* Changed `ChemmineOB` from a hard to soft dependency (moved from Imports to Suggests) to satisfy CRAN checks. Users will be prompted to install `ChemmineOB` the fist time `get_fx_groups()` or `calc_vol()` are run if they don't already have it installed.
+* Changed `ChemmineOB` from a hard to soft dependency (moved from Imports to Suggests) to satisfy CRAN checks. Users will be prompted to install `ChemmineOB` the fist time `get_fx_groups()` or `calc_vol()` are run if they don't already have it installed. To make this work, `BiocManager` was added as a dependency.
 
 # volcalc 2.1.1
 
