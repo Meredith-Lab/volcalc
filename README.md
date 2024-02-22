@@ -65,12 +65,13 @@ You can install the ‘legacy’ version used in Meredith et al. (2023) with
 pak::pkg_install("Meredith-Lab/volcalc@v1.0.2")
 ```
 
-Installation of `volcalc` requires the system libraries
-[OpenBabel](https://open-babel.readthedocs.io/) and Eigen3 (requirements
-of the `ChemmineOB` package, which `volcalc` depends on). `pak` will
-take care of the installation of these libraries for you on some
-systems, but you may need to install them manually on some operating
-systems.
+To use the main functionality of `volcalc`, you will also need to
+install the `ChemmineOB` package (if you don’t have it installed, you
+will be prompted to install it upon first use of `calc_vol()`).
+`ChemmineOB` requires the system libraries
+[OpenBabel](https://open-babel.readthedocs.io/) and Eigen3 on all
+platforms except Windows. Depending on how you install `ChemmineOB`, you
+may need to install these system dependencies manually.
 
 For macOS, they can be installed via homebrew by running the following
 shell command:
@@ -157,9 +158,9 @@ reference below:
 citation("volcalc")
 #> To cite volcalc in publications please use:
 #> 
-#>   Riemer K, Scott E (2023). _volcalc: Calculate Volatility of Chemical
-#>   Compounds_. doi:10.5281/zenodo.8015155
-#>   <https://doi.org/10.5281/zenodo.8015155>, R package version 2.0.0.
+#>   Riemer K, Scott E, Meredith L (2023). _volcalc: Calculate Volatility
+#>   of Chemical Compounds_. doi:10.5281/zenodo.8015155
+#>   <https://doi.org/10.5281/zenodo.8015155>, R package version 2.1.1.
 #> 
 #> Please also cite the related manuscript:
 #> 
