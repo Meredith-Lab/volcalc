@@ -26,9 +26,11 @@ Contributions of SMARTS strings or other methods to capture this
 "functional group" are welcome.
 }
 \examples{
-mol_path <- mol_example()[1]
-sdf <- ChemmineR::read.SDFset(mol_path)
-get_fx_groups(sdf)
+if (rlang::is_installed("ChemmineOB")) {
+  mol_path <- mol_example()[1]
+  sdf <- ChemmineR::read.SDFset(mol_path)
+  get_fx_groups(sdf)
+}
 
 }
 \seealso{

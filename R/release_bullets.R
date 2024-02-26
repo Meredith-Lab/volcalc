@@ -2,6 +2,6 @@
 release_bullets <- function() {
   c(
     "Increment version in CITATION.cff and CITATION",
-    "run vignettes/precompute.R script to precompute KEGG vignette"
+    "run vignettes/precompute.R script to precompute vignettes"
   )
 }
