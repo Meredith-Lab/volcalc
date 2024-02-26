@@ -1,3 +1,7 @@
+## Resubmission
+
+I've addressed comments from Konstanze Lauseker by changing long running examples from dontrun to donttest and correcting the format of citations in the package description
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
@@ -12,7 +16,7 @@ The note on check is:
 
 ChemmineOB is an R package with the [Artistic-2.0 license](https://github.com/girke-lab/ChemmineOB/blob/master/LICENSE), which does appear to be FOSS.  Other R packages
 
-Another note came up in a CRAN submission pre-test only on Debian
+Another ERROR came up in a CRAN submission pre-test only on Debian
 
 >* checking package dependencies ... ERROR
 Package required but not available: ‘ChemmineOB’
