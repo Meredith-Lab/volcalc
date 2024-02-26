@@ -40,7 +40,7 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' mol_paths <- mol_example()
 #' calc_vol(mol_paths)
 #'
