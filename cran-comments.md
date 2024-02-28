@@ -2,6 +2,8 @@
 
 I've addressed comments from Konstanze Lauseker by changing long running examples from dontrun to donttest and correcting the format of citations in the package description
 
+Also, the maintainers of ChemmineOB have addressed issues with the Licence field of their DESCRIPTION file.
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note

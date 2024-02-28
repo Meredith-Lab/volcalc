@@ -1,6 +1,8 @@
+# volcalc (development version)
+
 # volcalc 2.1.2
 
-* Initial CRAN submission
+* There is no release for this version as it was a rejected CRAN submission.
 
 # volcalc 2.1.1
 
