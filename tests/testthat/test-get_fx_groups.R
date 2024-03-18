@@ -66,5 +66,19 @@ test_that("SMARTS strings are correct", {
   )
 })
 
-
-
+test_that("validate = TRUE works", {
+  sdf_bad_header <- ChemmineR::read.SDFset(test_path("data/C16181_malformed_header.mol"))
+  sdf_r_group <- ChemmineR::read.SDFset(test_path("data/C00157.mol"))
+  expect_true(
+    all(is.na(
+      get_fx_groups(sdf_bad_header, validate = TRUE) %>% 
+        select(-name)
+      ))
+    )
+  expect_true(
+    all(is.na(
+      get_fx_groups(sdf_r_group, validate = TRUE) %>% 
+        select(-name)
+    ))
+  )
+})
