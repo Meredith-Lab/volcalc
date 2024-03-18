@@ -11,6 +11,19 @@
 #'
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
+#' @param validate logical; if `TRUE` (default), results are checked for
+#'   possible errors in parsing by Open Babel and `NA`s are returned if possible
+#'   errors are found.  Setting to `FALSE` bypasses these checks—use at your own
+#'   risk, as OpenBabel errors cannot be captured!
+#'   
+#' @details
+#' It is unfortunately difficult to capture errors and warnings produced by the
+#' command line tool OpenBabel.  These errors and warnings are printed to the R
+#' console, but they are *not* R errors and do not stop code from running and
+#' producing potentially incorrect data. `validate = TRUE` checks the output of
+#' certain `ChemmineR` functions for the *symptoms* of parsing errors, namely
+#' missing values for InChI and molecular formula.
+#' 
 #'
 #' @returns A tibble with columns of basic compound info and functional group
 #'   counts.
@@ -21,7 +34,7 @@
 #' get_fx_groups(sdf)
 #' 
 #' @export
-get_fx_groups <- function(compound_sdf) {
+get_fx_groups <- function(compound_sdf, validate = TRUE) {
   
   # For now at least, this code only works with SDFset objects that contain
   # single molecules. 
@@ -30,6 +43,8 @@ get_fx_groups <- function(compound_sdf) {
     stop("SDFset objects must contain a single molecule only")
   }
   
+  #get basic properties
+  prop_ob <- ChemmineR::propOB(compound_sdf)
   chem_groups <- ChemmineR::groups(compound_sdf,
                                    groups = "fctgroup",
                                    type = "countMA")
@@ -117,11 +132,11 @@ get_fx_groups <- function(compound_sdf) {
   
   fx_groups_df <- 
     dplyr::tibble(
-      formula = ChemmineR::propOB(compound_sdf)$formula,
+      formula = prop_ob$formula,
       #TODO should name be moved to `calc_vol`? `formula` also?
-      name = ChemmineR::propOB(compound_sdf)$title,
+      name = prop_ob$title,
       exact_mass = ChemmineR::exactMassOB(compound_sdf),
-      molecular_weight = ChemmineR::propOB(compound_sdf)$MW
+      molecular_weight = prop_ob$MW
     ) %>% 
     dplyr::mutate(
       carbons = atoms[["C"]] %||% 0L,
@@ -204,6 +219,16 @@ get_fx_groups <- function(compound_sdf) {
     
     #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
+  
+  if (isTRUE(validate)) {
+    #when SDFs have problems, the results of propOB() usually don't have InChI or formula
+    if (prop_ob$InChI == "" | prop_ob$formula == "") {
+      fx_groups_df <- fx_groups_df %>% 
+        dplyr::mutate(dplyr::across(-"name", \(x) magrittr::set_class(NA, class(x))))
+    }
+    warning("Possible OpenBabel errors detected and only NAs returned.
+Run with `validate = FALSE` to ignore this.")
+  }
   
   #return
   fx_groups_df

@@ -72,13 +72,13 @@ test_that("validate = TRUE works", {
   expect_true(
     all(is.na(
       get_fx_groups(sdf_bad_header, validate = TRUE) %>% 
-        select(-name)
+        dplyr::select(-name)
       ))
     )
   expect_true(
     all(is.na(
       get_fx_groups(sdf_r_group, validate = TRUE) %>% 
-        select(-name)
+        dplyr::select(-name)
     ))
   )
 })
