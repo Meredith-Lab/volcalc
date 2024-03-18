@@ -81,4 +81,8 @@ test_that("validate = TRUE works", {
         dplyr::select(-name)
     ))
   )
+  expect_equal(
+    get_fx_groups(sdf_r_group, validate = FALSE)$carbons,
+    10
+  )
 })
