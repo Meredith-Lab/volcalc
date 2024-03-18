@@ -14,7 +14,7 @@
 #' @param validate logical; if `TRUE` (default), results are checked for
 #'   possible errors in parsing by Open Babel and `NA`s are returned if possible
 #'   errors are found.  Setting to `FALSE` bypasses these checks—use at your own
-#'   risk, as OpenBabel errors cannot be captured!
+#'   risk! See **Details** for more information
 #'   
 #' @details
 #' It is unfortunately difficult to capture errors and warnings produced by the
