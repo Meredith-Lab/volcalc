@@ -90,8 +90,6 @@ calc_vol <-
     if(from == "smiles") {
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
-    #TODO use ChemmineR::validSDF() to check for any invalid inputs
-    # Warn and return NA for any that aren't valid??
     fx_groups_df_list <-
       lapply(compound_sdf_list, get_fx_groups, validate = validate)
     names(fx_groups_df_list) <- input

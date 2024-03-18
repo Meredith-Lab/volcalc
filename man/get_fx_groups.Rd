@@ -13,7 +13,7 @@ get_fx_groups(compound_sdf, validate = TRUE)
 \item{validate}{logical; if \code{TRUE} (default), results are checked for
 possible errors in parsing by Open Babel and \code{NA}s are returned if possible
 errors are found.  Setting to \code{FALSE} bypasses these checks—use at your own
-risk! See \strong{Details} for more information}
+risk! See \strong{Details} for more information.}
 }
 \value{
 A tibble with columns of basic compound info and functional group

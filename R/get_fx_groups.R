@@ -14,7 +14,7 @@
 #' @param validate logical; if `TRUE` (default), results are checked for
 #'   possible errors in parsing by Open Babel and `NA`s are returned if possible
 #'   errors are found.  Setting to `FALSE` bypasses these checks—use at your own
-#'   risk! See **Details** for more information
+#'   risk! See **Details** for more information.
 #'   
 #' @details
 #' It is unfortunately difficult to capture errors and warnings produced by the
@@ -221,7 +221,8 @@ get_fx_groups <- function(compound_sdf, validate = TRUE) {
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
   
   if (isTRUE(validate)) {
-    #when SDFs have problems, the results of propOB() usually don't have InChI or formula
+    # when SDFs have problems, the results of propOB() usually don't have InChI or formula
+    # TODO: possibly add `| isFALSE(ChemmineR::validSDF(compound_sdf))`, although I've never seen this catch any problems in practice.
     if (prop_ob$InChI == "" | prop_ob$formula == "") {
       fx_groups_df <- fx_groups_df %>% 
         dplyr::mutate(dplyr::across(-"name", \(x) magrittr::set_class(NA, class(x))))
