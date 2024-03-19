@@ -92,3 +92,9 @@ test_that("validate = TRUE doesn't change correct results", {
   expect_equal(get_fx_groups(from_smiles, validate = TRUE),
                get_fx_groups(from_smiles, validate = FALSE))
 })
+
+#temporary! Trying to figure out if windows version works differently
+test_that("InChI get generated", {
+  from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
+  expect_false(ChemmineR::propOB(from_smiles)$InChI == "")
+})
