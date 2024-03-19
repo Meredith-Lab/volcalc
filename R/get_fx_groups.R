@@ -96,13 +96,13 @@ get_fx_groups <- function(compound_sdf, validate = TRUE) {
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
-
+  
   #TODO need patterns for amines that don't pick up amides
   amine_primary_pattern <- "[NX3;H2;!$(NC=[!#6]);!$(NC#[!#6])][#6X4]"
   amine_secondary_pattern <- "[NX3H1!$(NC=[!#6])!$(NC#[!#6])]([#6X4])[#6X4]"
   amine_tertiary_pattern <- "[NX3H0!$(NC=[!#6])!$(NC#[!#6])]([#6X4])([#6X4])[#6X4]"
   amine_aromatic_pattern <-  "[NX3;!$(NO)]c" 
-
+  
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- 
@@ -226,9 +226,9 @@ get_fx_groups <- function(compound_sdf, validate = TRUE) {
     if (prop_ob$InChI == "" | prop_ob$formula == "") {
       fx_groups_df <- fx_groups_df %>% 
         dplyr::mutate(dplyr::across(-"name", \(x) magrittr::set_class(NA, class(x))))
-    }
-    warning("Possible OpenBabel errors detected and only NAs returned.
+      warning("Possible OpenBabel errors detected and only NAs returned.
 Run with `validate = FALSE` to ignore this.")
+    }
   }
   
   #return

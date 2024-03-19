@@ -86,3 +86,9 @@ test_that("validate = TRUE works", {
     10
   )
 })
+
+test_that("validate = TRUE doesn't change correct results", {
+  from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
+  expect_equal(get_fx_groups(from_smiles, validate = TRUE),
+               get_fx_groups(from_smiles, validate = FALSE))
+})
