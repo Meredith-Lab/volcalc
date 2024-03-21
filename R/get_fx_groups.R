@@ -36,6 +36,12 @@
 #' @export
 get_fx_groups <- function(compound_sdf, validate = TRUE) {
   
+  if(Sys.info()[["sysname"]] == "Windows" & isTRUE(validate)) {
+    warning("`validate = TRUE` is not available on Windows.
+Set `validate = FALSE` to silence this warning.")
+    validate <- FALSE
+  }
+  
   # For now at least, this code only works with SDFset objects that contain
   # single molecules. 
   # TODO: make this function work with SDFset objects with multiple molecules?
@@ -234,3 +240,6 @@ Run with `validate = FALSE` to ignore this.")
   #return
   fx_groups_df
 }
+
+#for mocking in tests. see: https://blog.r-hub.io/2024/03/21/mocking-new-take/ and ?testthat::local_mocked_bindings()
+Sys.info <- NULL
