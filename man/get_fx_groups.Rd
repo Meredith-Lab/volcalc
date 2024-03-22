@@ -4,11 +4,17 @@
 \alias{get_fx_groups}
 \title{Count compound functional groups}
 \usage{
-get_fx_groups(compound_sdf)
+get_fx_groups(compound_sdf, validate = TRUE)
 }
 \arguments{
 \item{compound_sdf}{a \link[ChemmineR:SDFset-class]{ChemmineR::SDFset} object returned by
 \code{\link[ChemmineR:read.SDFset]{ChemmineR::read.SDFset()}} or \code{\link[ChemmineR:smiles2sdf]{ChemmineR::smiles2sdf()}}, for example.}
+
+\item{validate}{logical; if \code{TRUE} (default), results are checked for
+possible errors in parsing by Open Babel and \code{NA}s are returned if possible
+errors are found. Setting to \code{FALSE} bypasses these checks—use at your own
+risk! Validation is not available on Windows. See \strong{Details} for more
+information.}
 }
 \value{
 A tibble with columns of basic compound info and functional group
@@ -18,6 +24,18 @@ counts.
 Returns functional group counts relevant to calculating estimated volatility
 for specified compounds. Users will not typically interact with this function
 directly, but rather by using \code{\link[=calc_vol]{calc_vol()}}.
+}
+\details{
+It is unfortunately difficult to capture errors and warnings
+produced by the command line tool OpenBabel used by \code{ChemmineOB}, a
+dependency of \code{volcalc}. These errors and warnings are printed to the R
+console, but they are \emph{not} R errors and do not stop code from running and
+producing potentially incorrect data. \code{validate = TRUE} checks the output
+of certain OpenBabel procedures for the \emph{symptoms} of these errors, namely
+missing values for InChI and molecular formula. Unfortunately, since InChI
+generation is not available with the Windows version of \code{ChemmineOB}, this
+validation step cannot be performed on Windows and \code{validate = TRUE} will
+simply print a warning that can be silenced by setting \code{validate = FALSE}.
 }
 \note{
 This function currently does \strong{not} capture the carbon number on the

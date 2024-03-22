@@ -66,5 +66,41 @@ test_that("SMARTS strings are correct", {
   )
 })
 
+test_that("validate = TRUE works", {
+  skip_on_os("windows") #validation not available on Windows because InChI aren't created on Windows
+  sdf_bad_header <- ChemmineR::read.SDFset(test_path("data/C16181_malformed_header.mol"))
+  sdf_r_group <- ChemmineR::read.SDFset(test_path("data/C00157.mol"))
+  expect_true(
+    all(is.na(
+      suppressWarnings(get_fx_groups(sdf_bad_header, validate = TRUE)) %>% 
+        dplyr::select(-name)
+      ))
+    )
+  expect_true(
+    all(is.na(
+      suppressWarnings(get_fx_groups(sdf_r_group, validate = TRUE)) %>% 
+        dplyr::select(-name)
+    ))
+  )
+  expect_warning(get_fx_groups(sdf_r_group, validate = TRUE),
+                 "Possible OpenBabel errors detected and only NAs returned.
+Run with `validate = FALSE` to ignore this.")
+  expect_equal(
+    get_fx_groups(sdf_r_group, validate = FALSE)$carbons,
+    10
+  )
+})
 
+test_that("validate = TRUE doesn't change correct results", {
+  from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
+  expect_equal(get_fx_groups(from_smiles, validate = TRUE),
+               get_fx_groups(from_smiles, validate = FALSE))
+})
 
+test_that("validate = TRUE warns on Windows and doesn't do anything", {
+  local_mocked_bindings(Sys.info = function(...) c(sysname = "Windows"))
+  from_smiles <- ChemmineR::smiles2sdf("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O")
+  expect_warning(get_fx_groups(from_smiles, validate = TRUE),
+                 "`validate = TRUE` is not available on Windows.
+Set `validate = FALSE` to silence this warning.")
+})

@@ -11,6 +11,23 @@
 #'
 #' @param compound_sdf a [ChemmineR::SDFset] object returned by
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
+#' @param validate logical; if `TRUE` (default), results are checked for
+#'   possible errors in parsing by Open Babel and `NA`s are returned if possible
+#'   errors are found. Setting to `FALSE` bypasses these checks—use at your own
+#'   risk! Validation is not available on Windows. See **Details** for more
+#'   information.
+#'   
+#' @details It is unfortunately difficult to capture errors and warnings
+#'   produced by the command line tool OpenBabel used by `ChemmineOB`, a
+#'   dependency of `volcalc`. These errors and warnings are printed to the R
+#'   console, but they are *not* R errors and do not stop code from running and
+#'   producing potentially incorrect data. `validate = TRUE` checks the output
+#'   of certain OpenBabel procedures for the *symptoms* of these errors, namely
+#'   missing values for InChI and molecular formula. Unfortunately, since InChI
+#'   generation is not available with the Windows version of `ChemmineOB`, this
+#'   validation step cannot be performed on Windows and `validate = TRUE` will
+#'   simply print a warning that can be silenced by setting `validate = FALSE`.
+#' 
 #'
 #' @returns A tibble with columns of basic compound info and functional group
 #'   counts.
@@ -21,7 +38,13 @@
 #' get_fx_groups(sdf)
 #' 
 #' @export
-get_fx_groups <- function(compound_sdf) {
+get_fx_groups <- function(compound_sdf, validate = TRUE) {
+  
+  if(Sys.info()[["sysname"]] == "Windows" & isTRUE(validate)) {
+    warning("`validate = TRUE` is not available on Windows.
+Set `validate = FALSE` to silence this warning.")
+    validate <- FALSE
+  }
   
   # For now at least, this code only works with SDFset objects that contain
   # single molecules. 
@@ -30,6 +53,8 @@ get_fx_groups <- function(compound_sdf) {
     stop("SDFset objects must contain a single molecule only")
   }
   
+  #get basic properties
+  prop_ob <- ChemmineR::propOB(compound_sdf)
   chem_groups <- ChemmineR::groups(compound_sdf,
                                    groups = "fctgroup",
                                    type = "countMA")
@@ -81,13 +106,13 @@ get_fx_groups <- function(compound_sdf) {
   nitro_pattern <- "[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]"
   hydroxyl_aromatic_pattern <- "[OX2H]c"
   nitrate_pattern <- "[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]"
-
+  
   #TODO need patterns for amines that don't pick up amides
   amine_primary_pattern <- "[NX3;H2;!$(NC=[!#6]);!$(NC#[!#6])][#6X4]"
   amine_secondary_pattern <- "[NX3H1!$(NC=[!#6])!$(NC#[!#6])]([#6X4])[#6X4]"
   amine_tertiary_pattern <- "[NX3H0!$(NC=[!#6])!$(NC#[!#6])]([#6X4])([#6X4])[#6X4]"
   amine_aromatic_pattern <-  "[NX3;!$(NO)]c" 
-
+  
   amide_primary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]"
   amide_secondary_pattern <- "[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]"
   amide_tertiary_pattern <- 
@@ -117,11 +142,11 @@ get_fx_groups <- function(compound_sdf) {
   
   fx_groups_df <- 
     dplyr::tibble(
-      formula = ChemmineR::propOB(compound_sdf)$formula,
+      formula = prop_ob$formula,
       #TODO should name be moved to `calc_vol`? `formula` also?
-      name = ChemmineR::propOB(compound_sdf)$title,
+      name = prop_ob$title,
       exact_mass = ChemmineR::exactMassOB(compound_sdf),
-      molecular_weight = ChemmineR::propOB(compound_sdf)$MW
+      molecular_weight = prop_ob$MW
     ) %>% 
     dplyr::mutate(
       carbons = atoms[["C"]] %||% 0L,
@@ -205,6 +230,20 @@ get_fx_groups <- function(compound_sdf) {
     #TODO should this be moved to `calc_vol?`. It's only relevant when from = "mol_path"
     dplyr::mutate(name = ifelse(.data$name == "", NA_character_, .data$name))
   
+  if (isTRUE(validate)) {
+    # when SDFs have problems, the results of propOB() usually don't have InChI or formula
+    # TODO: possibly add `| isFALSE(ChemmineR::validSDF(compound_sdf))`, although I've never seen this catch any problems in practice.
+    if (prop_ob$InChI == "" | prop_ob$formula == "") {
+      fx_groups_df <- fx_groups_df %>% 
+        dplyr::mutate(dplyr::across(-"name", \(x) magrittr::set_class(NA, class(x))))
+      warning("Possible OpenBabel errors detected and only NAs returned.
+Run with `validate = FALSE` to ignore this.")
+    }
+  }
+  
   #return
   fx_groups_df
 }
+
+#for mocking in tests. see: https://blog.r-hub.io/2024/03/21/mocking-new-take/ and ?testthat::local_mocked_bindings()
+Sys.info <- NULL
