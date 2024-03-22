@@ -17,16 +17,16 @@ test_that("get_mol_kegg writes files", {
   expect_true(fs::file_exists(fs::path(out$mol_path)))
 })
 
-test_that("get_mol_kegg errors unless one of compound_id or pathway_id", {
+test_that("get_mol_kegg errors unless one of compound_ids or pathway_ids", {
   skip_if_offline()
   skip_on_cran()
   
   dir <- withr::local_tempdir()
   expect_error(get_mol_kegg(dir = dir),
-               "One of `compound_id` or `pathway_id` are required")
+               "One of `compound_ids` or `pathway_ids` are required")
   expect_error(
     get_mol_kegg(compound_ids = "C16181", pathway_ids = "map00361", dir = dir),
-    "One of `compound_id` or `pathway_id` are required"
+    "One of `compound_ids` or `pathway_ids` are required"
   )
 })
 
