@@ -28,7 +28,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
   if(missing(dir)) stop("`dir` is required")
   if ((missing(compound_ids) & missing(pathway_ids)) |
       !missing(compound_ids) & !missing(pathway_ids)) {
-    stop("One of `compound_id` or `pathway_id` are required")
+    stop("One of `compound_ids` or `pathway_ids` are required")
   }
   
   #if compounds are provided
