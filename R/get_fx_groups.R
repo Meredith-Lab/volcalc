@@ -13,16 +13,20 @@
 #'   [ChemmineR::read.SDFset()] or [ChemmineR::smiles2sdf()], for example.
 #' @param validate logical; if `TRUE` (default), results are checked for
 #'   possible errors in parsing by Open Babel and `NA`s are returned if possible
-#'   errors are found.  Setting to `FALSE` bypasses these checks—use at your own
-#'   risk! See **Details** for more information.
+#'   errors are found. Setting to `FALSE` bypasses these checks—use at your own
+#'   risk! Validation is not available on Windows. See **Details** for more
+#'   information.
 #'   
-#' @details
-#' It is unfortunately difficult to capture errors and warnings produced by the
-#' command line tool OpenBabel.  These errors and warnings are printed to the R
-#' console, but they are *not* R errors and do not stop code from running and
-#' producing potentially incorrect data. `validate = TRUE` checks the output of
-#' certain `ChemmineR` functions for the *symptoms* of parsing errors, namely
-#' missing values for InChI and molecular formula.
+#' @details It is unfortunately difficult to capture errors and warnings
+#'   produced by the command line tool OpenBabel used by `ChemmineOB`, a
+#'   dependency of `volcalc`. These errors and warnings are printed to the R
+#'   console, but they are *not* R errors and do not stop code from running and
+#'   producing potentially incorrect data. `validate = TRUE` checks the output
+#'   of certain OpenBabel procedures for the *symptoms* of these errors, namely
+#'   missing values for InChI and molecular formula. Unfortunately, since InChI
+#'   generation is not available with the Windows version of `ChemmineOB`, this
+#'   validation step cannot be performed on Windows and `validate = TRUE` will
+#'   simply print a warning that can be silenced by setting `validate = FALSE`.
 #' 
 #'
 #' @returns A tibble with columns of basic compound info and functional group

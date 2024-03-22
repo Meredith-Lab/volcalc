@@ -30,8 +30,8 @@ these thresholds see Meredith et al. (2023) and Donahue et al. (2006).}
 
 \item{validate}{logical; if \code{TRUE} (default), results are checked for
 possible errors in parsing by Open Babel and \code{NA}s are returned if possible
-errors are found.  Setting to \code{FALSE} bypasses these checks—use at your own
-risk! See \strong{Details} of
+errors are found. Setting to \code{FALSE} bypasses these checks—use at your own
+risk! Validation is not available on Windows. See \strong{Details} of
 \code{\link[=get_fx_groups]{get_fx_groups()}} for more information.}
 
 \item{return_fx_groups}{When \code{TRUE}, the returned tibble includes functional

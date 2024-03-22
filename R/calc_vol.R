@@ -14,8 +14,8 @@
 #'   these thresholds see Meredith et al. (2023) and Donahue et al. (2006).
 #' @param validate logical; if `TRUE` (default), results are checked for
 #'   possible errors in parsing by Open Babel and `NA`s are returned if possible
-#'   errors are found.  Setting to `FALSE` bypasses these checks—use at your own
-#'   risk! See **Details** of
+#'   errors are found. Setting to `FALSE` bypasses these checks—use at your own
+#'   risk! Validation is not available on Windows. See **Details** of
 #'   [get_fx_groups()] for more information.
 #' @param return_fx_groups When `TRUE`, the returned tibble includes functional
 #'   group counts.
