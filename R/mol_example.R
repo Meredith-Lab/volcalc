@@ -5,10 +5,12 @@
 #'
 #' @details File names are the KEGG identifiers.  Compound names are as follows:
 #' - C00031: D-Glucose
+#' - C00157: Phosphatidylcholine
 #' - C08491: (-)-Jasmonic acid
 #' - C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol
 #' - C16286: Geosmin
 #' - C16521: Isoprene
+
 #' @returns File paths to installed example .mol files.
 #' @export
 #'

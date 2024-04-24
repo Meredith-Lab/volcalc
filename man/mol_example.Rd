@@ -17,6 +17,7 @@ directory.  This function provides easy access to them.
 File names are the KEGG identifiers.  Compound names are as follows:
 \itemize{
 \item C00031: D-Glucose
+\item C00157: Phosphatidylcholine
 \item C08491: (-)-Jasmonic acid
 \item C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol
 \item C16286: Geosmin
