@@ -66,7 +66,7 @@ directly, but rather by using <code><a href="calc_vol.html">calc_vol()</a></code
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_fx_groups</span><span class="op">(</span><span class="va">compound_sdf</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_fx_groups</span><span class="op">(</span><span class="va">compound_sdf</span>, validate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,6 +75,14 @@ directly, but rather by using <code><a href="calc_vol.html">calc_vol()</a></code
 <dd><p>a <a href="https://rdrr.io/pkg/ChemmineR/man/SDFset-class.html" class="external-link">ChemmineR::SDFset</a> object returned by
 <code><a href="https://rdrr.io/pkg/ChemmineR/man/read.SDFset.html" class="external-link">ChemmineR::read.SDFset()</a></code> or <code><a href="https://rdrr.io/pkg/ChemmineR/man/smiles2sdf.html" class="external-link">ChemmineR::smiles2sdf()</a></code>, for example.</p></dd>
 
+
+<dt>validate</dt>
+<dd><p>logical; if <code>TRUE</code> (default), results are checked for
+possible errors in parsing by Open Babel and <code>NA</code>s are returned if possible
+errors are found. Setting to <code>FALSE</code> bypasses these checks—use at your own
+risk! Validation is not available on Windows. See <strong>Details</strong> for more
+information.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -82,6 +90,19 @@ directly, but rather by using <code><a href="calc_vol.html">calc_vol()</a></code
 
 <p>A tibble with columns of basic compound info and functional group
 counts.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>It is unfortunately difficult to capture errors and warnings
+produced by the command line tool OpenBabel used by <code>ChemmineOB</code>, a
+dependency of <code>volcalc</code>. These errors and warnings are printed to the R
+console, but they are <em>not</em> R errors and do not stop code from running and
+producing potentially incorrect data. <code>validate = TRUE</code> checks the output
+of certain OpenBabel procedures for the <em>symptoms</em> of these errors, namely
+missing values for InChI and molecular formula. Unfortunately, since InChI
+generation is not available with the Windows version of <code>ChemmineOB</code>, this
+validation step cannot be performed on Windows and <code>validate = TRUE</code> will
+simply print a warning that can be silenced by setting <code>validate = FALSE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>

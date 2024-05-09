@@ -75,6 +75,7 @@ directory.  This function provides easy access to them.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>File names are the KEGG identifiers.  Compound names are as follows:</p><ul><li><p>C00031: D-Glucose</p></li>
+<li><p>C00157: Phosphatidylcholine</p></li>
 <li><p>C08491: (-)-Jasmonic acid</p></li>
 <li><p>C16181: beta-2,3,4,5,6-Pentachlorocyclohexanol</p></li>
 <li><p>C16286: Geosmin</p></li>
@@ -86,10 +87,11 @@ directory.  This function provides easy access to them.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#return paths to all example .mol files</span></span></span>
 <span class="r-in"><span><span class="fu">mol_example</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/home/runner/work/_temp/Library/volcalc/extdata/C00031.mol"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/_temp/Library/volcalc/extdata/C08491.mol"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/_temp/Library/volcalc/extdata/C16181.mol"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/home/runner/work/_temp/Library/volcalc/extdata/C16286.mol"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "/home/runner/work/_temp/Library/volcalc/extdata/C16521.mol"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/home/runner/work/_temp/Library/volcalc/extdata/C00157.mol"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/home/runner/work/_temp/Library/volcalc/extdata/C08491.mol"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/home/runner/work/_temp/Library/volcalc/extdata/C16181.mol"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "/home/runner/work/_temp/Library/volcalc/extdata/C16286.mol"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "/home/runner/work/_temp/Library/volcalc/extdata/C16521.mol"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#examine the contents of a file</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu">mol_example</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
