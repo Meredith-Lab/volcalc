@@ -95,6 +95,9 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> <span class="co">#for left_join()</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:ChemmineR':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     groups</span></span>
 <span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     filter, lag</span></span>
@@ -120,10 +123,10 @@ the <code>volcalc</code> function <code><a href="../reference/get_mol_kegg.html"
 <code class="sourceCode R"><span><span class="va">mols</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mol_kegg.html">get_mol_kegg</a></span><span class="op">(</span>compound_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C08491"</span>, <span class="st">"C11512"</span><span class="op">)</span>, dir <span class="op">=</span> <span class="va">dl_path</span><span class="op">)</span></span>
 <span><span class="va">mols</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
-<span><span class="co">#&gt;   compound_id mol_path                                    </span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;       &lt;fs::path&gt;                                  </span></span>
-<span><span class="co">#&gt; 1 C08491      …6hb9xvfqc5ht80000gp/T/Rtmp4LsL5W/C08491.mol</span></span>
-<span><span class="co">#&gt; 2 C11512      …6hb9xvfqc5ht80000gp/T/Rtmp4LsL5W/C11512.mol</span></span></code></pre></div>
+<span><span class="co">#&gt;   compound_id mol_path                                                              </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;       &lt;fs::path&gt;                                                            </span></span>
+<span><span class="co">#&gt; 1 C08491      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/C08491.mol</span></span>
+<span><span class="co">#&gt; 2 C11512      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/C11512.mol</span></span></code></pre></div>
 <p>The data frame returned by <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code> contains the
 paths the files were downloaded to in <code>mol_path</code>, making for
 convenient passage on to the <code>volcalc</code> function
@@ -132,10 +135,10 @@ convenient passage on to the <code>volcalc</code> function
 <code class="sourceCode R"><span><span class="va">rvi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">mols</span><span class="op">$</span><span class="va">mol_path</span><span class="op">)</span></span>
 <span><span class="va">rvi</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 5</span></span>
-<span><span class="co">#&gt;   mol_path                    formula name    rvi category</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                       &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
-<span><span class="co">#&gt; 1 /var/folders/pf/rjm3plcx14… C12H18… (-)-…  1.84 moderate</span></span>
-<span><span class="co">#&gt; 2 /var/folders/pf/rjm3plcx14… C13H20… Meth…  3.81 high</span></span></code></pre></div>
+<span><span class="co">#&gt;   mol_path                                                               formula  name                rvi category</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                                                  &lt;chr&gt;    &lt;chr&gt;             &lt;dbl&gt; &lt;fct&gt;   </span></span>
+<span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/C08491.mol C12H18O3 (-)-Jasmonic acid  1.84 moderate</span></span>
+<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/C11512.mol C13H20O3 Methyl jasmonate   3.81 high</span></span></code></pre></div>
 <p><code><a href="../reference/calc_vol.html">calc_vol()</a></code> also returns the file paths, so these two
 data frames can be easily joined.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -160,14 +163,14 @@ two compounds are part of.</p>
 <code class="sourceCode R"><span><span class="va">alam_pathway</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mol_kegg.html">get_mol_kegg</a></span><span class="op">(</span>pathway_ids <span class="op">=</span> <span class="st">"map00592"</span>, dir <span class="op">=</span> <span class="va">dl_path</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">alam_pathway</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
-<span><span class="co">#&gt;   pathway_id compound_id mol_path                         </span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;fs::path&gt;                       </span></span>
-<span><span class="co">#&gt; 1 map00592   C00157      …T/Rtmp4LsL5W/map00592/C00157.mol</span></span>
-<span><span class="co">#&gt; 2 map00592   C01226      …T/Rtmp4LsL5W/map00592/C01226.mol</span></span>
-<span><span class="co">#&gt; 3 map00592   C04672      …T/Rtmp4LsL5W/map00592/C04672.mol</span></span>
-<span><span class="co">#&gt; 4 map00592   C04780      …T/Rtmp4LsL5W/map00592/C04780.mol</span></span>
-<span><span class="co">#&gt; 5 map00592   C04785      …T/Rtmp4LsL5W/map00592/C04785.mol</span></span>
-<span><span class="co">#&gt; 6 map00592   C06427      …T/Rtmp4LsL5W/map00592/C06427.mol</span></span>
+<span><span class="co">#&gt;   pathway_id compound_id mol_path                                                                       </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;fs::path&gt;                                                                     </span></span>
+<span><span class="co">#&gt; 1 map00592   C00157      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C00157.mol</span></span>
+<span><span class="co">#&gt; 2 map00592   C01226      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C01226.mol</span></span>
+<span><span class="co">#&gt; 3 map00592   C04672      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C04672.mol</span></span>
+<span><span class="co">#&gt; 4 map00592   C04780      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C04780.mol</span></span>
+<span><span class="co">#&gt; 5 map00592   C04785      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C04785.mol</span></span>
+<span><span class="co">#&gt; 6 map00592   C06427      /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T/RtmpKwerlt/map00592/C06427.mol</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">alam_pathway</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 44  3</span></span></code></pre></div>
 <p>Notice that this returns pathway IDs and compound IDs. We can do the
@@ -176,7 +179,9 @@ same as above and pass the <code>mol_path</code> column to
 some basic data wrangling to find the top 10 most volatile compounds in
 that pathway.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rvi_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">alam_pathway</span><span class="op">$</span><span class="va">mol_path</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rvi_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="va">alam_pathway</span><span class="op">$</span><span class="va">mol_path</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in FUN(X[[i]], ...): Possible OpenBabel errors detected and only NAs returned.</span></span>
+<span><span class="co">#&gt; Run with `validate = FALSE` to ignore this.</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">alam_pathway</span>, <span class="va">rvi_path</span>, by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html" class="external-link">join_by</a></span><span class="op">(</span><span class="va">mol_path</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">mol_path</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -185,18 +190,18 @@ that pathway.</p>
 <span>  <span class="co">#take just the top 10</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 6</span></span>
-<span><span class="co">#&gt;    pathway_id compound_id formula    name     rvi category</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;  &lt;dbl&gt; &lt;fct&gt;   </span></span>
-<span><span class="co">#&gt;  1 map00592   C16310      C6H10O     3-Hex…  7.32 high    </span></span>
-<span><span class="co">#&gt;  2 map00592   C19757      C8H14O2    (3Z)-…  6.75 high    </span></span>
-<span><span class="co">#&gt;  3 map00592   C08492      C6H12O     3-Hex…  6.45 high    </span></span>
-<span><span class="co">#&gt;  4 map00592   C16323      C9H14O     3,6-N…  6.05 high    </span></span>
-<span><span class="co">#&gt;  5 map00592   C11512      C13H20O3   Methy…  3.81 high    </span></span>
-<span><span class="co">#&gt;  6 map00592   C16318      C13H20O3   (+)-7…  3.81 high    </span></span>
-<span><span class="co">#&gt;  7 map00592   C00157      C10H18NO8P Phosp…  2.89 high    </span></span>
-<span><span class="co">#&gt;  8 map00592   C16322      C9H16O3    9-Oxo…  2.77 high    </span></span>
-<span><span class="co">#&gt;  9 map00592   C16343      C17H28O    Hepta…  2.69 high    </span></span>
-<span><span class="co">#&gt; 10 map00592   C08491      C12H18O3   (-)-J…  1.84 moderate</span></span></code></pre></div>
+<span><span class="co">#&gt;    pathway_id compound_id formula  name                         rvi category</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;                      &lt;dbl&gt; &lt;fct&gt;   </span></span>
+<span><span class="co">#&gt;  1 map00592   C16310      C6H10O   3-Hexenal                   7.32 high    </span></span>
+<span><span class="co">#&gt;  2 map00592   C19757      C8H14O2  (3Z)-Hex-3-en-1-yl acetate  6.75 high    </span></span>
+<span><span class="co">#&gt;  3 map00592   C08492      C6H12O   3-Hexenol                   6.45 high    </span></span>
+<span><span class="co">#&gt;  4 map00592   C16323      C9H14O   3,6-Nonadienal              6.05 high    </span></span>
+<span><span class="co">#&gt;  5 map00592   C11512      C13H20O3 Methyl jasmonate            3.81 high    </span></span>
+<span><span class="co">#&gt;  6 map00592   C16318      C13H20O3 (+)-7-Isomethyljasmonate    3.81 high    </span></span>
+<span><span class="co">#&gt;  7 map00592   C16322      C9H16O3  9-Oxononanoic acid          2.77 high    </span></span>
+<span><span class="co">#&gt;  8 map00592   C16343      C17H28O  Heptadecatrienal            2.69 high    </span></span>
+<span><span class="co">#&gt;  9 map00592   C08491      C12H18O3 (-)-Jasmonic acid           1.84 moderate</span></span>
+<span><span class="co">#&gt; 10 map00592   C16317      C12H18O3 (+)-7-Isojasmonic acid      1.84 moderate</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
