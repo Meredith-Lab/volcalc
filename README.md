@@ -157,9 +157,10 @@ reference below:
 citation("volcalc")
 #> To cite volcalc in publications please use:
 #> 
-#>   Riemer K, Scott E (2023). _volcalc: Calculate Volatility of Chemical
-#>   Compounds_. doi:10.5281/zenodo.8015155
-#>   <https://doi.org/10.5281/zenodo.8015155>, R package version 2.0.0.
+#>   Riemer K, Scott E, Meredith L (2023). _volcalc: Calculate Volatility
+#>   of Chemical Compounds_. doi:10.5281/zenodo.8015155
+#>   <https://doi.org/10.5281/zenodo.8015155>, R package version
+#>   2.1.2.9000.
 #> 
 #> Please also cite the related manuscript:
 #> 
