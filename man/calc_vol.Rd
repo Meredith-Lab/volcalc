@@ -9,6 +9,7 @@ calc_vol(
   from = c("mol_path", "smiles"),
   method = c("meredith", "simpol1"),
   environment = c("clean", "polluted", "soil"),
+  validate = TRUE,
   return_fx_groups = FALSE,
   return_calc_steps = FALSE
 )
@@ -26,6 +27,12 @@ categories. RVI thresholds for low, moderate, and high volatility are as
 follows: \code{"clean"} (clean atmosphere, default) -2, 0, 2; \code{"polluted"}
 (polluted atmosphere) 0, 2, 4; \code{"soil"} 4, 6, 8. For more information about
 these thresholds see Meredith et al. (2023) and Donahue et al. (2006).}
+
+\item{validate}{logical; if \code{TRUE} (default), results are checked for
+possible errors in parsing by Open Babel and \code{NA}s are returned if possible
+errors are found. Setting to \code{FALSE} bypasses these checks—use at your own
+risk! Validation is not available on Windows. See \strong{Details} of
+\code{\link[=get_fx_groups]{get_fx_groups()}} for more information.}
 
 \item{return_fx_groups}{When \code{TRUE}, the returned tibble includes functional
 group counts.}
@@ -51,7 +58,7 @@ universal gas constant, and \eqn{T} is temperature (293.14K or 20ºC).  When
 and \eqn{\textrm{log}_{10}(M/RT)}, \code{log_alpha}, are also returned.
 }
 \examples{
-\dontrun{
+\donttest{
 mol_paths <- mol_example()
 calc_vol(mol_paths)
 

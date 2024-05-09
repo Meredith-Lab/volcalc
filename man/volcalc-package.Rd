@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Calculate estimated relative volatility index values for organic compounds based on functional group contributions. Calculation uses the SIMPOL.1 method (Prankow and Asher, 2008) \doi{10.5194/acp-8-2773-2008} or modified SIMPOL.1 method as in Meredith et al. (2023) \doi{10.5194/acp-8-2773-2008}.
+Calculate estimated relative volatility index values for organic compounds based on functional group contributions. Calculation uses the SIMPOL.1 method in Prankow and Asher (2008) \doi{10.5194/acp-8-2773-2008} or modified SIMPOL.1 method as in Meredith et al. (2023) \doi{10.5194/acp-8-2773-2008}.
 }
 \seealso{
 Useful links:

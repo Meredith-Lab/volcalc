@@ -12,6 +12,11 @@
 #'   follows: `"clean"` (clean atmosphere, default) -2, 0, 2; `"polluted"`
 #'   (polluted atmosphere) 0, 2, 4; `"soil"` 4, 6, 8. For more information about
 #'   these thresholds see Meredith et al. (2023) and Donahue et al. (2006).
+#' @param validate logical; if `TRUE` (default), results are checked for
+#'   possible errors in parsing by Open Babel and `NA`s are returned if possible
+#'   errors are found. Setting to `FALSE` bypasses these checks—use at your own
+#'   risk! Validation is not available on Windows. See **Details** of
+#'   [get_fx_groups()] for more information.
 #' @param return_fx_groups When `TRUE`, the returned tibble includes functional
 #'   group counts.
 #' @param return_calc_steps When `TRUE`, the returned tibble includes
@@ -55,6 +60,7 @@ calc_vol <-
            from = c("mol_path", "smiles"),
            method = c("meredith", "simpol1"),
            environment = c("clean", "polluted", "soil"),
+           validate = TRUE,
            return_fx_groups = FALSE,
            return_calc_steps = FALSE) {
     
@@ -78,17 +84,14 @@ calc_vol <-
     )
 
     if(from == "mol_path") {
-      #TODO: validate mol files??
       compound_sdf_list <- lapply(input, ChemmineR::read.SDFset)
     }
     
     if(from == "smiles") {
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
-    #TODO use ChemmineR::validSDF() to check for any invalid inputs
-    # Warn and return NA for any that aren't valid??
     fx_groups_df_list <-
-      lapply(compound_sdf_list, get_fx_groups)
+      lapply(compound_sdf_list, get_fx_groups, validate = validate)
     names(fx_groups_df_list) <- input
     fx_groups_df <- 
       #adds column for input named "mol_path" or "smiles"

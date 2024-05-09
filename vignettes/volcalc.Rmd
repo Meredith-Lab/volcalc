@@ -59,7 +59,7 @@ calc_vol(mol_paths, return_calc_steps = TRUE)
 
 ### Use with SMILES
 
-Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
+All of this can be done using [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) strings rather than .mol files with `from = "smiles"`.  Backslash, `\` is a valid SMILES character, but isn't a valid character in R and must be "escaped" as `\\`.
 
 ```{r}
 ## This will error even though the SMILES is correct
@@ -68,6 +68,58 @@ Finally, all of this can be done using [SMILES](https://en.wikipedia.org/wiki/Si
 # To solve this, escape \C as \\C
 calc_vol("CC/C=C\\C[C@@H]1[C@H](CCC1=O)CC(=O)O", from = "smiles")
 ```
+
+### Validation
+
+Occasionally, a .mol file will result in an error message bubbling up from the OpenBabel command line utility. For example, if there is an 'R' group somewhere in the molecule as is the case with Phosphatidylcholine on KEGG.
+
+```{r}
+# phosphatidylcholine .mol file from KEGG
+c00157 <- mol_example()[2]
+```
+
+<!-- the following chunks are not interactive because the OpenBabel errors also aren't captured when the vignette is built, so these must be edited manually to reflect what users actually see in their R console -->
+
+```r
+calc_vol(c00157)
+#> ==============================
+#> *** Open Babel Warning  in InChI code
+#>   Phosphatidylcholine :Unknown element(s): *
+#> ==============================
+#> *** Open Babel Error  in InChI code
+#>   InChI generation failed
+#> # A tibble: 1 × 5
+#>   mol_path                                                          formula name                  rvi category
+#>   <chr>                                                             <chr>   <chr>               <dbl> <fct>   
+#> 1 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C00157.mol NA      Phosphatidylcholine    NA NA      
+#> Warning message:
+#> In FUN(X[[i]], ...) :
+#>   Possible OpenBabel errors detected and only NAs returned.
+#> Run with `validate = FALSE` to ignore this.
+
+```
+
+Without validation, it will return an incorrect value for `rvi` and `category` for this compound.
+
+```r
+calc_vol(c00157, validate = FALSE)
+#> ==============================
+#> *** Open Babel Warning  in InChI code
+#>   Phosphatidylcholine :Unknown element(s): *
+#> ==============================
+#> *** Open Babel Error  in InChI code
+#>   InChI generation failed
+#> # A tibble: 1 × 5
+#>   mol_path                                                          formula    name                 rvi category
+#>   <chr>                                                             <chr>      <chr>              <dbl> <fct>   
+#> 1 /Users/ericscott/Documents/GitHub/volcalc/inst/extdata/C00157.mol C10H18NO8P Phosphatidylcholi…  2.89 high     
+```
+
+Phosphatidylcholine is a large phospholipid and is **not** highly volatile as these results would suggest.  
+
+#### Details
+
+Unfortunately, it is nearly impossible to detect these parsing errors from OpenBabel directly in R. When `validate = TRUE` is set (which it is by default), `calc_vol()` will look for "symptoms" of OpenBabel errors and return `NA`s for all values. Namely, validation works by assuming that InChI generation will fail whenever there are OpenBabel parsing issues.  Because InChI generation is not available on the Windows version of OpenBabel installed with `ChemmineOB`, this `volcalc` feature is only available on macOS and Linux. Setting `validate = TRUE` on Windows will have no effect.
 
 ### References
 
