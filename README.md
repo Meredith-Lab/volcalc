@@ -40,11 +40,13 @@ strings as input, and supports downloading .mol files directly from
 
 ## Installation
 
+<!--
 Install from CRAN with
 
 ``` r
 install.packages("volcalc")
 ```
+-->
 
 You can install the development version of `volcalc` from GitHub with
 
