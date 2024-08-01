@@ -1,54 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/404.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/articles/kegg.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/articles/volcalc.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/index.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/calc_vol.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/get_fx_groups.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/get_mol_kegg.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/mol_example.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/simpol1.html</loc>
-  </url>
-  <url>
-    <loc>https://meredith-lab.github.io/volcalc/reference/volcalc-package.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://meredith-lab.github.io/volcalc/404.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/LICENSE-text.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/LICENSE.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/articles/index.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/articles/kegg.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/articles/volcalc.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/authors.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/index.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/news/index.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/calc_vol.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/get_fx_groups.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/get_mol_kegg.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/index.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/mol_example.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/simpol1.html</loc></url>
+<url><loc>https://meredith-lab.github.io/volcalc/reference/volcalc-package.html</loc></url>
 </urlset>
+
