@@ -9,7 +9,7 @@
 \item{method}{Either "simpol1" for functional groups only used with the SIMPOL.1 method, or "meredith" for additional groups used in the Meredith et al. method.}
 \item{functional_groups}{These correspond to matching column names in the results of \code{\link[=get_fx_groups]{get_fx_groups()}}.}
 \item{smarts}{SMARTS strings used to capture groups, when applicable}
-\item{fun}{The function used to capture the functional group.  When \code{smarts} is not \code{NA}, this is always "ChemmineR::smartsSearchOB".  Other groups are captured with other \code{ChemmineR} functions or as calculations using other functional groups.}
+\item{fun}{The function used to capture the functional group.  When \code{smarts} is not \code{NA}, this is always "\link[ChemmineR:smartsSearchOB]{ChemmineR::smartsSearchOB}".  Other groups are captured with other \code{ChemmineR} functions or as calculations using other functional groups.}
 \item{notes}{Notes including how any functional group counts are corrected when there is overlap.  E.g. when one SMARTS pattern is a subset of another pattern, but the two groups are counted separately without overlap in the SIMPOL.1 method.}
 }
 }

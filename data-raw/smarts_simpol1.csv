@@ -4,7 +4,7 @@ simpol1,rings_aromatic,NA,ChemmineR::rings,
 simpol1,rings_total,NA,ChemmineR::rings,
 simpol1,rings_aliphatic,NA,rings_total - rings_aromatic,
 simpol1,carbon_dbl_bonds_aliphatic,C=C,ChemmineR::smartsSearchOB,
-simpol1,CCCO_aliphatic_ring,C(C=C[AR1])(=O)[AR1],ChemmineR::smartsSearchOB,
+simpol1,CCCO_aliphatic_ring,C(C=C[AR1])(=O)[AR1],ChemmineR::smartsSearchOB,Matches C=C-C=O in a non-aromatic ring
 simpol1,hydroxyl_total,NA,ChemmineR::groups,
 simpol1,hydroxyl_aromatic,[OX2H]c,ChemmineR::smartsSearchOB,"This pattern also captures nitrophenols, so the number of nitrophenols is subtracted"
 simpol1,hydroxyl_aliphatic,NA,hydroxyl_total - hydroxyl_aromatic,
