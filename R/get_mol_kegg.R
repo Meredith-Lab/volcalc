@@ -141,8 +141,9 @@ get_compounds_kegg <- function(pathway){
   mols <- resp_mols %>% 
     stringr::str_split("(?<=\\${4})", n = length(ids)) %>%
     unlist() %>% 
-    stringr::str_trim(side = "left") %>% 
-    gsub(">.*", "", .) #for some reason this pattern doesn't work with str_remove()
+    stringr::str_trim(side = "left")
+  mols <- 
+    gsub(">.*", "", mols) #for some reason this pattern doesn't work with str_remove()
   
   #add compound name in correct place
   paste0(names, "\n\n\n", mols)
