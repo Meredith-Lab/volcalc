@@ -47,7 +47,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
       stop("Some pathway_ids are not in the correct KEGG format")
     }
     fs::dir_create(dir, pathway_ids)
-    compound_ids_list <- lapply(pathway_ids, keggGetCompounds)
+    compound_ids_list <- lapply(pathway_ids, get_compounds_kegg)
     names(compound_ids_list) <- pathway_ids
     out_tbl <- 
       tibble::enframe(compound_ids_list, name = "pathway_id", value = "compound_id") %>% 
@@ -91,12 +91,9 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
 
 #' Get list of KEGG compound IDs for given KEGG pathway
 #'
-#' This is a temporary helper function until this function is improved and
-#' pushed into KEGGREST package
-#'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
 #' @noRd
-keggGetCompounds <- function(pathway){
+get_compounds_kegg <- function(pathway){
   
   resp <- 
     httr2::request("https://rest.kegg.jp/")  %>%  
