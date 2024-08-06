@@ -1,6 +1,7 @@
 # volcalc (development version)
 
 * adds a `validate = TRUE` option to `calc_vol()` and `get_fx_groups()` that returns `NA`s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of `ChemmineOB`
+* adds a dataset, `smarts_simpol1`, describing how functional groups are defined for the SIMPOL.1 and Meredith et al. methods
 
 # volcalc 2.1.2
 
