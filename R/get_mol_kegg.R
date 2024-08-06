@@ -110,35 +110,42 @@ get_compounds_kegg <- function(pathway){
   
 }
 
-dl_mol_kegg <- function(compound_ids) {
-  #balances compound_ids into groups of less than 10 to meet API guidelines
-  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+#' Get mol files for a single API request of up to 10 IDs
+.dl_mol_kegg <- function(ids) {
+  if (length(ids) > 10) {
+    stop("Provide 10 or fewer IDs at a time")
+  }
+  # get first suggested name
+  req_names <- 
+    httr2::request("https://rest.kegg.jp/get") %>% 
+    httr2::req_url_path_append(paste(ids, collapse = "+"))
   
-  #maps over list, but returns it to a single character vector to simplify wrangling code
-  raw <- 
-    purrr::map(compound_id_list, function(x) KEGGREST::keggGet(x, option = "mol")) %>% 
-    purrr::list_c() %>% 
-    glue::glue_collapse()
-  #split into multiples
-  mols <- stringr::str_split(raw, "(?<=\\${4})", n = length(compound_ids)) %>%
+  resp_names <- httr2::req_perform(req_names) %>% 
+    httr2::resp_body_string()
+  
+  names <- resp_names %>%
+    stringr::str_extract_all("(?<=NAME).+(?=\\n)") %>%
     unlist() %>% 
-    stringr::str_trim(side = "left")
+    stringr::str_trim() %>% 
+    stringr::str_remove(";")
   
-  # Adds title to mol file because it is used later on by get_fx_groups()
-  titles <- purrr::map(compound_id_list, function(x) { #for every group of <10 IDs
-    KEGGREST::keggGet(x) %>% 
-      purrr::map_chr(function(names) { #for every ID
-        purrr::pluck(names, "NAME", 1) %>% #get first element of NAME
-          stringr::str_remove(";")
-      })
-  }) %>% unlist()
-  purrr::map2(mols, titles, function(mol, title) {
-    paste0(title, "\n\n\n", gsub(">.*", "", mol))
-  })
+  # get mol file
   
+  req_mols <- req_names %>% 
+    httr2::req_url_path_append("mol")
+  
+  resp_mols <- httr2::req_perform(req_mols) %>% 
+    httr2::resp_body_string()
+  
+  mols <- resp_mols %>% 
+    stringr::str_split("(?<=\\${4})", n = length(ids)) %>%
+    unlist() %>% 
+    stringr::str_trim(side = "left") %>% 
+    gsub(">.*", "", .) #for some reason this pattern doesn't work with str_remove()
+  
+  #add title row
+  paste0(names, "\n\n\n", mols)
 }
-
-
 
 split_to_list <- function(x, max_len = 10) {
   
@@ -150,4 +157,16 @@ split_to_list <- function(x, max_len = 10) {
     list(x)
   }
   
+}
+
+#' Download compound_ids by splitting into groups of 10 and calling .dl_mol_kegg
+#' 
+dl_mol_kegg <- function(compound_ids) {
+  #balances compound_ids into groups of less than 10 to meet API guidelines
+  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+  
+  #maps over list, but returns it to a single character vector to simplify wrangling code
+  purrr::map(compound_id_list, .dl_mol_kegg) %>% 
+    purrr::list_c() %>% 
+    glue::glue_collapse()
 }
