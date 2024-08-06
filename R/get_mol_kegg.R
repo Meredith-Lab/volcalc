@@ -116,14 +116,14 @@ get_compounds_kegg <- function(pathway){
   if (length(ids) > 10) {
     stop("Provide 10 or fewer IDs at a time")
   }
-  # get first suggested name
   req_names <- 
     httr2::request("https://rest.kegg.jp/get") %>% 
     httr2::req_url_path_append(paste(ids, collapse = "+"))
-  
+
   resp_names <- httr2::req_perform(req_names) %>% 
     httr2::resp_body_string()
   
+  # There's a lot of stuff in the response, but I only care about the compound name
   names <- resp_names %>%
     stringr::str_extract_all("(?<=NAME).+(?=\\n)") %>%
     unlist() %>% 
@@ -131,20 +131,20 @@ get_compounds_kegg <- function(pathway){
     stringr::str_remove(";")
   
   # get mol file
-  
   req_mols <- req_names %>% 
     httr2::req_url_path_append("mol")
   
   resp_mols <- httr2::req_perform(req_mols) %>% 
     httr2::resp_body_string()
   
+  # wrangle into valid mol files
   mols <- resp_mols %>% 
     stringr::str_split("(?<=\\${4})", n = length(ids)) %>%
     unlist() %>% 
     stringr::str_trim(side = "left") %>% 
     gsub(">.*", "", .) #for some reason this pattern doesn't work with str_remove()
   
-  #add title row
+  #add compound name in correct place
   paste0(names, "\n\n\n", mols)
 }
 
