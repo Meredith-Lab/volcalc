@@ -17,13 +17,16 @@
 #'   risk! Validation is not available on Windows. See **Details** for more
 #'   information.
 #'   
-#' @details It is unfortunately difficult to capture errors and warnings
-#'   produced by the command line tool OpenBabel used by `ChemmineOB`, a
-#'   dependency of `volcalc`. These errors and warnings are printed to the R
-#'   console, but they are *not* R errors and do not stop code from running and
-#'   producing potentially incorrect data. `validate = TRUE` checks the output
-#'   of certain OpenBabel procedures for the *symptoms* of these errors, namely
-#'   missing values for InChI and molecular formula. Unfortunately, since InChI
+#' @details For more details on how functional groups are defined, see the
+#'   [smarts_simpol1] data set.
+#'
+#'   It is unfortunately difficult to capture errors and warnings produced by
+#'   the command line tool OpenBabel used by `ChemmineOB`, a dependency of
+#'   `volcalc`. These errors and warnings are printed to the R console, but they
+#'   are *not* R errors and do not stop code from running and producing
+#'   potentially incorrect data. `validate = TRUE` checks the output of certain
+#'   OpenBabel procedures for the *symptoms* of these errors, namely missing
+#'   values for InChI and molecular formula. Unfortunately, since InChI
 #'   generation is not available with the Windows version of `ChemmineOB`, this
 #'   validation step cannot be performed on Windows and `validate = TRUE` will
 #'   simply print a warning that can be silenced by setting `validate = FALSE`.
