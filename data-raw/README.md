@@ -1,0 +1,4 @@
+In the future, if new methods are added, create a separate .csv file named smarts_<method>.csv.
+To turn this into a user-facing dataset, edit `make_data.R` to add another `usethis::use_data()` and document it by adding a new entry to `R/data.R`.  To also use this in internal data, it needs to be added as an argument to `usethis::use_data(..., internal = TRUE)` since only one sysdata.rda can exist for holding internal data.  E.g. `usethis::use_data(smarts_patterns_simpol1, smarts_patterns_newmethod, internal = TRUE, overwrite = TRUE)`
+
+Be sure to run the code in `make_data.R` and to run `devtools::document()` to update data and documentation.
