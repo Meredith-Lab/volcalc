@@ -110,7 +110,8 @@ get_compounds_kegg <- function(pathway){
   
 }
 
-#' Get mol files for a single API request of up to 10 IDs
+#' Get and wrangle mol files for a single API request of up to 10 IDs
+#' @noRd
 .dl_mol_kegg <- function(ids) {
   if (length(ids) > 10) {
     stop("Provide 10 or fewer IDs at a time")
@@ -147,6 +148,8 @@ get_compounds_kegg <- function(pathway){
   paste0(names, "\n\n\n", mols)
 }
 
+#' Split vector into list elements of max length
+#' @noRd
 split_to_list <- function(x, max_len = 10) {
   
   if(length(x) > max_len) {
@@ -159,8 +162,8 @@ split_to_list <- function(x, max_len = 10) {
   
 }
 
-#' Download compound_ids by splitting into groups of 10 and calling .dl_mol_kegg
-#' 
+#' Get mol files for compound_ids by splitting into groups of 10 and calling .dl_mol_kegg
+#' @noRd
 dl_mol_kegg <- function(compound_ids) {
   #balances compound_ids into groups of less than 10 to meet API guidelines
   compound_id_list <- split_to_list(compound_ids, max_len = 10)
