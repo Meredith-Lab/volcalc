@@ -14,8 +14,12 @@ utils::globalVariables(".data")
 #'   if they are found in `dir`. Set this to `TRUE` to download and overwrite
 #'   existing files.
 #'   
+#' @note For additional functionality for interacting with KEGG, try the
+#'   `KEGGREST` package, which this function was inspired by.
+#'   
 #' @returns A tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files).
+#'   
 #' @export
 #'
 #' @examples
