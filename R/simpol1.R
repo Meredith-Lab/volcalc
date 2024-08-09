@@ -26,7 +26,7 @@
 #' - Carbothioester
 #' 
 #' @note The method described in Pankow & Asher (2008) was developed using data
-#'   between 0ºC and 120ºC, so extrapolating beyond that range is not
+#'   between 0 °C and 120 °C, so extrapolating beyond that range is not
 #'   recommended.
 #'
 #' @param fx_groups A data.frame or tibble with counts of functional groups
@@ -34,7 +34,7 @@
 #' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
 #' @param temp_c Numeric; the temperature at which to calculate volatility
-#'   estimates in degrees C.
+#'   estimates in °C.
 #' @returns The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
@@ -56,9 +56,9 @@
 #' fx_groups <- get_fx_groups(sdf)
 #' simpol1(fx_groups)
 simpol1 <- function(fx_groups, meredith = TRUE, temp_c = 20) {
-  #convert ºC to K
+  #convert C to K
   if (temp_c < 0 | temp_c > 120) {
-    warning("Temperatures below 0ºC or above 120ºC extrapolate beyond the range SIMPOL.1 was intended for. \n  Interpret results with caution!")
+    warning("Temperatures below 0\u00b0C or above 120\u00b0C extrapolate beyond the range SIMPOL.1 was intended for. \n  Interpret results with caution!")
   }
   temp_k <- temp_c + 273.15
   
@@ -168,7 +168,7 @@ calc_bk_simpol1 <- function(temp_k = 293.15) {
   )
   
   b_k_df <- 
-    dplyr::mutate(table_5, b_k = B1/temp_k + B2 + B3*temp_k + B4*log(temp_k))
+    dplyr::mutate(table_5, b_k = .data$B1/temp_k + .data$B2 + .data$B3*temp_k + .data$B4*log(temp_k))
   
   out <- b_k_df$b_k
   names(out) <- paste0("b", b_k_df$k)

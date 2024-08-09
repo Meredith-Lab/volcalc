@@ -14,7 +14,7 @@ produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the
 use the modified version in Meredith et al. (2023).}
 
 \item{temp_c}{Numeric; the temperature at which to calculate volatility
-estimates in degrees C.}
+estimates in °C.}
 }
 \value{
 The \code{fx_groups} tibble with the additional \code{log10_P} column.
@@ -51,7 +51,7 @@ Using the same coefficient as ester
 }
 \note{
 The method described in Pankow & Asher (2008) was developed using data
-between 0ºC and 120ºC, so extrapolating beyond that range is not
+between 0 °C and 120 °C, so extrapolating beyond that range is not
 recommended.
 }
 \examples{
