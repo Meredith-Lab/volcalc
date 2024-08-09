@@ -12,24 +12,29 @@
 #' atmospheres.
 #' 
 #' The modified method in Meredith et al. (2023) adds the following additional
-#' functional groups and coefficients:
+#' functional groups:
 #' 
-#' - Phosphoric acid (-2.23)
-#' - Phosphoric ester (-2.23)
-#' - Sulfate (-2.23)
-#' - Sulfonate (-2.23)
-#' - Thiol (-2.23)
-#' - Carbothioester (-1.20)
+#' Using the same coefficient as nitrate
 #' 
-#' @note The method described in Pankow & Asher (2008) allows for
-#' calculations of logP at different temperatures.  This implementation
-#' currently only calculates values at 20ºC.
+#' - Phosphoric acid
+#' - Phosphoric ester
+#' - Sulfate
+#' - Sulfonate
+#' - Thiol
 #' 
+#' Using the same coefficient as ester
+#' - Carbothioester
+#' 
+#' @note The method described in Pankow & Asher (2008) was developed using data
+#'   between 0ºC and 120ºC, so extrapolating beyond that range is not
+#'   recommended.
+#'
 #' @param fx_groups A data.frame or tibble with counts of functional groups
 #'   produced by [get_fx_groups()] (or manually, with the same column names).
 #' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
-#'
+#' @param temp_c Numeric; the temperature at which to calculate volatility
+#'   estimates.
 #' @returns The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
@@ -50,7 +55,13 @@
 #' sdf <- ChemmineR::read.SDFset(mol_path)
 #' fx_groups <- get_fx_groups(sdf)
 #' simpol1(fx_groups)
-simpol1 <- function(fx_groups, temp_k, meredith = TRUE) {
+simpol1 <- function(fx_groups, meredith = TRUE, temp_c = 20) {
+  #convert ºC to K
+  if (temp_c < 0 | temp_c > 120) {
+    warning("Temperatures below 0ºC or above 120ºC extrapolate beyond the range SIMPOL.1 was intended for. \n  Interpret results with caution!")
+  }
+  temp_k <- temp_c + 273.15
+  
   b_k <- calc_bk_simpol1(temp_k)
   
   contributions <- fx_groups %>%
@@ -63,58 +74,59 @@ simpol1 <- function(fx_groups, temp_k, meredith = TRUE) {
     dplyr::mutate(
       # multiplier for each functional group is volatility contribution to log10P
       # b_k(T)  * v_k,i
-      b_00 = (b_k["b0"]  * 1), #b_0(T) is an intercept/constant.  
-      b_01 = (b_k["b1"]  * .data$carbons),
-      b_02 = (b_k["b2"]  * .data$carbons_asa),
-      b_03 = (b_k["b3"]	 * .data$rings_aromatic),
-      b_04 = (b_k["b4"]  * .data$rings_aliphatic),
-      b_05 = (b_k["b5"]  * .data$carbon_dbl_bonds_aliphatic),
-      b_06 = (b_k["b6"]  * .data$CCCO_aliphatic_ring),
-      b_07 = (b_k["b7"]  * .data$hydroxyl_aliphatic),
-      b_08 = (b_k["b8"]  * .data$aldehydes),
-      b_09 = (b_k["b9"]  * .data$ketones),
-      b_10 = (b_k["b10"]  * .data$carbox_acids),
-      b_11 = (b_k["b11"]  * .data$ester),
-      b_12 = (b_k["b12"]  * .data$ether_alkyl),
-      b_13 = (b_k["b13"]  * .data$ether_alicyclic),
-      b_14 = (b_k["b14"]  * .data$ether_aromatic),
-      b_15 = (b_k["b15"]  * .data$nitrate),
-      b_16 = (b_k["b16"]  * .data$nitro),
-      b_17 = (b_k["b17"]  * .data$hydroxyl_aromatic),
-      b_18 = (b_k["b18"]  * .data$amine_primary),
-      b_19 = (b_k["b19"]	 * .data$amine_secondary),
-      b_20 = (b_k["b20"]	 * .data$amine_tertiary),
-      b_21 = (b_k["b21"]  * .data$amine_aromatic),
-      b_22 = (b_k["b22"]  * .data$amide_primary),
-      b_23 = (b_k["b23"]  * .data$amide_secondary),
-      b_24 = (b_k["b24"]  * .data$amide_tertiary),
-      b_25 = (b_k["b25"]  * .data$carbonylperoxynitrate),
-      b_26 = (b_k["b26"]  * .data$peroxide),
-      b_27 = (b_k["b27"]  * .data$hydroperoxide),
-      b_28 = (b_k["b28"]  * .data$carbonylperoxyacid),
-      b_29 = (b_k["b29"]	 * .data$nitrophenol),
-      b_30 = (b_k["b30"]  * .data$nitroester)
+      vb_00 = (b_k["b0"]  * 1), #b_0(T) is an intercept/constant.  
+      vb_01 = (b_k["b1"]  * .data$carbons),
+      vb_02 = (b_k["b2"]  * .data$carbons_asa),
+      vb_03 = (b_k["b3"]	 * .data$rings_aromatic),
+      vb_04 = (b_k["b4"]  * .data$rings_aliphatic),
+      vb_05 = (b_k["b5"]  * .data$carbon_dbl_bonds_aliphatic),
+      vb_06 = (b_k["b6"]  * .data$CCCO_aliphatic_ring),
+      vb_07 = (b_k["b7"]  * .data$hydroxyl_aliphatic),
+      vb_08 = (b_k["b8"]  * .data$aldehydes),
+      vb_09 = (b_k["b9"]  * .data$ketones),
+      vb_10 = (b_k["b10"]  * .data$carbox_acids),
+      vb_11 = (b_k["b11"]  * .data$ester),
+      vb_12 = (b_k["b12"]  * .data$ether_alkyl),
+      vb_13 = (b_k["b13"]  * .data$ether_alicyclic),
+      vb_14 = (b_k["b14"]  * .data$ether_aromatic),
+      vb_15 = (b_k["b15"]  * .data$nitrate),
+      vb_16 = (b_k["b16"]  * .data$nitro),
+      vb_17 = (b_k["b17"]  * .data$hydroxyl_aromatic),
+      vb_18 = (b_k["b18"]  * .data$amine_primary),
+      vb_19 = (b_k["b19"]	 * .data$amine_secondary),
+      vb_20 = (b_k["b20"]	 * .data$amine_tertiary),
+      vb_21 = (b_k["b21"]  * .data$amine_aromatic),
+      vb_22 = (b_k["b22"]  * .data$amide_primary),
+      vb_23 = (b_k["b23"]  * .data$amide_secondary),
+      vb_24 = (b_k["b24"]  * .data$amide_tertiary),
+      vb_25 = (b_k["b25"]  * .data$carbonylperoxynitrate),
+      vb_26 = (b_k["b26"]  * .data$peroxide),
+      vb_27 = (b_k["b27"]  * .data$hydroperoxide),
+      vb_28 = (b_k["b28"]  * .data$carbonylperoxyacid),
+      vb_29 = (b_k["b29"]	 * .data$nitrophenol),
+      vb_30 = (b_k["b30"]  * .data$nitroester)
     ) 
   
   if (isTRUE(meredith)) {
     contributions <- contributions %>% 
-      #TODO: either scale these with temp_k or don't allow use with temp_k other than 293.15
       dplyr::mutate(
         # # Below are additions from Meredith et al.
-        b_32 = (-2.23	  * .data$phosphoric_acids),
-        b_33 = (-2.23	  * .data$phosphoric_esters),
-        b_34 = (-2.23	  * .data$sulfates),
-        b_35 = (-2.23	  * .data$sulfonates),
-        b_36 = (-2.23	  * .data$thiols),
-        b_37 = (-1.20	  * .data$carbothioesters)
+        # use the coef for nitrate for the following groups
+        vb_32 = (b_k["b15"] * .data$phosphoric_acids),
+        vb_33 = (b_k["b15"] * .data$phosphoric_esters),
+        vb_34 = (b_k["b15"] * .data$sulfates),
+        vb_35 = (b_k["b15"] * .data$sulfonates),
+        vb_36 = (b_k["b15"] * .data$thiols),
+        # use the coef for ester for carbothioesters
+        vb_37 = (b_k["b11"] * .data$carbothioesters)
       )
   }
   
   contributions %>% 
     dplyr::rowwise() %>% 
-    dplyr::mutate(log10_P = sum(dplyr::c_across(dplyr::starts_with("b_")))) %>% 
+    dplyr::mutate(log10_P = sum(dplyr::c_across(dplyr::starts_with("vb_")))) %>% 
     dplyr::ungroup() %>% 
-    dplyr::select(-dplyr::starts_with("b_"))
+    dplyr::select(-dplyr::starts_with("vb_"))
 }
 
 

@@ -4,7 +4,7 @@
 \alias{simpol1}
 \title{SIMPOL.1 method for calculating estimated volatility}
 \usage{
-simpol1(fx_groups, meredith = TRUE)
+simpol1(fx_groups, meredith = TRUE, temp_c = 20)
 }
 \arguments{
 \item{fx_groups}{A data.frame or tibble with counts of functional groups
@@ -12,6 +12,13 @@ produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the
 
 \item{meredith}{Logical; \code{FALSE}: use the original SIMPOL.1 method. \code{TRUE}:
 use the modified version in Meredith et al. (2023).}
+
+\item{temp_c}{Numeric; the temperature at which to calculate volatility
+estimates. Pankow & Asher (2008) only used values between 0 and 120ºC so a
+warning is printed if you supply a value outside of this range. Also note
+that Pankow & Asher (2008) reported decreases in the accuracy of the
+SIMPOL.1 method with temperatures at the lower end of this range (see Fig.
+10 in their paper).}
 }
 \value{
 The \code{fx_groups} tibble with the additional \code{log10_P} column.
@@ -30,14 +37,20 @@ coefficients for each functional group (\eqn{b_K(T)}). Units are in log10
 atmospheres.
 
 The modified method in Meredith et al. (2023) adds the following additional
-functional groups and coefficients:
+functional groups:
+
+Using the same coefficient as nitrate
 \itemize{
-\item Phosphoric acid (-2.23)
-\item Phosphoric ester (-2.23)
-\item Sulfate (-2.23)
-\item Sulfonate (-2.23)
-\item Thiol (-2.23)
-\item Carbothioester (-1.20)
+\item Phosphoric acid
+\item Phosphoric ester
+\item Sulfate
+\item Sulfonate
+\item Thiol
+}
+
+Using the same coefficient as ester
+\itemize{
+\item Carbothioester
 }
 }
 \note{
