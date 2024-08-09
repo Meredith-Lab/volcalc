@@ -7,6 +7,8 @@
 #' @param from The form of `input`. Either `"mol_path"` (default) or `"smiles"`.
 #' @param method The method for calculating estimated volatility. See
 #'   [simpol1()] for more details.
+#' @param temp_c numeric; For methods that allow it, specify temperature (in
+#'   degrees C) at which log10(P) estimates are calculated.
 #' @param environment The environment for calculating relative volatility
 #'   categories. RVI thresholds for low, moderate, and high volatility are as
 #'   follows: `"clean"` (clean atmosphere, default) -2, 0, 2; `"polluted"`
@@ -59,6 +61,7 @@ calc_vol <-
   function(input, 
            from = c("mol_path", "smiles"),
            method = c("meredith", "simpol1"),
+           temp_c = 20,
            environment = c("clean", "polluted", "soil"),
            validate = TRUE,
            return_fx_groups = FALSE,
@@ -88,6 +91,8 @@ calc_vol <-
     }
     
     if(from == "smiles") {
+      # a way of converting into a list of *named* vectors, so smiles2sdf() runs on named vectors as input
+      input <- split(input, seq_along(input))
       compound_sdf_list <- lapply(input, ChemmineR::smiles2sdf)
     }
     fx_groups_df_list <-
@@ -98,7 +103,7 @@ calc_vol <-
       dplyr::bind_rows(fx_groups_df_list, .id = {{ from }}) 
     
     # calculate relative volatility & categories from logP
-    vol_df <- simpol1(fx_groups_df, meredith = meredith) %>% 
+    vol_df <- simpol1(fx_groups_df, meredith = meredith, temp_c = temp_c) %>% 
       dplyr::mutate(
         # mass is converted from grams to micrograms
         # 0.0000821 is universal gas constant
@@ -121,7 +126,6 @@ calc_vol <-
         colnames(fx_groups_df)[!colnames(fx_groups_df) %in% c("formula", "name", "molecular_weight")]
     }
     if (isTRUE(return_calc_steps)) {
-      #TODO document log_alpha (need to figure out why it's called that first)
       cols_calc <- c("molecular_weight", "log_alpha", "log10_P")
     }
     

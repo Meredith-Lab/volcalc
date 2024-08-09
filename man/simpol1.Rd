@@ -14,11 +14,7 @@ produced by \code{\link[=get_fx_groups]{get_fx_groups()}} (or manually, with the
 use the modified version in Meredith et al. (2023).}
 
 \item{temp_c}{Numeric; the temperature at which to calculate volatility
-estimates. Pankow & Asher (2008) only used values between 0 and 120ºC so a
-warning is printed if you supply a value outside of this range. Also note
-that Pankow & Asher (2008) reported decreases in the accuracy of the
-SIMPOL.1 method with temperatures at the lower end of this range (see Fig.
-10 in their paper).}
+estimates in degrees C.}
 }
 \value{
 The \code{fx_groups} tibble with the additional \code{log10_P} column.
@@ -54,9 +50,9 @@ Using the same coefficient as ester
 }
 }
 \note{
-The method described in Pankow & Asher (2008) allows for
-calculations of logP at different temperatures.  This implementation
-currently only calculates values at 20ºC.
+The method described in Pankow & Asher (2008) was developed using data
+between 0ºC and 120ºC, so extrapolating beyond that range is not
+recommended.
 }
 \examples{
 mol_path <- mol_example()[3]

@@ -8,6 +8,7 @@ calc_vol(
   input,
   from = c("mol_path", "smiles"),
   method = c("meredith", "simpol1"),
+  temp_c = 20,
   environment = c("clean", "polluted", "soil"),
   validate = TRUE,
   return_fx_groups = FALSE,
@@ -21,6 +22,9 @@ calc_vol(
 
 \item{method}{The method for calculating estimated volatility. See
 \code{\link[=simpol1]{simpol1()}} for more details.}
+
+\item{temp_c}{numeric; For methods that allow it, specify temperature (in
+degrees C) at which log10(P) estimates are calculated.}
 
 \item{environment}{The environment for calculating relative volatility
 categories. RVI thresholds for low, moderate, and high volatility are as

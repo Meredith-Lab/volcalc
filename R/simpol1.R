@@ -34,7 +34,7 @@
 #' @param meredith Logical; `FALSE`: use the original SIMPOL.1 method. `TRUE`:
 #'   use the modified version in Meredith et al. (2023).
 #' @param temp_c Numeric; the temperature at which to calculate volatility
-#'   estimates.
+#'   estimates in degrees C.
 #' @returns The `fx_groups` tibble with the additional `log10_P` column.
 #'
 #' @references 
