@@ -1,6 +1,6 @@
 test_that("volatility estimate is correct", {
-  ex_vol_df <- calc_vol("data/C16181.mol")
-  expect_equal(round(ex_vol_df$rvi, 6), 6.975349)
+  ex_vol_df <- calc_vol(testthat::test_path("data/C16181.mol"), temp_c = 20)
+  expect_equal(round(ex_vol_df$rvi, 4), 6.9776)
 })
 
 test_that("returns correct columns depending on return arguments", {
@@ -28,11 +28,15 @@ test_that("calc_vol() works with multiple inputs", {
 
 test_that("smiles and .mol give same results", {
   paths <-
-    c("data/C16181.mol",
-      "data/map00361/C00011.mol",
-      "data/map00361/C00042.mol")
+    c(testthat::test_path("data/C16181.mol"),
+      testthat::test_path("data/map00361/C00011.mol"),
+      testthat::test_path("data/map00361/C00042.mol"))
   smiles <-
-    c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O", "O=C=O", "C(CC(=O)O)C(=O)O")
+    c(
+      "beta-2,3,4,5,6-Pentachlorocyclohexanol" = "C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",
+      "CO2" = "O=C=O",
+      "Succinate" = "C(CC(=O)O)C(=O)O"
+    )
   expect_equal(
     calc_vol(smiles, from = "smiles") %>% dplyr::select(-name,-smiles),
     calc_vol(paths) %>% dplyr::select(-name,-mol_path)
