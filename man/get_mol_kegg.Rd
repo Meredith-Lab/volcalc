@@ -28,6 +28,10 @@ and \code{mol_paths} (paths to downloaded .mol files).
 Downloads mol files corresponding to individual compounds or compounds in a
 pathway from KEGG.
 }
+\note{
+For additional functionality for interacting with KEGG, try the
+\code{KEGGREST} package, which this function was inspired by.
+}
 \examples{
 \dontrun{
 get_mol_kegg(compound_ids = c("C16181", "C06074"), dir = tempdir())

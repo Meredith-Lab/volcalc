@@ -14,8 +14,12 @@ utils::globalVariables(".data")
 #'   if they are found in `dir`. Set this to `TRUE` to download and overwrite
 #'   existing files.
 #'   
+#' @note For additional functionality for interacting with KEGG, try the
+#'   `KEGGREST` package, which this function was inspired by.
+#'   
 #' @returns A tibble with the columns `compound_ids`, `pathway_ids` (if used),
 #'   and `mol_paths` (paths to downloaded .mol files).
+#'   
 #' @export
 #'
 #' @examples
@@ -47,7 +51,7 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
       stop("Some pathway_ids are not in the correct KEGG format")
     }
     fs::dir_create(dir, pathway_ids)
-    compound_ids_list <- lapply(pathway_ids, keggGetCompounds)
+    compound_ids_list <- lapply(pathway_ids, get_compounds_kegg)
     names(compound_ids_list) <- pathway_ids
     out_tbl <- 
       tibble::enframe(compound_ids_list, name = "pathway_id", value = "compound_id") %>% 
@@ -91,12 +95,9 @@ get_mol_kegg <- function(compound_ids, pathway_ids, dir, force = FALSE){
 
 #' Get list of KEGG compound IDs for given KEGG pathway
 #'
-#' This is a temporary helper function until this function is improved and
-#' pushed into KEGGREST package
-#'
 #' @param pathway string that is a KEGG identifier for a molecular pathway
 #' @noRd
-keggGetCompounds <- function(pathway){
+get_compounds_kegg <- function(pathway){
   
   resp <- 
     httr2::request("https://rest.kegg.jp/")  %>%  
@@ -113,36 +114,48 @@ keggGetCompounds <- function(pathway){
   
 }
 
-dl_mol_kegg <- function(compound_ids) {
-  #balances compound_ids into groups of less than 10 to meet API guidelines
-  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+#' Get and wrangle mol files for a single API request of up to 10 IDs
+#' @noRd
+.dl_mol_kegg <- function(ids) {
+  if (length(ids) > 10) {
+    stop("Provide 10 or fewer IDs at a time")
+  }
+  req_names <- 
+    httr2::request("https://rest.kegg.jp/get") %>% 
+    httr2::req_url_path_append(paste(ids, collapse = "+")) %>% 
+    httr2::req_retry(max_tries = 3)
+
+  resp_names <- httr2::req_perform(req_names) %>% 
+    httr2::resp_body_string()
   
-  #maps over list, but returns it to a single character vector to simplify wrangling code
-  raw <- 
-    purrr::map(compound_id_list, function(x) KEGGREST::keggGet(x, option = "mol")) %>% 
-    purrr::list_c() %>% 
-    glue::glue_collapse()
-  #split into multiples
-  mols <- stringr::str_split(raw, "(?<=\\${4})", n = length(compound_ids)) %>%
+  # There's a lot of stuff in the response, but I only care about the compound name
+  names <- resp_names %>%
+    stringr::str_extract_all("(?<=NAME).+(?=\\n)") %>%
+    unlist() %>% 
+    stringr::str_trim() %>% 
+    stringr::str_remove(";")
+  
+  # get mol file
+  req_mols <- req_names %>% 
+    httr2::req_url_path_append("mol")
+  
+  resp_mols <- httr2::req_perform(req_mols) %>% 
+    httr2::resp_body_string()
+  
+  # wrangle into valid mol files
+  mols <- resp_mols %>% 
+    stringr::str_split("(?<=\\${4})", n = length(ids)) %>%
     unlist() %>% 
     stringr::str_trim(side = "left")
+  mols <- 
+    gsub(">.*", "", mols) #for some reason this pattern doesn't work with str_remove()
   
-  # Adds title to mol file because it is used later on by get_fx_groups()
-  titles <- purrr::map(compound_id_list, function(x) { #for every group of <10 IDs
-    KEGGREST::keggGet(x) %>% 
-      purrr::map_chr(function(names) { #for every ID
-        purrr::pluck(names, "NAME", 1) %>% #get first element of NAME
-          stringr::str_remove(";")
-      })
-  }) %>% unlist()
-  purrr::map2(mols, titles, function(mol, title) {
-    paste0(title, "\n\n\n", gsub(">.*", "", mol))
-  })
-  
+  #add compound name in correct place
+  paste0(names, "\n\n\n", mols)
 }
 
-
-
+#' Split vector into list elements of max length
+#' @noRd
 split_to_list <- function(x, max_len = 10) {
   
   if(length(x) > max_len) {
@@ -153,4 +166,16 @@ split_to_list <- function(x, max_len = 10) {
     list(x)
   }
   
+}
+
+#' Get mol files for compound_ids by splitting into groups of 10 and calling .dl_mol_kegg
+#' @noRd
+dl_mol_kegg <- function(compound_ids) {
+  #balances compound_ids into groups of less than 10 to meet API guidelines
+  compound_id_list <- split_to_list(compound_ids, max_len = 10)
+  
+  #maps over list, but returns it to a single character vector to simplify wrangling code
+  purrr::map(compound_id_list, .dl_mol_kegg) %>% 
+    purrr::list_c() %>% 
+    glue::glue_collapse()
 }
