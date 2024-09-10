@@ -122,7 +122,8 @@ get_compounds_kegg <- function(pathway){
   }
   req_names <- 
     httr2::request("https://rest.kegg.jp/get") %>% 
-    httr2::req_url_path_append(paste(ids, collapse = "+"))
+    httr2::req_url_path_append(paste(ids, collapse = "+")) %>% 
+    httr2::req_retry(max_tries = 3)
 
   resp_names <- httr2::req_perform(req_names) %>% 
     httr2::resp_body_string()
