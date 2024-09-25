@@ -1,0 +1,39 @@
+method,functional_group,description,smarts,fun,notes
+simpol1,carbons_asa,carbon number on the acid-side of an amide,NA,NA,Not possible to capture with SMARTS
+simpol1,rings_aromatic,aromatic ring,NA,ChemmineR::rings,
+simpol1,rings_total,,NA,ChemmineR::rings,
+simpol1,rings_aliphatic,non-aromatic ring,NA,rings_total - rings_aromatic,
+simpol1,carbon_dbl_bonds_aliphatic,C=C (non-aromatic),C=C,ChemmineR::smartsSearchOB,
+simpol1,CCCO_aliphatic_ring,C=C-C=O in non-aromatic ring,C(C=C[AR1])(=O)[AR1],ChemmineR::smartsSearchOB,
+simpol1,hydroxyl_total,,NA,ChemmineR::groups,
+simpol1,hydroxyl_aromatic,"aromatic hydroxyl (e.g., phenol)",[OX2H]c,ChemmineR::smartsSearchOB,"This pattern also captures nitrophenols, so the number of nitrophenols is subtracted"
+simpol1,hydroxyl_aliphatic,hydroxyl (alkyl),NA,hydroxyl_total - hydroxyl_aromatic,
+simpol1,aldehydes,aldehyde,NA,ChemmineR::groups,
+simpol1,ketones,ketone,NA,ChemmineR::groups,
+simpol1,carbox_acids,carboxylic acid,NA,ChemmineR::groups,
+simpol1,ester,ester,NA,ChemmineR::groups,"This also captures carbonylperoxynitrates and nitroesters, so the number of carbonylperoxynitrates and nitroesters are subtracted"
+simpol1,ether_total,,NA,ChemmineR::groups,
+simpol1,ether_alkyl,ether,NA,ether_total - ether_alicyclic - ether_aromatic,
+simpol1,ether_alicyclic,ether (alicyclic),[OD2]([C!R0])[C!R0],ChemmineR::smartsSearchOB,
+simpol1,ether_aromatic,"ether, aromatic","O(c)[C,c]",ChemmineR::smartsSearchOB,Only one of the carbons has to be aromatic
+simpol1,nitrate,nitrate,"[$([NX3](=[OX1])(=[OX1])O),$([NX3+]([OX1-])(=[OX1])O)]",ChemmineR::smartsSearchOB,"This pattern also captures carbonylperoxynitrates, so the number of carbonylperoxynitrates is subtracted"
+simpol1,nitro,nitro,"[$([NX3](=O)=O),$([NX3+](=O)[O-])][!#8]",ChemmineR::smartsSearchOB,
+simpol1,amine_primary,"amine, primary",[NX3;H2;!$(NC=[!#6]);!$(NC#[!#6])][#6X4],ChemmineR::smartsSearchOB,
+simpol1,amine_secondary,"amine, secondary",[NX3H1!$(NC=[!#6])!$(NC#[!#6])]([#6X4])[#6X4],ChemmineR::smartsSearchOB,
+simpol1,amine_tertiary,"amine, tertiary",[NX3H0!$(NC=[!#6])!$(NC#[!#6])]([#6X4])([#6X4])[#6X4],ChemmineR::smartsSearchOB,
+simpol1,amine_aromatic,"amine, aromatic",[NX3;!$(NO)]c,ChemmineR::smartsSearchOB,
+simpol1,amide_primary,"amide, primary","[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H2]",ChemmineR::smartsSearchOB,
+simpol1,amide_secondary,"amide, secondary","[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H1][#6;!$(C=[O,N,S])]",ChemmineR::smartsSearchOB,
+simpol1,amide_tertiary,"amide, tertiary","[CX3;$([R0][#6]),$([H1R0])](=[OX1])[#7X3H0]([#6;!$(C=[O,N,S])])[#6;!$(C=[O,N,S])]",ChemmineR::smartsSearchOB,
+simpol1,carbonylperoxynitrate,carbonylperoxynitrate,*C(=O)OO[N+1](=O)[O-1],ChemmineR::smartsSearchOB,
+simpol1,peroxide,peroxide,[OX2D2][OX2D2],ChemmineR::smartsSearchOB,"This pattern also captures carbonylperoxynitrates, so the number of carbonylperoxinitrates is subtracted"
+simpol1,hydroperoxide,hydroperoxide,"[OX2][OX2H,OX1-]",ChemmineR::smartsSearchOB,"This pattern also captures peroxyacids, so the number of carbonylperoxyacids is subtracted"
+simpol1,carbonylperoxyacid,carbonylperoxyacid,"[CX3;$([R0][#6]),$([H1R0])](=[OX1])[OX2][$([OX2H]),$([OX1-])]",ChemmineR::smartsSearchOB,
+simpol1,nitrophenol,nitrophenol,"[OX2H][$(c1ccccc1[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1cccc(c1)[$([NX3](=O)=O),$([NX3+](=O)[O-])]),$(c1ccc(cc1)[$([NX3](=O)=O),$([NX3+](=O)[O-])])]",ChemmineR::smartsSearchOB,
+simpol1,nitroester,nitroester,"C(=O)(OC)C~[NX3](-,=[OX1])-,=[OX1]",ChemmineR::smartsSearchOB,"This pattern captures OH groups on a ring that also has a nitro group (para, ortho, or meta)"
+meredith,phosphoric_acids,,"[$(P(=[OX1])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)]),$([P+]([OX1-])([$([OX2H]),$([OX1-]),$([OX2]P)])([$([OX2H]),$([OX1-]),$([OX2]P)])[$([OX2H]),$([OX1-]),$([OX2]P)])]",ChemmineR::smartsSearchOB,"This pattern also captures phosphoric esthers, so the number of phosphoric esters is subtracted"
+meredith,phosphoric_esters,,"[$(P(=[OX1])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)]),$([P+]([OX1-])([OX2][#6])([$([OX2H]),$([OX1-]),$([OX2][#6])])[$([OX2H]),$([OX1-]),$([OX2][#6]),$([OX2]P)])]",ChemmineR::smartsSearchOB,
+meredith,sulfates,,"[$([#16X4](=[OX1])(=[OX1])([OX2H,OX1H0-])[OX2][#6]),$([#16X4+2]([OX1-])([OX1-])([OX2H,OX1H0-])[OX2][#6])]",ChemmineR::smartsSearchOB,
+meredith,sulfonates,,"[#16X4](=[OX1])(=[OX1])([#6])[*$([O-1]),*$([OH1]),*$([OX2H0])]",ChemmineR::smartsSearchOB,This pattern captures sulfonate ions and their conjugate acids (sulfonic acids)
+meredith,thiols,,[#16X2H],ChemmineR::smartsSearchOB,
+meredith,carbothioesters,,S([#6])[CX3](=O)[#6],ChemmineR::smartsSearchOB,
