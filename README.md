@@ -40,13 +40,11 @@ strings as input, and supports downloading .mol files directly from
 
 ## Installation
 
-<!--
 Install from CRAN with
 
 ``` r
 install.packages("volcalc")
 ```
--->
 
 You can install the development version of `volcalc` from GitHub with
 
@@ -96,6 +94,11 @@ documentation](https://open-babel.readthedocs.io/en/latest/Installation/install.
 and `ChemmineOB` [install
 guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 
+> \[!NOTE\]  
+> As of Dec 2024, `ChemmineOB` may fail to build on macs with Apple
+> silicon (<https://github.com/girke-lab/ChemmineOB/issues/35>) causing
+> installation failture for `volcalc`.
+
 ## Basic Usage
 
 This is a basic example which shows you how to get an estimated relative
@@ -118,7 +121,7 @@ calc_vol(files$mol_path)
 #>   mol_path                                          formula name    rvi category
 #>   <chr>                                             <chr>   <chr> <dbl> <fct>   
 #> 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    
-#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high
+#> 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high
 
 #alternatively, supply a SMILES representation
 calc_vol(c("C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O",  "C(CC(=O)O)C(=O)O"), from = "smiles")
