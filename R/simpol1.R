@@ -77,7 +77,7 @@ simpol1 <- function(fx_groups, meredith = TRUE, temp_c = 20) {
       vb_00 = (b_k["b0"]  * 1), #b_0(T) is an intercept/constant.  
       vb_01 = (b_k["b1"]  * .data$carbons),
       vb_02 = (b_k["b2"]  * .data$carbons_asa),
-      vb_03 = (b_k["b3"]	 * .data$rings_aromatic),
+      vb_03 = (b_k["b3"]	* .data$rings_aromatic),
       vb_04 = (b_k["b4"]  * .data$rings_aliphatic),
       vb_05 = (b_k["b5"]  * .data$carbon_dbl_bonds_aliphatic),
       vb_06 = (b_k["b6"]  * .data$CCCO_aliphatic_ring),
