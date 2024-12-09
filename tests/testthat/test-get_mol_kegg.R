@@ -110,3 +110,14 @@ test_that("works with pathway modules", {
   expect_true(all(file.exists(out$mol_path)))
 })
 
+test_that("one compound per mol", {
+  skip_on_cran()
+  skip_if_offline()
+  
+  dir <- withr::local_tempdir()
+  mols <- get_mol_kegg(c("C16181", "C00042"), dir = dir)
+  mol1 <- readLines(mols$mol_path[1])
+  mol2 <- readLines(mols$mol_path[2])
+  expect_equal(sum(stringr::str_detect(mol1, "END")), 1)
+  expect_equal(sum(stringr::str_detect(mol2, "END")), 1)
+})

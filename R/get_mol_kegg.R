@@ -176,6 +176,5 @@ dl_mol_kegg <- function(compound_ids) {
   
   #maps over list, but returns it to a single character vector to simplify wrangling code
   purrr::map(compound_id_list, .dl_mol_kegg) %>% 
-    purrr::list_c() %>% 
-    glue::glue_collapse()
+    purrr::list_c()
 }
