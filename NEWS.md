@@ -1,3 +1,5 @@
+# volcalc (development version)
+
 # volcalc 2.2.0
 
 * Added a `validate = TRUE` option to `calc_vol()` and `get_fx_groups()` that returns `NA`s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of `ChemmineOB`
