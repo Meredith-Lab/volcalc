@@ -77,13 +77,15 @@ counts.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>It is unfortunately difficult to capture errors and warnings
-produced by the command line tool OpenBabel used by <code>ChemmineOB</code>, a
-dependency of <code>volcalc</code>. These errors and warnings are printed to the R
-console, but they are <em>not</em> R errors and do not stop code from running and
-producing potentially incorrect data. <code>validate = TRUE</code> checks the output
-of certain OpenBabel procedures for the <em>symptoms</em> of these errors, namely
-missing values for InChI and molecular formula. Unfortunately, since InChI
+    <p>For more details on how functional groups are defined, see the
+<a href="smarts_simpol1.html">smarts_simpol1</a> data set.</p>
+<p>It is unfortunately difficult to capture errors and warnings produced by
+the command line tool OpenBabel used by <code>ChemmineOB</code>, a dependency of
+<code>volcalc</code>. These errors and warnings are printed to the R console, but they
+are <em>not</em> R errors and do not stop code from running and producing
+potentially incorrect data. <code>validate = TRUE</code> checks the output of certain
+OpenBabel procedures for the <em>symptoms</em> of these errors, namely missing
+values for InChI and molecular formula. Unfortunately, since InChI
 generation is not available with the Windows version of <code>ChemmineOB</code>, this
 validation step cannot be performed on Windows and <code>validate = TRUE</code> will
 simply print a warning that can be silenced by setting <code>validate = FALSE</code>.</p>
