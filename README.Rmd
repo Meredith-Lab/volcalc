@@ -77,6 +77,9 @@ For windows, `OpenBabel` is included in the `ChemmineOB` binary and does not nee
 
 For other installation options see the [OpenBabel documentation](https://open-babel.readthedocs.io/en/latest/Installation/install.html) and `ChemmineOB` [install guide](https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL)
 
+> [!NOTE]  
+> As of Dec 2024, `ChemmineOB` may fail to build on macs with Apple silicon (https://github.com/girke-lab/ChemmineOB/issues/35) causing installation failture for `volcalc`.
+
 ## Basic Usage
 
 This is a basic example which shows you how to get an estimated relative volatility index (`rvi`) for two example compounds *beta-2,3,4,5,6-Pentachlorocyclohexanol*, and *Succinate*.

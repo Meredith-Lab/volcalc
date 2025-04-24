@@ -18,8 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
+          - {os: macos-13,        r: 'release'} #TODO remove some day when ChemmineOB works on Apple silicon
+          - {os: macos-latest,    r: 'release'}
+          - {os: windows-latest,  r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
@@ -39,7 +40,7 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
       - name: macOS openbabel
-        if: matrix.config.os == 'macos-latest'
+        if: contains(matrix.config.os, 'macos')
         run: |
           brew install open-babel
       - name: ubuntu openbabel
