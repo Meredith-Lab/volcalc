@@ -1,6 +1,8 @@
 # volcalc (development version)
 
-* adds a `validate = TRUE` option to `calc_vol()` and `get_fx_groups()` that returns `NA`s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of `ChemmineOB`
+* Added a `validate = TRUE` option to `calc_vol()` and `get_fx_groups()` that returns `NA`s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of `ChemmineOB`
+* Users can now supply a temperature at which to calculate volatility estimates. As a result, RVI values may now be *slightly* different compared to those from `volcalc` v2.1.2 due to rounding differences.
+* Inputs to `calc_vol()` supplied as a named vector of SMILES strings now properly pass the names to `ChemmineR::smile2sdf()` where they are used as the molecule name.
 * adds a dataset, `smarts_simpol1`, describing how functional groups are defined for the SIMPOL.1 and Meredith et al. methods
 * `KEGGREST` is no longer a dependency of `volcalc` (previously used in `get_mol_kegg()`)
 
