@@ -14,6 +14,7 @@ Calculate estimated relative volatility index values for organic compounds based
 Useful links:
 \itemize{
   \item \url{https://meredith-lab.github.io/volcalc/}
+  \item \url{https://cct-datascience.r-universe.dev/volcalc}
   \item Report bugs at \url{https://github.com/Meredith-Lab/volcalc/issues}
 }
 
