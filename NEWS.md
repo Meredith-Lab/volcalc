@@ -1,4 +1,4 @@
-# volcalc (development version)
+# volcalc 2.2.0
 
 * Added a `validate = TRUE` option to `calc_vol()` and `get_fx_groups()` that returns `NA`s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of `ChemmineOB`
 * Users can now supply a temperature at which to calculate volatility estimates. As a result, RVI values may now be *slightly* different compared to those from `volcalc` v2.1.2 due to rounding differences.
