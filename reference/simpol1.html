@@ -53,7 +53,7 @@ use this function directly, but rather through <code><a href="calc_vol.html">cal
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simpol1</span><span class="op">(</span><span class="va">fx_groups</span>, meredith <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simpol1</span><span class="op">(</span><span class="va">fx_groups</span>, meredith <span class="op">=</span> <span class="cn">TRUE</span>, temp_c <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,6 +69,11 @@ produced by <code><a href="get_fx_groups.html">get_fx_groups()</a></code> (or ma
 <dd><p>Logical; <code>FALSE</code>: use the original SIMPOL.1 method. <code>TRUE</code>:
 use the modified version in Meredith et al. (2023).</p></dd>
 
+
+<dt id="arg-temp-c">temp_c<a class="anchor" aria-label="anchor" href="#arg-temp-c"></a></dt>
+<dd><p>Numeric; the temperature at which to calculate volatility
+estimates in °C.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -82,18 +87,19 @@ the sum of the counts of functional groups (\(\nu_{k,i}\)) times the
 coefficients for each functional group (\(b_K(T)\)). Units are in log10
 atmospheres.</p>
 <p>The modified method in Meredith et al. (2023) adds the following additional
-functional groups and coefficients:</p><ul><li><p>Phosphoric acid (-2.23)</p></li>
-<li><p>Phosphoric ester (-2.23)</p></li>
-<li><p>Sulfate (-2.23)</p></li>
-<li><p>Sulfonate (-2.23)</p></li>
-<li><p>Thiol (-2.23)</p></li>
-<li><p>Carbothioester (-1.20)</p></li>
+functional groups:</p>
+<p>Using the same coefficient as nitrate</p><ul><li><p>Phosphoric acid</p></li>
+<li><p>Phosphoric ester</p></li>
+<li><p>Sulfate</p></li>
+<li><p>Sulfonate</p></li>
+<li><p>Thiol</p></li>
+</ul><p>Using the same coefficient as ester</p><ul><li><p>Carbothioester</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>The method described in Pankow &amp; Asher (2008) allows for
-calculations of logP at different temperatures.  This implementation
-currently only calculates values at 20ºC.</p>
+    <p>The method described in Pankow &amp; Asher (2008) was developed using data
+between 0 °C and 120 °C, so extrapolating beyond that range is not
+recommended.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

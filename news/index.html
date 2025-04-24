@@ -39,8 +39,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="volcalc-development-version">volcalc (development version)<a class="anchor" aria-label="anchor" href="#volcalc-development-version"></a></h2>
-<ul><li>adds a <code>validate = TRUE</code> option to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> and <code><a href="../reference/get_fx_groups.html">get_fx_groups()</a></code> that returns <code>NA</code>s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of <code>ChemmineOB</code>
+<ul><li>Added a <code>validate = TRUE</code> option to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> and <code><a href="../reference/get_fx_groups.html">get_fx_groups()</a></code> that returns <code>NA</code>s when there are suspected errors in parsing SMILES or .mol files. This is unfortunately not available on Windows due to differences in the windows version of <code>ChemmineOB</code>
 </li>
+<li>Users can now supply a temperature at which to calculate volatility estimates. As a result, RVI values may now be <em>slightly</em> different compared to those from <code>volcalc</code> v2.1.2 due to rounding differences.</li>
+<li>Inputs to <code><a href="../reference/calc_vol.html">calc_vol()</a></code> supplied as a named vector of SMILES strings now properly pass the names to <code>ChemmineR::smile2sdf()</code> where they are used as the molecule name.</li>
 <li>adds a dataset, <code>smarts_simpol1</code>, describing how functional groups are defined for the SIMPOL.1 and Meredith et al. methods</li>
 <li>
 <code>KEGGREST</code> is no longer a dependency of <code>volcalc</code> (previously used in <code><a href="../reference/get_mol_kegg.html">get_mol_kegg()</a></code>)</li>
