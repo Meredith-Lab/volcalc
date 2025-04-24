@@ -17,14 +17,16 @@ Description: Calculate estimated relative volatility index values for
     <doi:10.5194/acp-8-2773-2008> or modified SIMPOL.1 method as in
     Meredith et al. (2023) <doi:10.5194/acp-8-2773-2008>.
 License: MIT + file LICENSE
-URL: https://meredith-lab.github.io/volcalc/, https://cct-datascience.r-universe.dev/volcalc
+URL: https://meredith-lab.github.io/volcalc/,
+    https://cct-datascience.r-universe.dev/volcalc
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
+Depends: 
+    R (>= 2.10)
 Imports: 
     ChemmineOB,
     ChemmineR,
     dplyr,
     fs,
-    glue,
     httr2,
     magrittr,
     purrr,
@@ -44,8 +46,6 @@ VignetteBuilder:
 biocViews: 
 Config/testthat/edition: 3
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends: 
-    R (>= 2.10)
-LazyData: true
