@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">volcalc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ As of Dec 2024, <code>ChemmineOB</code> may fail to build on macs with Apple sil
 <span><span class="co">#&gt;   mol_path                                          formula name    rvi category</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    </span></span>
-<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high</span></span>
+<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.58 high</span></span>
 <span></span>
 <span><span class="co">#alternatively, supply a SMILES representation</span></span>
 <span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O"</span>,  <span class="st">"C(CC(=O)O)C(=O)O"</span><span class="op">)</span>, from <span class="op">=</span> <span class="st">"smiles"</span><span class="op">)</span></span>
@@ -125,7 +125,7 @@ As of Dec 2024, <code>ChemmineOB</code> may fail to build on macs with Apple sil
 <span><span class="co">#&gt;   smiles                        formula  name    rvi category</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O C6H7Cl5O &lt;NA&gt;   6.98 high    </span></span>
-<span><span class="co">#&gt; 2 C(CC(=O)O)C(=O)O              C4H6O4   &lt;NA&gt;   2.57 high</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 C(CC(=O)O)C(=O)O              C4H6O4   &lt;NA&gt;   2.58 high</span></span></code></pre></div>
 <p>This returns a tibble with columns specifying general info about the compound, and the compound’s calculated volatility and corresponding volatility category. The functional group counts underlying the volatility can be additionally returned with <code>return_fx_groups = TRUE</code>, and the intermediate calculation steps with <code>return_calc_steps = TRUE</code>.</p>
 </div>
 <div class="section level2">
@@ -148,8 +148,7 @@ As of Dec 2024, <code>ChemmineOB</code> may fail to build on macs with Apple sil
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Riemer K, Scott E, Meredith L (2023). _volcalc: Calculate Volatility</span></span>
 <span><span class="co">#&gt;   of Chemical Compounds_. doi:10.5281/zenodo.8015155</span></span>
-<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.8015155&gt;, R package version</span></span>
-<span><span class="co">#&gt;   2.1.2.9000.</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.5281/zenodo.8015155&gt;, R package version 2.2.0.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Please also cite the related manuscript:</span></span>
 <span><span class="co">#&gt; </span></span>
