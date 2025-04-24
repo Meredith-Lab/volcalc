@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Calculate Volatility of Chemical Compounds">
 <meta name="description" content="Calculate estimated relative volatility index values for organic compounds based on functional group contributions. Calculation uses the SIMPOL.1 method in Prankow and Asher (2008) &lt;doi:10.5194/acp-8-2773-2008&gt; or modified SIMPOL.1 method as in Meredith et al. (2023) &lt;doi:10.5194/acp-8-2773-2008&gt;.">
 <meta property="og:description" content="Calculate estimated relative volatility index values for organic compounds based on functional group contributions. Calculation uses the SIMPOL.1 method in Prankow and Asher (2008) &lt;doi:10.5194/acp-8-2773-2008&gt; or modified SIMPOL.1 method as in Meredith et al. (2023) &lt;doi:10.5194/acp-8-2773-2008&gt;.">
@@ -76,39 +76,39 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<!--
-Install from CRAN with
-
-``` r
-install.packages("volcalc")
-```
--->
-<p>You can install the development version of <code>volcalc</code> from GitHub with</p>
+<p>Install from CRAN with</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"volcalc"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of <code>volcalc</code> from GitHub with</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc"</span><span class="op">)</span></span></code></pre></div>
 <p>Or from r-universe with</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"volcalc"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://cct-datascience.r-universe.dev"</span>, <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"repos"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the ‘legacy’ version used in Meredith et al. (2023) with</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"Meredith-Lab/volcalc@v1.0.2"</span><span class="op">)</span></span></code></pre></div>
 <p>Installation of <code>volcalc</code> requires the system libraries <a href="https://open-babel.readthedocs.io/" class="external-link">OpenBabel</a> and Eigen3 (requirements of the <code>ChemmineOB</code> package, which <code>volcalc</code> depends on). <code>pak</code> will take care of the installation of these libraries for you on some systems, but you may need to install them manually on some operating systems.</p>
 <p>For macOS, they can be installed via homebrew by running the following shell command:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">brew</span> install open-babel</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">brew</span> install open-babel</span></code></pre></div>
 <p>For Ubuntu Linux:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libopenbabel-dev</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libeigen3-dev</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libopenbabel-dev</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">sudo</span> apt-get install libeigen3-dev</span></code></pre></div>
 <p>For windows, <code>OpenBabel</code> is included in the <code>ChemmineOB</code> binary and does not need to be installed separately.</p>
 <p>For other installation options see the <a href="https://open-babel.readthedocs.io/en/latest/Installation/install.html" class="external-link">OpenBabel documentation</a> and <code>ChemmineOB</code> <a href="https://github.com/girke-lab/ChemmineOB/blob/master/INSTALL" class="external-link">install guide</a></p>
+<blockquote>
+<p>[!NOTE]<br>
+As of Dec 2024, <code>ChemmineOB</code> may fail to build on macs with Apple silicon (<a href="https://github.com/girke-lab/ChemmineOB/issues/35" class="external-link uri">https://github.com/girke-lab/ChemmineOB/issues/35</a>) causing installation failture for <code>volcalc</code>.</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
 <p>This is a basic example which shows you how to get an estimated relative volatility index (<code>rvi</code>) for two example compounds <em>beta-2,3,4,5,6-Pentachlorocyclohexanol</em>, and <em>Succinate</em>. The KEGG compound identifiers for the compounds, as found on <a href="https://www.genome.jp/dbget-bin/www_bget?C16181" class="external-link">the compound’s KEGG page</a>, are C16181, and C00042.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://meredith-lab.github.io/volcalc/">volcalc</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://meredith-lab.github.io/volcalc/">volcalc</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># download a .mol file from KEGG</span></span>
 <span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_mol_kegg.html">get_mol_kegg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C16181"</span>, <span class="st">"C00042"</span><span class="op">)</span>, dir <span class="op">=</span> <span class="va">out_path</span><span class="op">)</span></span>
@@ -117,7 +117,7 @@ install.packages("volcalc")
 <span><span class="co">#&gt;   mol_path                                          formula name    rvi category</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;   </span></span>
 <span><span class="co">#&gt; 1 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high    </span></span>
-<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C4H6O4  Succ…  2.57 high</span></span>
+<span><span class="co">#&gt; 2 /var/folders/wr/by_lst2d2fngf67mknmgf4340000gn/T… C6H7Cl… beta…  6.98 high</span></span>
 <span></span>
 <span><span class="co">#alternatively, supply a SMILES representation</span></span>
 <span><span class="fu"><a href="reference/calc_vol.html">calc_vol</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)O"</span>,  <span class="st">"C(CC(=O)O)C(=O)O"</span><span class="op">)</span>, from <span class="op">=</span> <span class="st">"smiles"</span><span class="op">)</span></span>
@@ -142,7 +142,7 @@ install.packages("volcalc")
 <h2 id="how-to-cite">How to cite<a class="anchor" aria-label="anchor" href="#how-to-cite"></a>
 </h2>
 <p>If you use this package in your published work, please cite it using the reference below:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"volcalc"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite volcalc in publications please use:</span></span>
 <span><span class="co">#&gt; </span></span>
