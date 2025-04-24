@@ -17,7 +17,7 @@ Description: Calculate estimated relative volatility index values for
     <doi:10.5194/acp-8-2773-2008> or modified SIMPOL.1 method as in
     Meredith et al. (2023) <doi:10.5194/acp-8-2773-2008>.
 License: MIT + file LICENSE
-URL: https://meredith-lab.github.io/volcalc/
+URL: https://meredith-lab.github.io/volcalc/, https://cct-datascience.r-universe.dev/volcalc
 BugReports: https://github.com/Meredith-Lab/volcalc/issues
 Imports: 
     ChemmineOB,
@@ -26,7 +26,6 @@ Imports:
     fs,
     glue,
     httr2,
-    KEGGREST,
     magrittr,
     purrr,
     rlang,
